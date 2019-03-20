@@ -1,0 +1,11 @@
+{
+  "name": "huji",
+  "version": "1.0.0",
+  "description": "test app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "huji",
+  "license": "ISC"
+}
