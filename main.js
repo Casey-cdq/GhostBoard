@@ -15,7 +15,7 @@ function createWindow () {
   conf.alwaysOnTop = true
   conf.title = "幽灵看盘"
   conf.frame = false
-  conf.opacity = 0.5
+  conf.opacity = 1.0
   conf.useContentSize = true
   // conf.transparent = true
 
