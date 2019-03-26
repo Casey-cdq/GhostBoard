@@ -7,14 +7,12 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
-
-    <title>Hello, world!</title>
   </head>
-  <body style="-webkit-app-region: drag">
+  <body>
 
     <div class="container-fluid">
 
-       <div class="row">
+       <div class="row" style="-webkit-app-region: drag">
           <div class="col-sm">
           
           <table class="table">
@@ -53,16 +51,17 @@
 
         <div class="row">
           <div class="col-sm">
-            <button type="button" class="btn btn-primary btn-block">+</button>
+            <button id="addnew" type="button" class="btn btn-primary btn-block">+</button>
+          </div>
+           <div class="col-sm">
+            <button id="config" type="button" class="btn btn-primary btn-block">设置</button>
+          </div>
+
+          <div class="col-sm">
+            <button id="help" type="button" class="btn btn-primary btn-block">？</button>
           </div>
           <div class="col-sm">
-            <button type="button" class="btn btn-primary btn-block">？</button>
-          </div>
-          <div class="col-sm">
-            <button type="button" class="btn btn-primary btn-block">设置</button>
-          </div>
-          <div class="col-sm">
-            <button type="button" class="btn btn-primary btn-block">!</button>
+            <button id="info" type="button" class="btn btn-primary btn-block">!</button>
           </div>
        </div>
        
@@ -70,8 +69,15 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>
+// window.nodeRequire = require;
+// delete window.require;
+// delete window.exports;
+// delete window.module;
+    </script>
     <script src="./node_modules/jquery/jquery.min.js"></script>
-    <script src="./node_modules/popper.js/dist/popper.min.js"></script>
+    <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./index.js"></script>
   </body>
 </html>
