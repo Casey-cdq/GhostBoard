@@ -16,6 +16,7 @@ function createWindow () {
   conf.title = "幽灵看盘"
   conf.frame = false
   conf.opacity = 1.0
+  conf.resizable = false
   conf.useContentSize = true
   // conf.transparent = true
 
@@ -26,7 +27,7 @@ function createWindow () {
   win.loadFile('index.html')
 
   // 打开开发者工具
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
   win.once('ready-to-show', () => {
     win.show()
   })
