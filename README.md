@@ -2,6 +2,8 @@
 Maybe A Make A Living Project.
 
 Client(electron):
+npm install --save electron-json-storage@4.1.6
+
 npm install bootstrap@4.3.1
 npm install jquery@1.9.1
 npm install popper.js@^1.14.7

@@ -71,6 +71,8 @@ function addShotCut(win){
   	})
 }
 
+
+
 // Electron 会在初始化后并准备
 // 创建浏览器窗口时，调用这个函数。
 // 部分 API 在 ready 事件触发后才能使用。

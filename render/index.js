@@ -1,5 +1,7 @@
 var cm = require("../common")
 
+var watch_keys = []
+
 function gb_add_row(key,row){
 	let row_all = $('<tr></tr>')
 	for ( i in row){
@@ -87,16 +89,7 @@ function help(){
 function config(){
 	console.log("config click")
 
-	// cm.post(cm.base_url,["600355@a","300081@a"],
-	// 	 function (message) {
- //            console.log("OK:"+JSON.stringify(message))
- //        },
- //        function (message) {
- //            console.log("NOTOK:"+JSON.stringify(message))
- //        }
-	// )
-
-	cm.post(cm.base_url+"/sug",{"key":"60035@a"},
+	cm.post(cm.base_url+"/sug",{"key":"000001@a"},
 	 	function (message) {
             console.log("OK:"+JSON.stringify(message))
         },
@@ -110,6 +103,33 @@ function info(){
 	cm.open_url("http://info")
 }
 
+function request_keys_and_set_timer(){
+
+	delay = 5000
+
+	keys = watch_keys
+
+	cm.post(cm.base_url,keys,
+		 function (message) {
+            console.log("OK:"+JSON.stringify(message))
+
+            $("#gbrow").empty()
+            for (i in message){
+            	v = message[i]
+            	gb_add_row(i.key,[v.code,v.name,v.price])
+            }
+
+            window.setTimeout(request_keys_and_set_timer,delay);
+        },
+        function (message) {
+            console.log("NOTOK:"+JSON.stringify(message))
+
+            window.setTimeout(request_keys_and_set_timer,delay);
+        }
+	)
+
+}
+
 function ready_func(){
 	$("#addnew").click(add_new)
 	$("#help").click(help)
@@ -117,6 +137,24 @@ function ready_func(){
 	$("#info").click(info)
 
 	console.log("doc ready.")
+
+	const storage = require('electron-json-storage')
+	const defaultDataPath = storage.getDefaultDataPath()
+	console.log(defaultDataPath)
+	storage.get('keys', function(error, data) {
+	  if (error) throw error;
+
+
+	  if(JSON.stringify(data) == '{}'){
+	    watch_keys.push("sh@a")
+	  }else{
+	  	watch_keys.concat(data)
+	  }
+
+	  //start request and timer...
+	  request_keys_and_set_timer()
+
+	});
 }
 
 $(document).ready(ready_func)
