@@ -3,9 +3,11 @@ import tushare as ts
 import thread
 import time
 import json
+import requests
 
 urls = (
-    '/', 'index'
+    '/', 'index',
+    '/sug', 'sug'
 )
 
 all_data = {}
@@ -24,6 +26,40 @@ def get_one_from_map(one):
         return market[one]
     else:
         return {"key":one}
+
+def parse_sina_sug(text):
+    sugs = []
+    text = text.split('="')[1]
+    text = text.split('";')[0].strip()
+    lines = text.split(";")
+    for line in lines:
+        tokens = line.split(',')
+        code = tokens[2].strip()
+        if len(code)==6:
+            sug = {}
+            sug['code'] = code
+            sug['name'] = tokens[4]
+            sug['key'] = code+"@a"
+            sugs.append(sug)
+        else:
+            print "code not right..."+line
+    return sugs
+
+class sug:
+    def POST(self):
+        data = web.data()
+        params = json.loads(data.decode())
+        key = params['key']
+        id,m = id_market_from_key(key)
+        if m == "a":
+            sina_key = id
+            now = int(1000*time.time())
+            url = "https://suggest3.sinajs.cn/suggest/type=&key=%s&name=suggestdata_%d" % (sina_key,now)
+            ret = requests.get(url)
+            sina_sug = parse_sina_sug(ret.text)
+            return json.dumps(sina_sug)
+        else:
+            return {"err":"not support.."}
 
 class index:
     def POST(self):

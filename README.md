@@ -12,3 +12,4 @@ Server(python2.7):
 pip install web.py
 pip install tushare
 pip install bs4
+pip install requests
