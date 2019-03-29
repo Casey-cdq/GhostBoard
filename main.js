@@ -18,13 +18,15 @@ function createWindow () {
   conf.opacity = 1.0
   conf.resizable = false
   conf.useContentSize = true
+  conf.minimizable = false
+  conf.maximizable = false
   // conf.transparent = true
 
   // 创建浏览器窗口。
   win = new BrowserWindow(conf)
 
   // 然后加载应用的 index.html。
-  win.loadFile('index.html')
+  win.loadFile('render/index.html')
 
   // 打开开发者工具
   win.webContents.openDevTools()
