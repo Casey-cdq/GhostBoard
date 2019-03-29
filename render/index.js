@@ -87,19 +87,23 @@ function help(){
 function config(){
 	console.log("config click")
 
-	$.ajax({
-        type: "POST",
-        url: "http://localhost:8080",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(["600355@a","300081@a"]),
-        dataType: "json",
-        success: function (message) {
+	// cm.post(cm.base_url,["600355@a","300081@a"],
+	// 	 function (message) {
+ //            console.log("OK:"+JSON.stringify(message))
+ //        },
+ //        function (message) {
+ //            console.log("NOTOK:"+JSON.stringify(message))
+ //        }
+	// )
+
+	cm.post(cm.base_url+"/sug",{"key":"60035@a"},
+	 	function (message) {
             console.log("OK:"+JSON.stringify(message))
         },
-        error: function (message) {
+        function (message) {
             console.log("NOTOK:"+JSON.stringify(message))
         }
-    });
+	)
 }
 
 function info(){
