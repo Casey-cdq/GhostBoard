@@ -19,9 +19,9 @@ def id_market_from_key(key):
 
 def get_one_from_map(one):
     id,m = id_market_from_key(one)
-    market = all_data[m]
-    if id in market:
-        return market[id]
+    market = web.all_data[m]
+    if one in market:
+        return market[one]
     else:
         return {"key":one}
 
