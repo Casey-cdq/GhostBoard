@@ -1,3 +1,5 @@
+#coding=utf-8
+
 import web
 import tushare as ts
 import thread
@@ -35,10 +37,22 @@ def parse_sina_sug(text):
     for line in lines:
         tokens = line.split(',')
         code = tokens[2].strip()
-        if len(code)==6:
+        if tokens[0] in ["sh000001","sz399001"]:
             sug = {}
             sug['code'] = code
-            sug['name'] = tokens[4]
+            sug['name'] = tokens[4].strip()
+            sug['key'] = tokens[0][:2]+"@a"
+            sugs.append(sug)
+        elif tokens[0] == "sz399006":
+            sug = {}
+            sug['code'] = code
+            sug['name'] = tokens[4].strip()
+            sug['key'] = "cyb@a"
+            sugs.append(sug)
+        elif len(code)==6:
+            sug = {}
+            sug['code'] = code
+            sug['name'] = tokens[4].strip()
             sug['key'] = code+"@a"
             sugs.append(sug)
         else:
@@ -56,11 +70,13 @@ class sug:
             now = int(1000*time.time())
             url = "https://suggest3.sinajs.cn/suggest/type=&key=%s&name=suggestdata_%d" % (sina_key,now)
             ret = requests.get(url)
+            print(ret.text)
             sina_sug = parse_sina_sug(ret.text)
             return json.dumps(sina_sug)
         else:
             return {"err":"not support.."}
 
+#sh=上证指数 sz=深圳成指 hs300=沪深300指数 sz50=上证50 zxb=中小板 cyb=创业板
 class index:
     def POST(self):
         pool = web.req_pool
@@ -87,10 +103,11 @@ def DataLoop(name):
             print str(now)+" getting @a " + str(a)
             df = ts.get_realtime_quotes(a)
             jss = json.loads(df.to_json(orient='records'))
-            for js in jss:
-                js["key"] = js['code']+"@a"
+            for i in range(len(jss)):
+                js = jss[i]
+                js["key"] = a[i]+"@a"
                 all_data["a"][js["key"]] = js
-        time.sleep(3)
+        time.sleep(5)
 
 if __name__ == "__main__":
     web.req_pool = {}
