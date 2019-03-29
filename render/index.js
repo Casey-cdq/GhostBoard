@@ -94,10 +94,10 @@ function config(){
         data: JSON.stringify(["600355@a","300081@a"]),
         dataType: "json",
         success: function (message) {
-            console.log("OK:"+message)
+            console.log("OK:"+JSON.stringify(message))
         },
         error: function (message) {
-            console.log("NOTOK:"+message)
+            console.log("NOTOK:"+JSON.stringify(message))
         }
     });
 }
