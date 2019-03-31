@@ -1,11 +1,64 @@
 var cm = require("../common")
+const storage = require('electron-json-storage')
+const defaultDataPath = storage.getDefaultDataPath()
+console.log(defaultDataPath)
 
-var watch_keys = []
+var the_current_req = undefined
+
+function gb_delete_row(ev){
+	console.log("delete click")
+	console.log(ev)
+	key = ev.data
+	storage.get('keys', function(error, data) {
+			if (error) throw error
+			let new_data = []
+		  	for (i in data){
+		  		if (data[i]!=key){
+		  			new_data.push(data[i])
+		  		}
+		  	}
+
+			storage.set('keys', new_data, function(error) {
+		    	if (error) throw error;
+
+		    	request_keys_and_set_timer(false)
+
+				let gbrow = $("#gbrow")
+				gbrow.children("tr[id='"+key+"']").remove()
+
+		    	console.log("delete keys ok ")
+			});
+	});
+}
+
+function gb_top_row(ev){
+	key = ev.data
+	storage.get('keys', function(error, data) {
+			if (error) throw error
+			let new_data = []
+		  	new_data.push(key)
+		  	for (i in data){
+		  		if (data[i]!=key){
+		  			new_data.push(data[i])
+		  		}
+		  	}
+
+			storage.set('keys', new_data, function(error) {
+		    	if (error) throw error;
+
+		    	request_keys_and_set_timer(true)
+		    	console.log("top key ok ")
+			});
+	});
+}
 
 function gb_add_row(key,row){
+	console.log("add key :"+key)
 	let row_all = $('<tr></tr>')
-	for ( i in row){
-		row_all.append($("<td>"+row[i]+"</td>"))
+	for ( k in row){
+		td = $("<td>"+row[k]+"</td>")
+		td.attr("id",k)
+		row_all.append(td)
 	}
 
 	let bts = $("<div></div>")
@@ -13,26 +66,43 @@ function gb_add_row(key,row){
 
 	let bttext = '<button type="button" class="btn btn-primary btn-block"></button>'
 	bts.append($(bttext).text('K线'))
-	bts.append($(bttext).text('置顶'))
-	bts.append($(bttext).text('删除'))
+
+	let top_bt = $(bttext).text('置顶')
+	top_bt.click(key,gb_top_row)
+	bts.append(top_bt)
+
+	let del_bt = $(bttext).text('删除')
+	del_bt.click(key,gb_delete_row)
+	bts.append(del_bt)
+
 	row_all.append(bts)
 
 	// row_all.addClass("row")
 	row_all.attr("id",key)
 
-	$("#gbrow").append(row_all)
+	let gbrow = $("#gbrow")
+	gbrow.append(row_all)
 
-	$("#"+key).mouseenter(function(){
+	the_tr = gbrow.children("tr[id='"+key+"']")
+
+	the_tr.mouseenter(function(){
     	console.log("in " + key)
     	$(this).children('.collapse').collapse('show')
  	});
 
- 	$("#"+key).mouseleave(function(){
+ 	the_tr.mouseleave(function(){
     	console.log("out " + key)
     	$(this).children('.collapse').collapse('hide')
  	});
 }
 
+
+function gb_set_row(row,row_data){
+	for (let k in row_data){
+		let t = row.children("td[id='"+k+"']")
+		t.text(row_data[k])
+	}
+}
 
 
 function add_new(){
@@ -88,45 +158,61 @@ function help(){
 
 function config(){
 	console.log("config click")
-
-	cm.post(cm.base_url+"/sug",{"key":"000001@a"},
-	 	function (message) {
-            console.log("OK:"+JSON.stringify(message))
-        },
-        function (message) {
-            console.log("NOTOK:"+JSON.stringify(message))
-        }
-	)
 }
 
 function info(){
 	cm.open_url("http://info")
 }
 
-function request_keys_and_set_timer(){
+function request_keys_and_set_timer(emp){
 
-	delay = 5000
+	storage.get('keys', function(error, data) {
+	  if (error) throw error;
 
-	keys = watch_keys
+	  let watch_keys = []
 
-	cm.post(cm.base_url,keys,
-		 function (message) {
-            console.log("OK:"+JSON.stringify(message))
+	  if(JSON.stringify(data) == '{}'){
+	    watch_keys.push("sh@a")
+	  }else{
+	  	watch_keys = watch_keys.concat(data)
+	  }
 
-            $("#gbrow").empty()
-            for (i in message){
-            	v = message[i]
-            	gb_add_row(i.key,[v.code,v.name,v.price])
-            }
+		delay = 5000
 
-            window.setTimeout(request_keys_and_set_timer,delay);
-        },
-        function (message) {
-            console.log("NOTOK:"+JSON.stringify(message))
+		keys = watch_keys
 
-            window.setTimeout(request_keys_and_set_timer,delay);
-        }
-	)
+		if (typeof(the_current_req)!="undefined"){
+			the_current_req.abort()
+		}
+
+		the_current_req = cm.post(cm.base_url,keys,
+			 function (message) {
+	            // console.log("OK:"+JSON.stringify(message))
+	            gbrow = $("#gbrow")
+	            if (emp){
+	            	gbrow.empty()
+	            }
+
+	            for (i in message){
+	            	v = message[i]
+	            	row_td = gbrow.children("tr[id='"+v.key+"']")
+	            	if (row_td.length==0){
+	            		gb_add_row(v.key,{name:v.name,code:v.code,price:v.price})
+	            	}else{
+	            		gb_set_row(row_td,{name:v.name,code:v.code,price:v.price})
+	            	}
+	            }
+
+	            the_current_req = undefined
+	        },
+	        function (message) {
+	            console.log("NOTOK:"+JSON.stringify(message))
+
+	            the_current_req = undefined
+	        }
+		)
+
+	});
 
 }
 
@@ -138,23 +224,9 @@ function ready_func(){
 
 	console.log("doc ready.")
 
-	const storage = require('electron-json-storage')
-	const defaultDataPath = storage.getDefaultDataPath()
-	console.log(defaultDataPath)
-	storage.get('keys', function(error, data) {
-	  if (error) throw error;
-
-
-	  if(JSON.stringify(data) == '{}'){
-	    watch_keys.push("sh@a")
-	  }else{
-	  	watch_keys.concat(data)
-	  }
-
-	  //start request and timer...
-	  request_keys_and_set_timer()
-
-	});
+	//start request and timer...
+	request_keys_and_set_timer(false)
+	window.setInterval(request_keys_and_set_timer,5000,false)
 }
 
 $(document).ready(ready_func)

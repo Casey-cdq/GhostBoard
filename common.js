@@ -18,9 +18,30 @@ function request_post(url,params,suc,fail){
 
 	// the_ajax.abort()
 
-	// return the_ajax
+	return the_ajax
+}
+
+function request_get(url,params,suc,fail){
+    url += "?"
+    for (k in params){
+        url += k
+        url += "="
+        url += params[k]
+        url += "&"
+    }
+
+    the_ajax = $.ajax({
+        type: "GET",
+        url: url,
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        success: suc,
+        error: fail
+    });
+
+    return the_ajax
 }
 
 exports.open_url = open_url;
 exports.post = request_post;
+exports.get = request_get;
 exports.base_url = "http://localhost:8080";
