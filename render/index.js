@@ -62,16 +62,19 @@ function gb_add_row(key,row){
 	}
 
 	let bts = $("<div></div>")
+	bts.addClass("btn-group")
 	bts.addClass("collapse")
+	bts.addClass("float-right")
+	bts.add
 
 	let bttext = '<button type="button" class="btn btn-primary btn-block"></button>'
-	bts.append($(bttext).text('K线'))
+	bts.append($(bttext).text('K线').addClass("col-sm"))
 
-	let top_bt = $(bttext).text('置顶')
+	let top_bt = $(bttext).text('置顶').addClass("col-sm")
 	top_bt.click(key,gb_top_row)
 	bts.append(top_bt)
 
-	let del_bt = $(bttext).text('删除')
+	let del_bt = $(bttext).text('删除').addClass("col-sm")
 	del_bt.click(key,gb_delete_row)
 	bts.append(del_bt)
 
@@ -87,12 +90,12 @@ function gb_add_row(key,row){
 
 	the_tr.mouseenter(function(){
     	console.log("in " + key)
-    	$(this).children('.collapse').collapse('show')
+    	$(this).find('.collapse').collapse('show')
  	});
 
  	the_tr.mouseleave(function(){
     	console.log("out " + key)
-    	$(this).children('.collapse').collapse('hide')
+    	$(this).find('.collapse').collapse('hide')
  	});
 }
 
