@@ -12,32 +12,34 @@
 
     <div class="container-fluid">
 
-        <div class="row" >
-         <div class="col-sm">
-          <input class="form-control" type="text" placeholder="Default input">
-          </div>
-          <div class="col-sm">
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" checked>
-              <label class="custom-control-label" for="customRadioInline1">A股</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-              <label class="custom-control-label" for="customRadioInline2">数字货币</label>
-            </div>
-          </div> 
-        </div>
+      
 
-        <div class="row dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <button class="dropdown-item" type="button">Action</button>
-            <button class="dropdown-item" type="button">Another action</button>
-            <button class="dropdown-item" type="button">Something else here</button>
-          </div>
-        </div>
+      <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="testNoBtn">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            </ul>
+                        </div>
+                        <!-- /btn-group -->
+                    </div>
+                </div>
+
+                <div class="col-sm">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" checked>
+                  <label class="custom-control-label" for="customRadioInline1">A股</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline2">数字货币</label>
+                </div>
+              </div> 
+      </div>
     </div>
 
     <!-- Optional JavaScript -->
@@ -52,6 +54,7 @@
     <script src="./../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="./../node_modules/mousetrap/mousetrap.min.js"></script>
+    <script src="./../node_modules/bootstrap-suggest-plugin/dist/bootstrap-suggest.min.js"></script>
     <script src="./add.js"></script>
   </body>
 </html>

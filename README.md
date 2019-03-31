@@ -7,7 +7,8 @@ npm install --save electron-json-storage@4.1.6
 npm install bootstrap@4.3.1
 npm install jquery@1.9.1
 npm install popper.js@^1.14.7
-nmp install mousetrap@1.6.3
+npm install mousetrap@1.6.3
+npm install bootstrap-suggest-plugin@0.1.27
 
 
 Server(python2.7):

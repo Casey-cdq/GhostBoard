@@ -33,6 +33,8 @@ def parse_sina_sug(text):
     sugs = []
     text = text.split('="')[1]
     text = text.split('";')[0].strip()
+    if text == "":
+        return sugs
     lines = text.split(";")
     for line in lines:
         tokens = line.split(',')
@@ -60,19 +62,23 @@ def parse_sina_sug(text):
     return sugs
 
 class sug:
-    def POST(self):
-        data = web.data()
-        params = json.loads(data.decode())
-        key = params['key']
+    def GET(self):
+        user_data = web.input()
+        key = user_data.key
+        if key.strip().startswith("@"):
+            return {"message":"no input"}
         id,m = id_market_from_key(key)
         if m == "a":
+            print "get sug : " + id
             sina_key = id
             now = int(1000*time.time())
             url = "https://suggest3.sinajs.cn/suggest/type=&key=%s&name=suggestdata_%d" % (sina_key,now)
             ret = requests.get(url)
             print(ret.text)
             sina_sug = parse_sina_sug(ret.text)
-            return json.dumps(sina_sug)
+            ret_sug = {}
+            ret_sug['value'] = sina_sug
+            return json.dumps(ret_sug)
         else:
             return {"err":"not support.."}
 
@@ -87,7 +93,7 @@ class index:
         for one in aslist:
             pool[one] = now
             ret.append(get_one_from_map(one))
-        print "ret:"+str(ret)
+        # print "ret:"+str(ret)
         return json.dumps(ret)
 
 def DataLoop(name):
@@ -100,7 +106,7 @@ def DataLoop(name):
             if m == "a" and now - pool[one] < 60:
                 a.append(id)
         if len(a)>0:
-            print str(now)+" getting @a " + str(a)
+            # print str(now)+" getting @a " + str(a)
             df = ts.get_realtime_quotes(a)
             jss = json.loads(df.to_json(orient='records'))
             for i in range(len(jss)):
