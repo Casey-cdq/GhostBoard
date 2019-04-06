@@ -5,6 +5,46 @@ console.log(defaultDataPath)
 
 var the_current_req = undefined
 
+function gb_chart(ev){
+	key = ev.data
+	const { BrowserWindow } = require('electron').remote
+	  conf = {}
+	  conf.fullscreenable = false
+	  conf.fullscreen = false
+	  conf.width = 1000
+	  conf.height = 600
+	  conf.show = false
+	  conf.alwaysOnTop = true
+	  conf.title = "幽灵看盘"
+	  conf.frame = false
+	  conf.opacity = 1.0
+	  conf.resizable = true
+	  conf.useContentSize = true
+	  conf.minimizable = false
+	  conf.maximizable = false
+	  // conf.transparent = true
+
+	  // 创建浏览器窗口。
+	  win = new BrowserWindow(conf)
+
+	  // 然后加载应用的 index.html。
+	  win.loadFile('render/gbchart.html',{query:{key:key}})
+
+	  // 打开开发者工具
+	  win.webContents.openDevTools()
+	  win.once('ready-to-show', () => {
+	    win.show()
+	  })
+
+	  // 当 window 被关闭，这个事件会被触发。
+	  win.on('closed', () => {
+	    // 取消引用 window 对象，如果你的应用支持多窗口的话，
+	    // 通常会把多个 window 对象存放在一个数组里面，
+	    // 与此同时，你应该删除相应的元素。
+	    win = null
+	  })
+}
+
 function gb_delete_row(ev){
 	console.log("delete click")
 	console.log(ev)
@@ -64,11 +104,19 @@ function gb_add_row(key,row){
 	let bts = $("<div></div>")
 	bts.addClass("btn-group")
 	bts.addClass("collapse")
-	bts.addClass("float-right")
+	bts.css("-webkit-transition","none")
+	bts.css("transition","none")
+	// bts.css("display","none")
+	// bts.addClass("float-right")
 	bts.add
 
 	let bttext = '<button type="button" class="btn btn-primary btn-block"></button>'
-	bts.append($(bttext).text('K线').addClass("col-sm"))
+
+	let chart = $(bttext).text('分时').addClass("col-sm")
+	chart.click(key,gb_chart)
+	chart.attr("id","chart_"+key)
+	chart.prop('disabled',true)
+	bts.append(chart)
 
 	let top_bt = $(bttext).text('置顶').addClass("col-sm")
 	top_bt.click(key,gb_top_row)
@@ -100,11 +148,14 @@ function gb_add_row(key,row){
 }
 
 
-function gb_set_row(row,row_data){
+function gb_set_row(key,row,row_data){
 	for (let k in row_data){
 		let t = row.children("td[id='"+k+"']")
 		t.text(row_data[k])
 	}
+
+	let cbt = row.find("button[id='chart_"+key+"']")
+	cbt.prop('disabled',false)
 }
 
 
@@ -161,6 +212,12 @@ function help(){
 
 function config(){
 	console.log("config click")
+
+	get_current_config(function(data){
+		$("#fontsize").attr("value",data.fontsize)
+
+		$("#setconfig").collapse('toggle')
+	})
 }
 
 function info(){
@@ -202,7 +259,7 @@ function request_keys_and_set_timer(emp){
 	            	if (row_td.length==0){
 	            		gb_add_row(v.key,{name:v.name,code:v.code,price:v.price})
 	            	}else{
-	            		gb_set_row(row_td,{name:v.name,code:v.code,price:v.price})
+	            		gb_set_row(v.key,row_td,{name:v.name,code:v.code,price:v.price})
 	            	}
 	            }
 
@@ -219,11 +276,48 @@ function request_keys_and_set_timer(emp){
 
 }
 
+function get_current_config(func){
+	storage.get("config",function(error,data){
+		if (error) throw error;
+
+		if(JSON.stringify(data)=="{}"){
+			//default config
+			data.fontsize = "16"
+		}
+
+		func(data)
+	})
+}
+
+function config_save(){
+	console.log("config save.")
+
+	new_config = {}
+	new_config.fontsize = $("#fontsize").val()
+
+	get_current_config(function(data){
+		new_conf_json = JSON.stringify(new_config)
+		old_conf_json = JSON.stringify(data)
+
+		console.log(new_conf_json)
+		console.log(old_conf_json)
+
+		if (new_conf_json == old_conf_json){
+			console.log("config not change")
+			$("#setconfig").collapse('hide')
+			return
+		}else{
+			console.log("config changed.update.")
+		}
+	})	
+}
+
 function ready_func(){
 	$("#addnew").click(add_new)
 	$("#help").click(help)
 	$("#config").click(config)
 	$("#info").click(info)
+	$("#configsave").click(config_save)
 
 	console.log("doc ready.")
 
