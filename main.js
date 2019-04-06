@@ -3,15 +3,14 @@ const { app, BrowserWindow,globalShortcut } = require('electron')
 // 保持对window对象的全局引用，如果不这么做的话，当JavaScript对象被
 // 垃圾回收的时候，window对象将会自动的关闭
 let win
-var watch_keys = []
 
 function createWindow () {
 
   conf = {}
   conf.fullscreenable = false
   conf.fullscreen = false
-  // conf.width = 400
-  // conf.height = 300
+  conf.width = 1200
+  conf.height = 800
   conf.show = false
   conf.alwaysOnTop = true
   conf.title = "幽灵看盘"
