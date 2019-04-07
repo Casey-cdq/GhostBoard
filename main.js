@@ -6,11 +6,15 @@ let win
 
 function createWindow () {
 
+  const {width, height} = require('electron').screen.getPrimaryDisplay().workAreaSize
+
   conf = {}
   conf.fullscreenable = false
   conf.fullscreen = false
-  conf.width = 1200
-  conf.height = 800
+  conf.x = width - width/5
+  conf.y = height - height/5
+  conf.width = 600
+  conf.height = 400
   conf.show = false
   conf.alwaysOnTop = true
   conf.title = "幽灵看盘"
@@ -29,7 +33,7 @@ function createWindow () {
   win.loadFile('render/index.html')
 
   // 打开开发者工具
-  win.webContents.openDevTools()
+  win.webContents.openDevTools({ mode: 'detach' })
   win.once('ready-to-show', () => {
     win.show()
   })

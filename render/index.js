@@ -11,7 +11,7 @@ function gb_chart(ev){
 	  conf = {}
 	  conf.fullscreenable = false
 	  conf.fullscreen = false
-	  conf.width = 1000
+	  conf.width = 1200
 	  conf.height = 600
 	  conf.show = false
 	  conf.alwaysOnTop = true
@@ -162,48 +162,17 @@ function gb_set_row(key,row,row_data){
 function add_new(){
 	console.log("add click")
 
-	  const { BrowserWindow } = require('electron').remote
-	  conf = {}
-	  conf.fullscreenable = false
-	  conf.fullscreen = false
-	  conf.width = 1000
-	  conf.height = 600
-	  conf.show = false
-	  conf.alwaysOnTop = true
-	  conf.title = "幽灵看盘"
-	  conf.frame = false
-	  conf.opacity = 1.0
-	  conf.resizable = false
-	  conf.useContentSize = true
-	  conf.minimizable = false
-	  conf.maximizable = false
-	  // conf.transparent = true
-
-	  // 创建浏览器窗口。
-	  win = new BrowserWindow(conf)
-
-	  // 然后加载应用的 index.html。
-	  win.loadFile('render/add.html')
-
-	  // 打开开发者工具
-	  win.webContents.openDevTools()
-	  win.once('ready-to-show', () => {
-	    win.show()
-	  })
-
-	  // 当 window 被关闭，这个事件会被触发。
-	  win.on('closed', () => {
-	    // 取消引用 window 对象，如果你的应用支持多窗口的话，
-	    // 通常会把多个 window 对象存放在一个数组里面，
-	    // 与此同时，你应该删除相应的元素。
-	    win = null
-	  })
-
+	$("#newboard").collapse('toggle')
 	// let gb_ipc = require('electron').remote.require('./gb_ipc')
 	// gb_ipc.new_add_window()
 
     // let row_len = $("#gbrow").children("tr").length
 	// gb_add_row("test"+row_len,["ab"+row_len,"cde","fghj"])
+}
+
+function add_new_cleanup(){
+	$("#newboard").collapse('toggle')
+	request_keys_and_set_timer(false)
 }
 
 function help(){
@@ -307,9 +276,62 @@ function config_save(){
 			$("#setconfig").collapse('hide')
 			return
 		}else{
-			console.log("config changed.update.")
+			console.log("config changed.update and save.")
 		}
 	})	
+}
+
+function setup_sug(){
+	$("#testNoBtn").bsSuggest({
+			emptyTip: '未检索到匹配的数据',
+	    url: cm.base_url+"/sug?key=",
+	    effectiveFields: ["code", "name"],
+	    getDataMethod: "url",
+	    allowNoKeyword: false,
+	    ignorecase: true,
+	    showHeader: false,
+	    showBtn: false,     //不显示下拉按钮
+	    delayUntilKeyup: true, //获取数据的方式为 firstByUrl 时，延迟到有输入/获取到焦点时才请求数据
+	    idField: "key",
+	    keyField: "name",
+	    clearable: true,
+	    fnPreprocessKeyword: function(keyword) { //请求数据前，对输入关键字作进一步处理方法。注意，应返回字符串
+	        return keyword+"@a";
+	    },
+	}).on('onDataRequestSuccess', function (e, result) {
+		console.log('onDataRequestSuccess: ', result);
+		
+	}).on('onSetSelectValue', function (e, keyword, sel_data) {
+		console.log('onSetSelectValue: ', keyword, sel_data);
+		const storage = require('electron-json-storage')
+		storage.get('keys', function(error, data) {
+				if (error) throw error
+
+				if(JSON.stringify(data) == '{}'){
+			    	data = []
+			  	}
+
+			  	for (i in data){
+			  		if (data[i]==sel_data.key){
+			  			console.log("same key..")
+			  			remote.getCurrentWindow().close()
+			  			return
+			  		}
+			  	}
+
+			data.push(sel_data.key)
+
+			storage.set('keys', data, function(error) {
+		    	if (error) throw error;
+
+		    	add_new_cleanup()
+
+		    	console.log("set keys ok ")
+			});
+		});
+	}).on('onUnsetSelectValue', function () {
+		console.log("onUnsetSelectValue");
+	});
 }
 
 function ready_func(){
@@ -318,6 +340,8 @@ function ready_func(){
 	$("#config").click(config)
 	$("#info").click(info)
 	$("#configsave").click(config_save)
+
+	setup_sug()
 
 	console.log("doc ready.")
 

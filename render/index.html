@@ -53,12 +53,29 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1">字号</span>
                 </div>
-                <input id="fontsize" type="text" class="form-control" placeholder="16" aria-label="16" aria-describedby="basic-addon1">
+                <input id="fontsize" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
               </div>
              
              <button id="configsave" type="button" class="btn btn-primary btn-block">保存</button>
             </div>
           </div>
+        </div>
+        </div>
+
+        <div id="newboard" class="row collapse">
+        <div class="col-sm">
+                <p>A股 Tab切换</p>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="testNoBtn">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        </ul>
+                    </div>
+                    <!-- /btn-group -->
+                </div>
         </div>
         </div>
        
@@ -76,6 +93,7 @@
     <script src="./../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="./../node_modules/moment/moment.js"></script>
+    <script src="./../node_modules/bootstrap-suggest-plugin/dist/bootstrap-suggest.min.js"></script>
     <script src="./index.js"></script>
   </body>
 </html>
