@@ -29,6 +29,7 @@ $("#testNoBtn").bsSuggest({
         },
 }).on('onDataRequestSuccess', function (e, result) {
     // console.log('onDataRequestSuccess: ', result);
+    log_vsize()
 }).on('onSetSelectValue', function (e, keyword, sel_data) {
     console.log('onSetSelectValue: ', keyword, sel_data);
 	const storage = require('electron-json-storage')
@@ -59,3 +60,17 @@ $("#testNoBtn").bsSuggest({
 }).on('onUnsetSelectValue', function () {
     console.log("onUnsetSelectValue");
 });
+
+function log_vsize(){
+	let w = $(window).width()
+	let h = $(window).height()
+	console.log(w)
+	console.log(h)
+}
+
+function add_ready(){
+	console.log("add ready.")
+	log_vsize()
+}
+
+$(document).ready(add_ready)
