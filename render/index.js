@@ -182,10 +182,41 @@ function help(){
 function config(){
 	console.log("config click")
 
-	get_current_config(function(data){
-		$("#fontsize").attr("value",data.fontsize)
+	const { BrowserWindow } = require('electron').remote
+	conf = {}
+	conf.fullscreenable = false
+	conf.fullscreen = false
+	conf.width = 600
+	conf.height = 800
+	conf.show = false
+	conf.alwaysOnTop = true
+	conf.title = "幽灵看盘"
+	conf.frame = false
+	conf.opacity = 1.0
+	conf.resizable = true
+	conf.useContentSize = true
+	conf.minimizable = false
+	conf.maximizable = false
+	// conf.transparent = true
 
-		$("#setconfig").collapse('toggle')
+	// 创建浏览器窗口。
+	win = new BrowserWindow(conf)
+
+	// 然后加载应用的 index.html。
+	win.loadFile('render/config.html')
+
+	// 打开开发者工具
+	win.webContents.openDevTools({ mode: 'detach' })
+	win.once('ready-to-show', () => {
+	win.show()
+	})
+
+	// 当 window 被关闭，这个事件会被触发。
+	win.on('closed', () => {
+	// 取消引用 window 对象，如果你的应用支持多窗口的话，
+	// 通常会把多个 window 对象存放在一个数组里面，
+	// 与此同时，你应该删除相应的元素。
+	win = null
 	})
 }
 
@@ -243,42 +274,6 @@ function request_keys_and_set_timer(emp){
 
 	});
 
-}
-
-function get_current_config(func){
-	storage.get("config",function(error,data){
-		if (error) throw error;
-
-		if(JSON.stringify(data)=="{}"){
-			//default config
-			data.fontsize = "16"
-		}
-
-		func(data)
-	})
-}
-
-function config_save(){
-	console.log("config save.")
-
-	new_config = {}
-	new_config.fontsize = $("#fontsize").val()
-
-	get_current_config(function(data){
-		new_conf_json = JSON.stringify(new_config)
-		old_conf_json = JSON.stringify(data)
-
-		console.log(new_conf_json)
-		console.log(old_conf_json)
-
-		if (new_conf_json == old_conf_json){
-			console.log("config not change")
-			$("#setconfig").collapse('hide')
-			return
-		}else{
-			console.log("config changed.update and save.")
-		}
-	})	
 }
 
 function setup_sug(){
@@ -339,7 +334,6 @@ function ready_func(){
 	$("#help").click(help)
 	$("#config").click(config)
 	$("#info").click(info)
-	$("#configsave").click(config_save)
 
 	setup_sug()
 

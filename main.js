@@ -8,11 +8,13 @@ function createWindow () {
 
   const {width, height} = require('electron').screen.getPrimaryDisplay().workAreaSize
 
+  console.log("mainWindow:"+width+" x "+height)
+
   conf = {}
   conf.fullscreenable = false
   conf.fullscreen = false
-  conf.x = width - width/5
-  conf.y = height - height/5
+  conf.x = width - width/6
+  conf.y = height - height/6
   conf.width = 600
   conf.height = 400
   conf.show = false
