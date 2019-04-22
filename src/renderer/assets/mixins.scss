@@ -1,0 +1,73 @@
+/**
+  * 可用于生成1物理像素border
+  * @param {$color} border颜色
+  * @param {$type} (上|下|左|右|全)边框
+  * @param {$pseudo} 使用before还是after伪类
+  * @param {$lineWidth} border宽度
+  * @param {$radius} 当为全边框时，设置边框的圆弧半径
+  */
+@mixin genBorder ($color, $type, $pseudo: after, $lineWidth: 1px, $radius: 4px) {
+    &:#{$pseudo} {
+        box-sizing: border-box;
+        content: '';
+        position: absolute;
+        display: block;
+        transform: scale(1);
+        transform-origin: 0 0;
+
+        @if $type == rounded {
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border: $lineWidth solid $color;
+            border-radius: $radius;
+            @media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min-device-pixel-ratio: 2){
+                width: 200%;
+                height: 200%;
+                border-radius: $radius * 2;
+                transform: scale(0.5);
+            }
+            @media screen and (-webkit-min-device-pixel-ratio: 3), screen and (min-device-pixel-ratio: 3){
+                width: 300%;
+                height: 300%;
+                border-radius: $radius * 3;
+                transform: scale(0.3333);
+            }
+        } @else if $type == left or $type == right {
+            @if $type == left {
+                left: 0;
+            } @else if $type == right {
+                right: 0;
+                transform-origin: 100% 0;
+            }
+            top: 0;
+            width: $lineWidth;
+            height: 100%;
+            background-color: $color;
+            @media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min-device-pixel-ratio: 2){
+                transform: scaleX(0.5);
+            }
+            @media screen and (-webkit-min-device-pixel-ratio: 3), screen and (min-device-pixel-ratio: 3){
+                transform: scaleX(0.3333);
+            }
+        } @else if $type == top or $type == bottom {
+            @if $type == top {
+                top: 0;
+            } @else if $type == bottom {
+                bottom: 0;
+                transform-origin: 0 100%;
+            }
+            left: 0;
+            height: $lineWidth;
+            width: 100%;
+            background-color: $color;
+            @media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min-device-pixel-ratio: 2){
+                transform: scaleY(0.5);
+            }
+            @media screen and (-webkit-min-device-pixel-ratio: 3), screen and (min-device-pixel-ratio: 3){
+                transform: scaleY(0.3333);
+            }
+        }
+    }
+}
