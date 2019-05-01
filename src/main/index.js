@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 const winURL = process.env.NODE_ENV === 'development'
-    ? `http://localhost:8090`
+    ? `http://localhost:8090/`
     : `file://${__dirname}/index.html`
 let mainWindow
 
@@ -37,12 +37,13 @@ app.on('activate', () => {
     }
 })
 
-ipcMain.on('fenshi', function (e, data) {
-    const url = `${winURL}#/fenshi`
-    let win = new BrowserWindow({ width: 400, height: 320, webPreferences: {webSecurity: false} })
-    win.on('close', function () { win = null })
-    win.loadURL(url)
-})
+// ipcMain.on('openUrl', function (e, data) {
+//     console.log(1111, data)
+//     const url = `${winURL}${data.url}`
+//     let win = new BrowserWindow({ width: data.winWidth, height: winHeight })
+//     win.on('close', function () { win = null })
+//     win.loadURL(url)
+// })
 
 function initWindow () {
     let window = createWindow()
@@ -64,7 +65,9 @@ function createWindow () {
     mainWindow.loadURL(winURL)
 
     // 打开开发者工具
-    mainWindow.webContents.openDevTools({mode: 'detach'})
+    if (process.env.NODE_ENV === 'development') {
+        mainWindow.webContents.openDevTools({mode: 'detach'})
+    }
 
     mainWindow.once('ready-to-show', () => {
         mainWindow.show()

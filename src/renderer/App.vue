@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: 'ghostboard'
+        name: 'GhostBoard'
     }
 </script>
 
@@ -17,6 +17,14 @@
     body {
         margin: 0;
         padding: 0;
+        width: 100%;
+        height: 100%;
         font-family: $fonts;
+        font-size: 14px;
+    }
+    #app {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
     }
 </style>

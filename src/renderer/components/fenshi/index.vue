@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-        <el-col :span="16">
+        <el-col :span="15">
             <highcharts :options="chartOptions"></highcharts>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6" :offset="1">
             <div class="per">
                 <span>涨幅：</span>
                 <span>{{ per + '%' }}</span>
@@ -17,8 +17,7 @@
 </template>
 
 <script>
-    import { remote } from 'electron';
-    import { BASE_URL } from '@/config'
+    import { BASE_API_URL } from '@/config'
     import axios from 'axios';
     import Highcharts from 'highcharts';
 
@@ -33,7 +32,7 @@
                 chartOptions: {
                     chart: {
                         zoomType: 'x',
-                        height: '550'
+                        height: '100%'
                     },
                     title: {
                         text: '分时图'
@@ -105,7 +104,10 @@
                         type: 'area',
                         name: '价格？',
                         data: []
-                    }]
+                    }],
+                    credits: {
+                        enabled: false
+                    }
                 }
             }
         },
@@ -120,7 +122,7 @@
 
             if (this.currentRq) this.currentRq.cancel('request canceled')
             this.currentRq = CancelToken.source()
-            axios.get(BASE_URL + "/chart", {
+            axios.get(BASE_API_URL + "/chart", {
                 params: {
                     key: key
                 },
@@ -153,15 +155,18 @@
                 }
                 // 图形数据
                 this.chartOptions.series[0].data = chartData
+                console.log('分时数据：', chartData)
 
                 // 涨幅
                 this.per = (quote.price - quote.pre_close) / quote.pre_close * 100
+                this.per = this.per.toFixed(4)
             }).catch(err => {
-                const { dialog } = remote
-
                 console.log("NOTOK:"+JSON.stringify(err))
                 this.currentRq = null
-                dialog.showMessageBox({message:"请求失败，请重试",buttons:["OK"]})
+                this.$message.error({
+                    message: '请求失败，请重试',
+                    duration: 1500
+                })
             })
         },
         methods: {
@@ -175,6 +180,10 @@
     @import "~@/assets/mixins.scss";
 
     .container {
+        width: 100%;
+        height: 100%;
+        overflow: scroll;
+
         .per {
             font-family: $fontsMedium;
             font-size: 16px;

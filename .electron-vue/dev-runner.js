@@ -126,7 +126,6 @@ function startElectron() {
     //   args = args.concat(process.argv.slice(2))
     // }
 
-    console.log(123123, args)
     electronProcess = spawn(electron, args)
 
     electronProcess.stdout.on('data', data => {

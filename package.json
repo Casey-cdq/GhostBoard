@@ -1,5 +1,5 @@
 {
-    "name": "ghostboard",
+    "name": "GhostBoard",
     "version": "0.0.1",
     "author": "example",
     "description": "An electron-vue project",
@@ -21,7 +21,7 @@
         "postinstall": "npm run lint:fix"
     },
     "build": {
-        "productName": "ghostboard",
+        "productName": "GhostBoard",
         "appId": "",
         "directories": {
             "output": "build"
@@ -57,7 +57,7 @@
     "dependencies": {
         "axios": "^0.18.0",
         "electron-json-storage": "^4.1.6",
-        "element-ui": "^2.7.2",
+        "element-ui": "^2.8.2",
         "highcharts": "^7.1.1",
         "highcharts-vue": "^1.2.0",
         "vue": "^2.5.16",

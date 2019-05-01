@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fe9903f2-5404-4193-8cfa-ad9a4be0b3e8" name="Default Changelist" comment="" />
+    <list default="true" id="fe9903f2-5404-4193-8cfa-ad9a4be0b3e8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.electron-vue/dev-runner.js" beforeDir="false" afterPath="$PROJECT_DIR$/.electron-vue/dev-runner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/window.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/window.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/index.dev.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/index.dev.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/fenshi/gbchart.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/fenshi/gbchart.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/fenshi/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/fenshi/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/homePage/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/homePage/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/config/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/index.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -16,9 +32,9 @@
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="1" />
-          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.0" value="2" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -27,16 +43,16 @@
           <entry key="editorconfig" value="3" />
           <entry key="ejs" value="3" />
           <entry key="eslintignore" value="3" />
-          <entry key="gitignore" value="1" />
+          <entry key="gitignore" value="2" />
           <entry key="html" value="1" />
-          <entry key="js" value="63" />
-          <entry key="json" value="9" />
+          <entry key="js" value="67" />
+          <entry key="json" value="10" />
           <entry key="md" value="2" />
           <entry key="png" value="1" />
           <entry key="py" value="6" />
           <entry key="scss" value="3" />
-          <entry key="ts" value="7" />
-          <entry key="vue" value="11" />
+          <entry key="ts" value="8" />
+          <entry key="vue" value="12" />
           <entry key="yml" value="2" />
         </counts>
       </usages-collector>
@@ -45,67 +61,97 @@
           <entry key="EJS" value="3" />
           <entry key="HTML" value="1" />
           <entry key="Image" value="1" />
-          <entry key="JSON" value="14" />
-          <entry key="JavaScript" value="63" />
+          <entry key="JSON" value="15" />
+          <entry key="JavaScript" value="67" />
           <entry key="Markdown" value="2" />
-          <entry key="PLAIN_TEXT" value="12" />
+          <entry key="PLAIN_TEXT" value="13" />
           <entry key="SCSS" value="3" />
-          <entry key="TypeScript" value="7" />
-          <entry key="Vue.js" value="11" />
+          <entry key="TypeScript" value="8" />
+          <entry key="Vue.js" value="12" />
           <entry key="YAML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="ESLintLanguageService" value="2" />
-          <entry key="TypeScriptServerServiceImpl" value="2" />
+          <entry key="ESLintLanguageService" value="3" />
+          <entry key="TypeScriptServerServiceImpl" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="ejs" value="7" />
           <entry key="eslintignore" value="1" />
-          <entry key="js" value="1299" />
+          <entry key="gitignore" value="4" />
+          <entry key="js" value="1391" />
           <entry key="json" value="143" />
           <entry key="md" value="3" />
           <entry key="py" value="128" />
           <entry key="scss" value="2" />
-          <entry key="vue" value="6063" />
+          <entry key="vue" value="7785" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="EJS" value="7" />
           <entry key="JSON" value="143" />
-          <entry key="JavaScript" value="1299" />
+          <entry key="JavaScript" value="1391" />
           <entry key="Markdown" value="3" />
-          <entry key="PLAIN_TEXT" value="129" />
+          <entry key="PLAIN_TEXT" value="133" />
           <entry key="SCSS" value="2" />
-          <entry key="Vue.js" value="6063" />
+          <entry key="Vue.js" value="7785" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/homePage/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1494">
-              <caret line="83" column="19" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
+            <state relative-caret-position="402">
+              <caret line="168" column="18" lean-forward="true" selection-start-line="168" selection-start-column="18" selection-end-line="168" selection-end-column="18" />
               <folding>
-                <element signature="n#style#0;n#el-autocomplete#0;n#div#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#971#997#0" expanded="true" />
+                <element signature="n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#style#0;n#el-autocomplete#0;n#div#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#el-form-item#1;n#el-form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#2144#2170#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/a.json">
+        <entry file="file://$PROJECT_DIR$/src/main/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="15" column="29" lean-forward="true" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+            <state relative-caret-position="36">
+              <caret line="2" column="27" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/index.dev.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="2" selection-start-column="2" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="18">
+              <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/renderer/App.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -113,8 +159,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/config/window.config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+            <state relative-caret-position="126">
+              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -122,38 +168,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/fenshi/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-244">
-              <caret line="137" column="14" selection-start-line="137" selection-start-column="14" selection-end-line="137" selection-end-column="14" />
+            <state relative-caret-position="1425">
+              <caret line="153" column="28" selection-start-line="153" selection-start-column="28" selection-end-line="153" selection-end-column="28" />
               <folding>
-                <element signature="e#416#450#0" expanded="true" />
+                <element signature="e#579#618#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="478">
-              <caret line="123" column="13" lean-forward="true" selection-start-line="123" selection-start-column="13" selection-end-line="123" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.electron-vue/dev-runner.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1528">
-              <caret line="74" selection-start-line="74" selection-end-line="74" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/fenshi/gbchart.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -161,8 +180,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="21" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="21" />
+            <state relative-caret-position="306">
+              <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -171,10 +190,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/fenshi/gbchart.js">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="560">
-              <caret line="157" column="5" selection-start-line="136" selection-start-column="4" selection-end-line="157" selection-end-column="5" />
+            <state relative-caret-position="342">
+              <caret line="19" column="22" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -183,41 +202,42 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>BrowserWindow</find>
-      <find>win.loadUR</find>
-      <find>win.loadURL</find>
-      <find>window.conf</find>
-      <find>windowConfig</find>
-      <find>createWindow</find>
-      <find>initWindow</find>
-      <find>chart_ready_func</find>
-      <find>queryURLParameter</find>
-      <find>chart_key</find>
+      <find>storage.get(</find>
+      <find>fontSize</find>
+      <find>storage.set(</find>
+      <find>settingsData</find>
+      <find>settings</find>
+      <find>成功</find>
+      <find>electron</find>
+      <find>help</find>
+      <find>GhostBoard</find>
+      <find>container</find>
+      <find>http://localhost</find>
+      <find>http://localhost:8090</find>
+      <find>localhost:</find>
       <find>BASE_URL</find>
-      <find>initwind</find>
-      <find>key</find>
-      <find>highcharts</find>
-      <find>remote</find>
-      <find>highchart</find>
-      <find>Highcharts</find>
-      <find>type</find>
-      <find>baseWinConfig</find>
-      <find>@todo</find>
-      <find>tableData</find>
-      <find>chartOptions</find>
-      <find>op</find>
-      <find>not sup</find>
-      <find>decode</find>
-      <find>id_market_from_key</find>
-      <find>doSearch</find>
-      <find>item</find>
-      <find>handleSelect</find>
-      <find>storage.set('keys'</find>
+      <find>DevTools</find>
+      <find>todo</find>
+      <find>opt-btns</find>
+      <find>file://</find>
+      <find>localhost:8090</find>
+      <find>__dirname</find>
+      <find>align</find>
+      <find>winURL</find>
+      <find>shell</find>
+      <find>console.log</find>
+      <find>devtools</find>
+      <find>conf</find>
+      <find>openDevTools</find>
+      <find>height</find>
+      <find>remo</find>
+      <find>window</find>
     </findStrings>
     <replaceStrings>
       <replace>mainWindow</replace>
       <replace>:</replace>
       <replace>mainWindow.</replace>
+      <replace>BASE_API_URL</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/.electron-vue</dir>
@@ -225,6 +245,9 @@
       <dir>$PROJECT_DIR$/Server</dir>
       <dir>$PROJECT_DIR$/</dir>
     </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -243,7 +266,6 @@
         <option value="$PROJECT_DIR$/src/renderer/assets/a.scss" />
         <option value="$PROJECT_DIR$/src/renderer/assets/constant.scss" />
         <option value="$PROJECT_DIR$/src/renderer/assets/mixins.scss" />
-        <option value="$PROJECT_DIR$/src/renderer/App.vue" />
         <option value="$PROJECT_DIR$/src/renderer/router/index.js" />
         <option value="$PROJECT_DIR$/.eslintignore" />
         <option value="$PROJECT_DIR$/package.json" />
@@ -251,13 +273,16 @@
         <option value="$PROJECT_DIR$/.electron-vue/dev-runner.js" />
         <option value="$PROJECT_DIR$/src/renderer/config/index.js" />
         <option value="$PROJECT_DIR$/src/main/window.config.js" />
-        <option value="$PROJECT_DIR$/src/main/index.js" />
         <option value="$PROJECT_DIR$/src/renderer/main.js" />
-        <option value="$PROJECT_DIR$/src/config/window.config.js" />
-        <option value="$PROJECT_DIR$/src/renderer/components/fenshi/index.vue" />
         <option value="$PROJECT_DIR$/Server/main.py" />
         <option value="$PROJECT_DIR$/a.json" />
+        <option value="$PROJECT_DIR$/src/renderer/App.vue" />
+        <option value="$PROJECT_DIR$/src/config/window.config.js" />
+        <option value="$PROJECT_DIR$/src/main/index.dev.js" />
+        <option value="$PROJECT_DIR$/src/main/index.js" />
         <option value="$PROJECT_DIR$/src/renderer/components/homePage/index.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/fenshi/index.vue" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -341,12 +366,7 @@
             <path>
               <item name="GhostBoard1" type="b2602c69:ProjectViewProjectNode" />
               <item name="GhostBoard1" type="462c0819:PsiDirectoryNode" />
-              <item name=".electron-vue" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GhostBoard1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GhostBoard1" type="462c0819:PsiDirectoryNode" />
-              <item name="Server" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GhostBoard1" type="b2602c69:ProjectViewProjectNode" />
@@ -406,7 +426,7 @@
               <item name="GhostBoard1" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="router" type="462c0819:PsiDirectoryNode" />
+              <item name="store" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -467,14 +487,15 @@
       <updated>1554711194158</updated>
       <workItem from="1554711195483" duration="25841000" />
       <workItem from="1555729811830" duration="35753000" />
+      <workItem from="1556677821524" duration="13336000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61594000" />
+    <option name="totallyTimeSpent" value="74930000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="56" y="23" width="1384" height="877" extended-state="6" />
+    <frame x="57" y="23" width="1384" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49936306" visible="true" weight="0.24944974" />
@@ -510,14 +531,8 @@
     <entry file="file://$PROJECT_DIR$/build/icons/256x256.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/vuex-electron/dist/persisted-state.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/electron/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3362" />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/vuex-electron/dist/persisted-state.js" />
+    <entry file="file://$PROJECT_DIR$/dist/electron/main.js" />
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
@@ -525,27 +540,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/eslint/lib/rules/indent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1056" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/eslint-config-standard/eslintrc.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="51" column="11" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/eslint/lib/rules/indent.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/eslint-config-standard/eslintrc.json" />
     <entry file="file://$PROJECT_DIR$/.babelrc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/LandingPage.vue" />
     <entry file="file://$PROJECT_DIR$/.editorconfig">
@@ -555,24 +557,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.eslintrc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="6" lean-forward="true" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.electron-vue/webpack.web.config.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="245">
           <caret line="98" column="66" selection-start-line="98" selection-start-column="57" selection-end-line="98" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/index.dev.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="2" lean-forward="true" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -594,9 +582,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -607,13 +592,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/@types/node/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="115" column="12" selection-start-line="115" selection-start-column="12" selection-end-line="115" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/node/index.d.ts" />
     <entry file="file://$PROJECT_DIR$/.electron-vue/webpack.renderer.config.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="254">
@@ -642,20 +621,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/homePage/fenshi.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/homePage/fenshi.vue" />
     <entry file="file://$PROJECT_DIR$/.eslintignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -666,13 +636,6 @@
             <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.electron-vue/dev-runner.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1528">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
         </state>
       </provider>
     </entry>
@@ -694,33 +657,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/electron/electron.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="1008" column="8" selection-start-line="1008" selection-start-column="8" selection-end-line="1008" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/config/window.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/fenshi/gbchart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="157" column="5" selection-start-line="136" selection-start-column="4" selection-end-line="157" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/config/window.config.js" />
     <entry file="file://$PROJECT_DIR$/src/renderer/config/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -728,79 +668,127 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/index.js">
+    <entry file="file://$PROJECT_DIR$/a.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="44" column="2" lean-forward="true" selection-start-line="44" selection-start-column="2" selection-end-line="44" selection-end-column="2" />
-          <folding>
-            <element signature="e#14#84#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+        <state relative-caret-position="-3255">
+          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/fenshi/gbchart.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+        <state relative-caret-position="306">
+          <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/fenshi/gbchart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="142" column="14" selection-start-line="142" selection-start-column="14" selection-end-line="142" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config/window.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.electron-vue/dev-runner.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-604">
+          <caret line="74" selection-start-line="74" selection-end-line="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="123" column="13" selection-start-line="123" selection-start-column="13" selection-end-line="123" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="21" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="21" />
+        <state relative-caret-position="306">
+          <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config/window.config.js">
+    <entry file="file://$PROJECT_DIR$/.eslintrc.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+        <state relative-caret-position="288">
+          <caret line="16" column="6" lean-forward="true" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="22" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/electron/electron.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="1427" column="4" selection-start-line="1427" selection-start-column="4" selection-end-line="1427" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/fenshi/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-244">
-          <caret line="137" column="14" selection-start-line="137" selection-start-column="14" selection-end-line="137" selection-end-column="14" />
+        <state relative-caret-position="1425">
+          <caret line="153" column="28" selection-start-line="153" selection-start-column="28" selection-end-line="153" selection-end-column="28" />
           <folding>
-            <element signature="e#416#450#0" expanded="true" />
+            <element signature="e#579#618#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/main.py">
+    <entry file="file://$PROJECT_DIR$/src/main/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="123" column="13" lean-forward="true" selection-start-line="123" selection-start-column="13" selection-end-line="123" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/a.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="29" lean-forward="true" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+        <state relative-caret-position="36">
+          <caret line="2" column="27" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/homePage/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1494">
-          <caret line="83" column="19" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
+        <state relative-caret-position="402">
+          <caret line="168" column="18" lean-forward="true" selection-start-line="168" selection-start-column="18" selection-end-line="168" selection-end-column="18" />
           <folding>
-            <element signature="n#style#0;n#el-autocomplete#0;n#div#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#971#997#0" expanded="true" />
+            <element signature="n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#el-autocomplete#0;n#div#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-form-item#1;n#el-form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#2144#2170#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/index.dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="2" selection-start-column="2" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
         </state>
       </provider>
     </entry>

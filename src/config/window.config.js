@@ -1,10 +1,9 @@
 export default {
     fullscreenable: true,
     fullscreen: false,
-    width: 600,
+    width: 400,
     height: 400,
     show: false,
-    // @TODO
     // alwaysOnTop: true,
     title: '幽灵看盘',
     frame: true,
@@ -12,5 +11,4 @@ export default {
     resizable: true,
     minimizable: true,
     maximizable: true
-    // conf.transparent: true,
 }
