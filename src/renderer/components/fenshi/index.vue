@@ -1,18 +1,23 @@
 <template>
-    <div class="container">
-        <el-col :span="15">
-            <highcharts :options="chartOptions"></highcharts>
-        </el-col>
-        <el-col :span="6" :offset="1">
-            <div class="per">
-                <span>涨幅：</span>
-                <span>{{ per + '%' }}</span>
-            </div>
-            <el-table :data="tableData">
-                <el-table-column label="什么1" prop="p"></el-table-column>
-                <el-table-column label="什么2" prop="v"></el-table-column>
-            </el-table>
-        </el-col>
+    <div class="container scrollbar">
+        <div class="title-bar">
+            分时图
+        </div>
+        <el-row>
+            <el-col :span="15">
+                <highcharts :options="chartOptions"></highcharts>
+            </el-col>
+            <el-col :span="8" :offset="1" class="tb-wrapper scrollbar">
+                <div class="per">
+                    <span>涨幅：</span>
+                    <span>{{ per + '%' }}</span>
+                </div>
+                <el-table :data="tableData">
+                    <el-table-column label="什么1" prop="p"></el-table-column>
+                    <el-table-column label="什么2" prop="v"></el-table-column>
+                </el-table>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -32,7 +37,7 @@
                 chartOptions: {
                     chart: {
                         zoomType: 'x',
-                        height: '100%'
+                        height: '374'
                     },
                     title: {
                         text: '分时图'
@@ -175,19 +180,35 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     @import "~@/assets/constant.scss";
     @import "~@/assets/mixins.scss";
 
     .container {
+        box-sizing: border-box;
         width: 100%;
         height: 100%;
-        overflow: scroll;
+        overflow-y: scroll;
+        text-align: center;
 
-        .per {
-            font-family: $fontsMedium;
-            font-size: 16px;
-            line-height: 60px;
+        .tb-wrapper {
+            height: 374px;
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+
+            .per {
+                font-family: $fontsMedium;
+                font-size: 12px;
+                line-height: 60px;
+            }
         }
+    }
+</style>
+<style lang="scss">
+    svg.highcharts-root {
+        font-family: PingFangSC-Regular, STHeitiSC, HelveticaNeue, sans-serif-condensed, Microsoft Yahei, sans-serif !important;
+    }
+    .el-table {
+        font-size: 12px;
     }
 </style>

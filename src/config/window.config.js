@@ -6,9 +6,10 @@ export default {
     show: false,
     // alwaysOnTop: true,
     title: '幽灵看盘',
-    frame: true,
     opacity: 1.0,
     resizable: true,
     minimizable: true,
-    maximizable: true
+    maximizable: true,
+    frame: false,
+    transparent: true,
 }

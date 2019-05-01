@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-        <div class="board">
+        <div class="title-bar">
+            GhostBoard
+        </div>
+        <div class="board scrollbar">
             <el-row class="header">
                 <el-col :span="8">股票代码</el-col>
                 <el-col :span="8">股票名</el-col>
@@ -153,8 +156,8 @@
             },
             fenshiClick (key) {
                 const conf = Object.assign({}, baseWinConfig, {
-                    width: 800,
-                    height: 500,
+                    width: 600,
+                    height: 400,
                 })
                 let win = new remote.BrowserWindow(conf)
                 let winURL = window.location.href;
@@ -281,7 +284,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     @import "~@/assets/constant.scss";
     @import "~@/assets/mixins.scss";
 
@@ -294,7 +297,7 @@
         .board {
             flex: 1;
             padding: 10px;
-            overflow: scroll;
+            overflow-y: scroll;
             -webkit-overflow-scrolling: touch;
 
             .header {
