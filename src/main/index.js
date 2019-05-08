@@ -57,6 +57,13 @@ function createWindow () {
         y: height - height / 5
     }
     const conf = Object.assign({}, baseWinConfig, config)
+    conf.fullscreenable = false
+    conf.fullscreen = false
+    conf.alwaysOnTop = true
+    conf.resizable = false
+    conf.useContentSize = true
+    conf.minimizable = false
+    conf.maximizable = false
 
     // 创建浏览器窗口。
     mainWindow = new BrowserWindow(conf)
