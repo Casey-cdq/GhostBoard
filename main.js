@@ -40,6 +40,7 @@ function createWindow () {
   win.once('ready-to-show', () => {
     win.show()
   })
+  global.indexwindow = win
 
   // 当 window 被关闭，这个事件会被触发。
   win.on('closed', () => {

@@ -10,9 +10,22 @@
   </head>
   <body>
 
-    <div class="container">
-        <p>A股 Tab切换</p>
-        <div class="input-group">
+    <div class="container pl-0 pr-0 pt-0 pb-0 ml-0 mr-0 mt-0 mb-0 dropdown" id="board">
+        <div class="input-group mb-0">
+          <input id="sugin" type="text" class="form-control mousetrap" placeholder="股票代码(esc关闭,tab切换市场)" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <span style="-webkit-app-region: drag" class="input-group-text" id="mkt">A股</span>
+          </div>
+        </div>
+        <ul class="list-group" id="sug">
+          <a href="#" onclick="sug_click(this)" class="d-none list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+          <a href="#" onclick="sug_click(this)" class="d-none list-group-item list-group-item-action">Morbi leo risus</a>
+          <a href="#" onclick="sug_click(this)" class="d-none list-group-item list-group-item-action">Porta ac consectetur ac</a>
+          <a href="#" onclick="sug_click(this)" class="d-none list-group-item list-group-item-action">Porta ac consectetur ac</a>
+          <a href="#" onclick="sug_click(this)" class="d-none list-group-item list-group-item-action">Porta ac consectetur ac</a>
+          <a href="#" onclick="sug_click(this)" class="d-none list-group-item list-group-item-action">Porta ac consectetur ac</a>
+        </ul>
+        <!-- <div class="input-group">
             <input type="text" class="form-control" id="testNoBtn">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -21,8 +34,7 @@
                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                 </ul>
             </div>
-            <!-- /btn-group -->
-        </div>
+        </div> -->
       
     </div>
 
@@ -38,7 +50,6 @@
     <script src="./../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="./../node_modules/mousetrap/mousetrap.min.js"></script>
-    <script src="./../node_modules/bootstrap-suggest-plugin/dist/bootstrap-suggest.min.js"></script>
     <script src="./add_new.js"></script>
   </body>
 </html>

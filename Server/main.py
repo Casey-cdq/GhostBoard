@@ -95,6 +95,8 @@ class sug:
     def GET(self):
         user_data = web.input()
         key = user_data.key
+        if key.endswith("?"):
+            key = key[:-1]
         if key.strip().startswith("@"):
             return {"message":"no input"}
         id,m = id_market_from_key(key)
@@ -109,7 +111,7 @@ class sug:
             ret_sug['value'] = sina_sug
             return json.dumps(ret_sug)
         else:
-            return json.dumps({"err":"not support.."})
+            return json.dumps({"err":"not support.."+key})
 
 #sh=上证指数 sz=深圳成指 hs300=沪深300指数 sz50=上证50 zxb=中小板 cyb=创业板
 class index:

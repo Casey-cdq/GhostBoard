@@ -6,6 +6,9 @@ function open_url(url){
 }
 
 function request_post(url,params,suc,fail){
+    console.log("post to:"+url)
+    console.log("params:",params)
+
 	the_ajax = $.ajax({
         type: "POST",
         url: url,

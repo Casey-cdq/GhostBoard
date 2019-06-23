@@ -168,12 +168,14 @@ function ret_window_height(){
 function add_new(){
 	console.log("add click")
 
+	$("#addnew").addClass("disabled")
+
 	const { BrowserWindow } = require('electron').remote
 	conf = {}
 	conf.fullscreenable = false
 	conf.fullscreen = false
 	conf.width = 600
-	conf.height = 800
+	conf.height = 400
 	conf.show = false
 	conf.alwaysOnTop = true
 	conf.title = "幽灵看盘"
@@ -193,17 +195,18 @@ function add_new(){
 	win.loadFile('render/add_new.html')
 
 	// 打开开发者工具
-	win.webContents.openDevTools({ mode: 'detach' })
+	// win.webContents.openDevTools({ mode: 'detach' })
 	win.once('ready-to-show', () => {
-	win.show()
+		win.show()
 	})
 
 	// 当 window 被关闭，这个事件会被触发。
 	win.on('closed', () => {
-	// 取消引用 window 对象，如果你的应用支持多窗口的话，
-	// 通常会把多个 window 对象存放在一个数组里面，
-	// 与此同时，你应该删除相应的元素。
-	win = null
+		// 取消引用 window 对象，如果你的应用支持多窗口的话，
+		// 通常会把多个 window 对象存放在一个数组里面，
+		// 与此同时，你应该删除相应的元素。
+		win = null
+		$("#addnew").removeClass("disabled")
 	})
 }
 
@@ -272,14 +275,18 @@ function request_keys_and_set_timer(emp){
 		if(JSON.stringify(data) == '{}'){
 			watch_keys.push("sh@a")
 		}else{
-			watch_keys = watch_keys.concat(data)
+			for (i in data){
+				if(typeof(data[i])=="string"){
+					watch_keys.push(data[i])
+				}else{
+					console.log("type="+typeof(data[i]))
+				}
+			}
 		}
-
-		console.log("keys="+watch_keys)
 
 		delay = 5000
 
-		keys = watch_keys
+		let keys = watch_keys
 
 		if (typeof(the_current_req)!="undefined"){
 			the_current_req.abort()
@@ -330,5 +337,10 @@ function ready_func(){
 	request_keys_and_set_timer(false)
 	window.setInterval(request_keys_and_set_timer,5000,false)
 }
+
+const { ipcRenderer } = require('electron')
+ipcRenderer.on('refreshboard', (event, arg) => {
+  request_keys_and_set_timer(false)
+})
 
 $(document).ready(ready_func)
