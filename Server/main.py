@@ -1,5 +1,6 @@
 #coding=utf-8
 
+import numpy
 import web
 import tushare as ts
 import thread
@@ -61,7 +62,7 @@ def parse_sina_sug(text):
             sug['key'] = code+"@a"
             sugs.append(sug)
         else:
-            print "code not right..."+line
+            print("code not right..."+line)
     return sugs
 
 class chart:
@@ -98,7 +99,7 @@ class sug:
             return {"message":"no input"}
         id,m = id_market_from_key(key)
         if m == "a":
-            print "get sug : " + id
+            print("get sug : " + id)
             sina_key = id
             now = int(1000*time.time())
             url = "https://suggest3.sinajs.cn/suggest/type=&key=%s&name=suggestdata_%d" % (sina_key,now)
@@ -116,7 +117,6 @@ class index:
         pool = web.req_pool
         data = web.data()
         aslist = json.loads(data.decode())
-        print aslist
         ret = []
         now = time.time()
         lt = arrow.now().date()
@@ -142,7 +142,7 @@ def DataLoop(name):
                 a.append(id)
         a.extend(web.a_fixed)
         if len(a)>0:
-            # print str(now)+" getting @a " + str(a)
+            print(str(now)+" getting @a " + str(a))
             df = ts.get_realtime_quotes(a)
             jss = json.loads(df.to_json(orient='records'))
             for i in range(len(jss)):

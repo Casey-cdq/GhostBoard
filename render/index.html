@@ -10,11 +10,11 @@
   </head>
   <body>
 
-    <div class="container-fluid">
+    <div class="container-fluid pl-0 pr-0" id="board">
 
-       <div class="row" >
-          <div class="col-sm">
-            <table class="table">
+       <div class="row pl-0 pr-0 pt-0 pb-0 ml-0 mr-0" >
+          <div class="col">
+            <table class="table mb-0">
               <thead style="-webkit-app-region: drag">
                 <tr>
                   <th scope="col">股票代码</th>
@@ -29,38 +29,20 @@
           </div>
       </div>
 
-        <div class="row">
-          <div class="col-sm">
-            <button id="addnew" type="button" class="btn btn-primary btn-block">+</button>
+        <div class="row pl-0 pr-0 pt-0 pb-0 ml-0 mr-0">
+          <div class="col pl-0 pr-0">
+            <button id="addnew" type="button" class="btn btn-link btn-block pl-0 pr-0 pt-0 pb-0">+</button>
           </div>
-           <div class="col-sm">
-            <button id="config" type="button" class="btn btn-primary btn-block">设置</button>
+           <div class="col pl-0 pr-0">
+            <button id="config" type="button" class="btn btn-link btn-block pl-0 pr-0 pt-0 pb-0">设置</button>
           </div>
-
-          <div class="col-sm">
-            <button id="help" type="button" class="btn btn-primary btn-block">？</button>
+          <div class="col pl-0 pr-0">
+            <button id="help" type="button" class="btn btn-link btn-block pl-0 pr-0 pt-0 pb-0">帮助</button>
           </div>
-          <div class="col-sm">
-            <button id="info" type="button" class="btn btn-primary btn-block">!</button>
+          <div class="col pl-0 pr-0">
+            <button id="info" type="button" class="btn btn-link btn-block pl-0 pr-0 pt-0 pb-0">关于</button>
           </div>
        </div>
-
-        <div id="newboard" class="row collapse">
-        <div class="col-sm">
-                <p>A股 Tab切换</p>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="testNoBtn">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        </ul>
-                    </div>
-                    <!-- /btn-group -->
-                </div>
-        </div>
-        </div>
        
     </div>
 
@@ -76,7 +58,6 @@
     <script src="./../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="./../node_modules/moment/moment.js"></script>
-    <script src="./../node_modules/bootstrap-suggest-plugin/dist/bootstrap-suggest.min.js"></script>
     <script src="./index.js"></script>
   </body>
 </html>

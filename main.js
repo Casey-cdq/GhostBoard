@@ -15,8 +15,8 @@ function createWindow () {
   conf.fullscreen = false
   conf.x = width - width/6
   conf.y = height - height/6
-  conf.width = 600
-  conf.height = 400
+  conf.width = 300
+  conf.height = 200
   conf.show = false
   conf.alwaysOnTop = true
   conf.title = "幽灵看盘"
@@ -26,6 +26,7 @@ function createWindow () {
   conf.useContentSize = true
   conf.minimizable = false
   conf.maximizable = false
+  conf.webPreferences = {nodeIntegration:true}
   // conf.transparent = true
 
   // 创建浏览器窗口。

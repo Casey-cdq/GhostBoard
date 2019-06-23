@@ -22,6 +22,7 @@ function gb_chart(ev){
 	  conf.useContentSize = true
 	  conf.minimizable = false
 	  conf.maximizable = false
+	  conf.webPreferences = {nodeIntegration:true}
 	  // conf.transparent = true
 
 	  // 创建浏览器窗口。
@@ -96,33 +97,31 @@ function gb_add_row(key,row){
 	console.log("add key :"+key)
 	let row_all = $('<tr></tr>')
 	for ( k in row){
-		td = $("<td>"+row[k]+"</td>")
+		td = $("<td>-</td>")
 		td.attr("id",k)
 		row_all.append(td)
 	}
 
-	let bts = $("<div></div>")
+	let bts = $('<div></div>')
 	bts.addClass("btn-group")
 	bts.addClass("collapse")
+	bts.css("margin-left",-200)
 	bts.css("-webkit-transition","none")
-	bts.css("transition","none")
-	// bts.css("display","none")
-	// bts.addClass("float-right")
-	bts.add
+	bts.addClass("position-absolute")
 
-	let bttext = '<button type="button" class="btn btn-primary btn-block"></button>'
+	let bttext = '<button type="button" class="btn btn-primary"></button>'
 
-	let chart = $(bttext).text('分时').addClass("col-sm")
+	let chart = $(bttext).text('分时')
 	chart.click(key,gb_chart)
 	chart.attr("id","chart_"+key)
 	chart.prop('disabled',true)
 	bts.append(chart)
 
-	let top_bt = $(bttext).text('置顶').addClass("col-sm")
+	let top_bt = $(bttext).text('置顶')
 	top_bt.click(key,gb_top_row)
 	bts.append(top_bt)
 
-	let del_bt = $(bttext).text('删除').addClass("col-sm")
+	let del_bt = $(bttext).text('删除')
 	del_bt.click(key,gb_delete_row)
 	bts.append(del_bt)
 
@@ -158,16 +157,54 @@ function gb_set_row(key,row,row_data){
 	cbt.prop('disabled',false)
 }
 
+function ret_window_height(){
+	let dh = $("#board").height()
+
+	let cw = require('electron').remote.getCurrentWindow()
+	cw.setBounds({ height: dh })
+	console.log("doc window height "+dh)
+}
 
 function add_new(){
 	console.log("add click")
 
-	$("#newboard").collapse('toggle')
-	// let gb_ipc = require('electron').remote.require('./gb_ipc')
-	// gb_ipc.new_add_window()
+	const { BrowserWindow } = require('electron').remote
+	conf = {}
+	conf.fullscreenable = false
+	conf.fullscreen = false
+	conf.width = 600
+	conf.height = 800
+	conf.show = false
+	conf.alwaysOnTop = true
+	conf.title = "幽灵看盘"
+	conf.frame = false
+	conf.opacity = 1.0
+	conf.resizable = true
+	conf.useContentSize = true
+	conf.minimizable = false
+	conf.maximizable = false
+	conf.webPreferences = {nodeIntegration:true}
+	// conf.transparent = true
 
-    // let row_len = $("#gbrow").children("tr").length
-	// gb_add_row("test"+row_len,["ab"+row_len,"cde","fghj"])
+	// 创建浏览器窗口。
+	win = new BrowserWindow(conf)
+
+	// 然后加载应用的 index.html。
+	win.loadFile('render/add_new.html')
+
+	// 打开开发者工具
+	win.webContents.openDevTools({ mode: 'detach' })
+	win.once('ready-to-show', () => {
+	win.show()
+	})
+
+	// 当 window 被关闭，这个事件会被触发。
+	win.on('closed', () => {
+	// 取消引用 window 对象，如果你的应用支持多窗口的话，
+	// 通常会把多个 window 对象存放在一个数组里面，
+	// 与此同时，你应该删除相应的元素。
+	win = null
+	})
 }
 
 function add_new_cleanup(){
@@ -197,6 +234,7 @@ function config(){
 	conf.useContentSize = true
 	conf.minimizable = false
 	conf.maximizable = false
+	conf.webPreferences = {nodeIntegration:true}
 	// conf.transparent = true
 
 	// 创建浏览器窗口。
@@ -227,15 +265,17 @@ function info(){
 function request_keys_and_set_timer(emp){
 
 	storage.get('keys', function(error, data) {
-	  if (error) throw error;
+		if (error) throw error;
 
-	  let watch_keys = []
+		let watch_keys = []
 
-	  if(JSON.stringify(data) == '{}'){
-	    watch_keys.push("sh@a")
-	  }else{
-	  	watch_keys = watch_keys.concat(data)
-	  }
+		if(JSON.stringify(data) == '{}'){
+			watch_keys.push("sh@a")
+		}else{
+			watch_keys = watch_keys.concat(data)
+		}
+
+		console.log("keys="+watch_keys)
 
 		delay = 5000
 
@@ -247,86 +287,35 @@ function request_keys_and_set_timer(emp){
 
 		the_current_req = cm.post(cm.base_url,keys,
 			 function (message) {
-	            // console.log("OK:"+JSON.stringify(message))
-	            gbrow = $("#gbrow")
-	            if (emp){
-	            	gbrow.empty()
-	            }
+		        // console.log("OK:"+JSON.stringify(message))
+		        gbrow = $("#gbrow")
+		        if (emp){
+		        	gbrow.empty()
+		        }
 
-	            for (i in message){
-	            	v = message[i]
-	            	row_td = gbrow.children("tr[id='"+v.key+"']")
-	            	if (row_td.length==0){
-	            		gb_add_row(v.key,{name:v.name,code:v.code,price:v.price})
-	            	}else{
-	            		gb_set_row(v.key,row_td,{name:v.name,code:v.code,price:v.price})
-	            	}
-	            }
+		        for (i in message){
+		        	v = message[i]
+		        	row_td = gbrow.children("tr[id='"+v.key+"']")
+		        	if (row_td.length==0){
+		        		gb_add_row(v.key,{name:v.name,code:v.code,price:v.price})
+		        	}
+		        	
+		        	gb_set_row(v.key,row_td,{name:v.name,code:v.code,price:v.price})
+		        }
 
-	            the_current_req = undefined
-	        },
-	        function (message) {
-	            console.log("NOTOK:"+JSON.stringify(message))
+		        ret_window_height()
 
-	            the_current_req = undefined
-	        }
+		        the_current_req = undefined
+		    },
+		    function (message) {
+		        console.log("NOTOK:"+JSON.stringify(message))
+
+		        the_current_req = undefined
+		    }
 		)
 
 	});
 
-}
-
-function setup_sug(){
-	$("#testNoBtn").bsSuggest({
-			emptyTip: '未检索到匹配的数据',
-	    url: cm.base_url+"/sug?key=",
-	    effectiveFields: ["code", "name"],
-	    getDataMethod: "url",
-	    allowNoKeyword: false,
-	    ignorecase: true,
-	    showHeader: false,
-	    showBtn: false,     //不显示下拉按钮
-	    delayUntilKeyup: true, //获取数据的方式为 firstByUrl 时，延迟到有输入/获取到焦点时才请求数据
-	    idField: "key",
-	    keyField: "name",
-	    clearable: true,
-	    fnPreprocessKeyword: function(keyword) { //请求数据前，对输入关键字作进一步处理方法。注意，应返回字符串
-	        return keyword+"@a";
-	    },
-	}).on('onDataRequestSuccess', function (e, result) {
-		console.log('onDataRequestSuccess: ', result);
-		
-	}).on('onSetSelectValue', function (e, keyword, sel_data) {
-		console.log('onSetSelectValue: ', keyword, sel_data);
-		const storage = require('electron-json-storage')
-		storage.get('keys', function(error, data) {
-				if (error) throw error
-
-				if(JSON.stringify(data) == '{}'){
-			    	data = []
-			  	}
-
-			  	for (i in data){
-			  		if (data[i]==sel_data.key){
-			  			console.log("same key..")
-			  			remote.getCurrentWindow().close()
-			  			return
-			  		}
-			  	}
-
-			data.push(sel_data.key)
-
-			storage.set('keys', data, function(error) {
-		    	if (error) throw error;
-
-		    	add_new_cleanup()
-
-		    	console.log("set keys ok ")
-			});
-		});
-	}).on('onUnsetSelectValue', function () {
-		console.log("onUnsetSelectValue");
-	});
 }
 
 function ready_func(){
@@ -334,8 +323,6 @@ function ready_func(){
 	$("#help").click(help)
 	$("#config").click(config)
 	$("#info").click(info)
-
-	setup_sug()
 
 	console.log("doc ready.")
 
