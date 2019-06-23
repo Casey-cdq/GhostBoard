@@ -155,7 +155,17 @@ function addnew_ready(){
 		// $("#fontsize").attr("value",data.fontsize)
 	})
 
-	ret_window_height()
+	let dh = $("#board").height()
+	let dw = $("#board").width()
+	let cw = require('electron').remote.getCurrentWindow()
+	let bds = cw.getBounds()
+	bds.y = window.screen.height/2 - dh/2
+	bds.x = window.screen.width/2 - dw/2
+	bds.height = dh
+	bds.width = dw
+	cw.setBounds(bds)
+	console.log(bds)
+	$("#sugin").focus()
 }
 
 $(document).ready(addnew_ready)

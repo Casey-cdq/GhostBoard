@@ -174,8 +174,10 @@ function add_new(){
 	conf = {}
 	conf.fullscreenable = false
 	conf.fullscreen = false
-	conf.width = 600
-	conf.height = 400
+	conf.x = window.screen.width/2 - 540/2
+	conf.y = window.screen.height/2 - 38/2
+	conf.width = 540
+	conf.height = 38
 	conf.show = false
 	conf.alwaysOnTop = true
 	conf.title = "幽灵看盘"
