@@ -97,31 +97,32 @@ function gb_add_row(key,row){
 	console.log("add key :"+key)
 	let row_all = $('<tr></tr>')
 	for ( k in row){
-		td = $("<td>-</td>")
+		td = $('<td class="px-1 py-1">-</td>')
 		td.attr("id",k)
 		row_all.append(td)
 	}
 
 	let bts = $('<div></div>')
-	bts.addClass("btn-group")
+	// bts.addClass("btn-group")
 	bts.addClass("collapse")
 	bts.css("margin-left",-200)
 	bts.css("-webkit-transition","none")
 	bts.addClass("position-absolute")
 
-	let bttext = '<button type="button" class="btn btn-primary"></button>'
+	let bttext = '<button type="button" class="btn btn-primary btn-sm px-0 py-0"></button>'
 
-	let chart = $(bttext).text('分时')
-	chart.click(key,gb_chart)
-	chart.attr("id","chart_"+key)
-	chart.prop('disabled',true)
-	bts.append(chart)
+	// let chart = $(bttext).text('分时')
+	// chart.click(key,gb_chart)
+	// chart.attr("id","chart_"+key)
+	// chart.prop('disabled',true)
+	// bts.append(chart)
 
 	let top_bt = $(bttext).text('置顶')
 	top_bt.click(key,gb_top_row)
 	bts.append(top_bt)
 
 	let del_bt = $(bttext).text('删除')
+	del_bt.addClass("ml-1")
 	del_bt.click(key,gb_delete_row)
 	bts.append(del_bt)
 
@@ -148,21 +149,23 @@ function gb_add_row(key,row){
 
 
 function gb_set_row(key,row,row_data){
+
 	for (let k in row_data){
 		let t = row.children("td[id='"+k+"']")
 		t.text(row_data[k])
 	}
 
-	let cbt = row.find("button[id='chart_"+key+"']")
-	cbt.prop('disabled',false)
+	// let cbt = row.find("button[id='chart_"+key+"']")
+	// cbt.prop('disabled',false)
 }
 
 function ret_window_height(){
-	let dh = $("#board").height()
-
 	let cw = require('electron').remote.getCurrentWindow()
-	cw.setBounds({ height: dh })
-	console.log("doc window height "+dh)
+	let dw = $("#board").width()
+	cw.setBounds({ width:dw})
+
+	let dh = $("#board").height()
+	cw.setBounds({ height: dh})
 }
 
 function add_new(){
@@ -183,7 +186,7 @@ function add_new(){
 	conf.title = "幽灵看盘"
 	conf.frame = false
 	conf.opacity = 1.0
-	conf.resizable = true
+	conf.resizable = false
 	conf.useContentSize = true
 	conf.minimizable = false
 	conf.maximizable = false
@@ -224,18 +227,22 @@ function help(){
 function config(){
 	console.log("config click")
 
+	$("#config").addClass("disabled")
+
 	const { BrowserWindow } = require('electron').remote
 	conf = {}
 	conf.fullscreenable = false
 	conf.fullscreen = false
-	conf.width = 600
-	conf.height = 800
+	conf.width = 410
+	conf.height = 100
+	conf.x = window.screen.width/2 - conf.width/2
+	conf.y = window.screen.height/2 - conf.height/2
 	conf.show = false
 	conf.alwaysOnTop = true
 	conf.title = "幽灵看盘"
 	conf.frame = false
 	conf.opacity = 1.0
-	conf.resizable = true
+	conf.resizable = false
 	conf.useContentSize = true
 	conf.minimizable = false
 	conf.maximizable = false
@@ -256,10 +263,11 @@ function config(){
 
 	// 当 window 被关闭，这个事件会被触发。
 	win.on('closed', () => {
-	// 取消引用 window 对象，如果你的应用支持多窗口的话，
-	// 通常会把多个 window 对象存放在一个数组里面，
-	// 与此同时，你应该删除相应的元素。
-	win = null
+		// 取消引用 window 对象，如果你的应用支持多窗口的话，
+		// 通常会把多个 window 对象存放在一个数组里面，
+		// 与此同时，你应该删除相应的元素。
+		win = null
+		$("#config").removeClass("disabled")
 	})
 }
 
@@ -308,7 +316,8 @@ function request_keys_and_set_timer(emp){
 		        	if (row_td.length==0){
 		        		gb_add_row(v.key,{name:v.name,code:v.code,price:v.price})
 		        	}
-		        	
+
+		        	row_td = gbrow.children("tr[id='"+v.key+"']")
 		        	gb_set_row(v.key,row_td,{name:v.name,code:v.code,price:v.price})
 		        }
 
@@ -327,7 +336,15 @@ function request_keys_and_set_timer(emp){
 
 }
 
+function reset_font(){
+	cm.get_current_config(function(data){
+		$("#board").css("font-size",Number(data.fontsize))
+	})
+}
+
 function ready_func(){
+	reset_font()
+
 	$("#addnew").click(add_new)
 	$("#help").click(help)
 	$("#config").click(config)
@@ -343,6 +360,10 @@ function ready_func(){
 const { ipcRenderer } = require('electron')
 ipcRenderer.on('refreshboard', (event, arg) => {
   request_keys_and_set_timer(false)
+})
+
+ipcRenderer.on('resetfont', (event, arg) => {
+  reset_font()
 })
 
 $(document).ready(ready_func)
