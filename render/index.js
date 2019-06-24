@@ -68,6 +68,7 @@ function gb_delete_row(ev){
 				gbrow.children("tr[id='"+key+"']").remove()
 
 		    	console.log("delete keys ok ")
+		    	ret_window_height()
 			});
 	});
 }
@@ -161,11 +162,14 @@ function gb_set_row(key,row,row_data){
 
 function ret_window_height(){
 	let cw = require('electron').remote.getCurrentWindow()
-	let dw = $("#board").width()
-	cw.setBounds({ width:dw})
 
-	let dh = $("#board").height()
-	cw.setBounds({ height: dh})
+	let dw = $("#board")[0].scrollWidth
+	let dh = $("#board")[0].scrollHeight
+	console.log(dw+","+dh)
+	console.log($("#board").width()+","+$("#board").height())
+	cw.setBounds({ width:dw,height: dh})
+
+	// cw.setBounds({ height: dh})
 }
 
 function add_new(){
@@ -310,18 +314,23 @@ function request_keys_and_set_timer(emp){
 		        	gbrow.empty()
 		        }
 
+		        let added = false
+
 		        for (i in message){
 		        	v = message[i]
 		        	row_td = gbrow.children("tr[id='"+v.key+"']")
 		        	if (row_td.length==0){
 		        		gb_add_row(v.key,{name:v.name,code:v.code,price:v.price})
+		        		added = true
 		        	}
 
 		        	row_td = gbrow.children("tr[id='"+v.key+"']")
 		        	gb_set_row(v.key,row_td,{name:v.name,code:v.code,price:v.price})
 		        }
 
-		        ret_window_height()
+		        if (added){
+		        	ret_window_height()
+		        }
 
 		        the_current_req = undefined
 		    },
@@ -339,6 +348,18 @@ function request_keys_and_set_timer(emp){
 function reset_font(){
 	cm.get_current_config(function(data){
 		$("#board").css("font-size",Number(data.fontsize))
+
+		let cw1 = require('electron').remote.getCurrentWindow()
+		cw1.setBounds({ width:100})
+
+		$(window).resize(function(){
+			let cw = require('electron').remote.getCurrentWindow()
+			let dw = $("#board")[0].scrollWidth
+			let dh = $("#board")[0].scrollHeight
+			console.log(dw+","+dh)
+			console.log($("#board").width()+","+$("#board").height())
+			cw.setBounds({ width:dw,height: dh})
+		})
 	})
 }
 

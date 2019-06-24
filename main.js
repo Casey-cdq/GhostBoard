@@ -15,7 +15,7 @@ function createWindow () {
   conf.fullscreen = false
   conf.x = width - width/6
   conf.y = height - height/6
-  conf.width = 300
+  conf.width = 100
   conf.height = 200
   conf.show = false
   conf.alwaysOnTop = true

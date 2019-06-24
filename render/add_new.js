@@ -113,9 +113,6 @@ function ret_window_height(){
 function addnew_ready(){
 	console.log("addnew_ready")
 	setup_sug()
-	get_current_config(function(data){
-		// $("#fontsize").attr("value",data.fontsize)
-	})
 
 	let dh = $("#board").height()
 	let dw = $("#board").width()
