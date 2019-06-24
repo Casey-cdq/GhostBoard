@@ -12,7 +12,13 @@ function get_current_config(func){
 
         if(JSON.stringify(data)=="{}"){
             //default config
-            data.fontsize = "16"
+            data.fontsize = "16"   
+        }
+        if(typeof(data.col)=="undefined"){
+            data.col = []
+        }
+        if(typeof(data.keys)=="undefined"){
+            data.keys = ["sh@a"]
         }
         console.log("config:")
         console.log(data)

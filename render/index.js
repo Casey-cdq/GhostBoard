@@ -279,22 +279,28 @@ function info(){
 	cm.open_url("http://info")
 }
 
+function vcol_from_col(v,col){
+	let ret = {}
+	ret.name = v.name
+	ret.per = v.per
+
+	for (c in col){
+		ret[c] = v[c]
+	}
+
+	return ret
+}
+
 function request_keys_and_set_timer(emp){
 
-	storage.get('keys', function(error, data) {
-		if (error) throw error;
+	cm.get_current_config(function(data) {
 
 		let watch_keys = []
-
-		if(JSON.stringify(data) == '{}'){
-			watch_keys.push("sh@a")
-		}else{
-			for (i in data){
-				if(typeof(data[i])=="string"){
-					watch_keys.push(data[i])
-				}else{
-					console.log("type="+typeof(data[i]))
-				}
+		for (i in data.keys){
+			if(typeof(data.keys[i])=="string"){
+				watch_keys.push(data.keys[i])
+			}else{
+				console.log("type="+typeof(data.keys[i]))
 			}
 		}
 
@@ -308,7 +314,7 @@ function request_keys_and_set_timer(emp){
 
 		the_current_req = cm.post(cm.base_url,keys,
 			 function (message) {
-		        // console.log("OK:"+JSON.stringify(message))
+		        console.log("OK:"+JSON.stringify(message))
 		        gbrow = $("#gbrow")
 		        if (emp){
 		        	gbrow.empty()
@@ -318,14 +324,15 @@ function request_keys_and_set_timer(emp){
 
 		        for (i in message){
 		        	v = message[i]
+		        	v_col = vcol_from_col(v,data.col)
 		        	row_td = gbrow.children("tr[id='"+v.key+"']")
 		        	if (row_td.length==0){
-		        		gb_add_row(v.key,{name:v.name,code:v.code,price:v.price})
+		        		gb_add_row(v.key,v_col)
 		        		added = true
 		        	}
 
 		        	row_td = gbrow.children("tr[id='"+v.key+"']")
-		        	gb_set_row(v.key,row_td,{name:v.name,code:v.code,price:v.price})
+		        	gb_set_row(v.key,row_td,v_col)
 		        }
 
 		        if (added){

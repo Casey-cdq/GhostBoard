@@ -21,26 +21,21 @@ function sug_click(a){
 	let sel_data = {}
 	sel_data.key = $(a).attr("sugkey")
 
-	const storage = require('electron-json-storage')
-	storage.get('keys', function(error, data) {
-			if (error) throw error
+	cm.get_current_config(function(conf) {
+		let data = conf.keys
 
-			if(JSON.stringify(data) == '{}'){
-		    	data = []
-		  	}
-
-		  	for (i in data){
-		  		if (data[i]==sel_data.key){
-		  			console.log("same key..")
-		  			return
-		  		}
-		  	}
+	  	for (i in data){
+	  		if (data[i]==sel_data.key){
+	  			console.log("same key..")
+	  			return
+	  		}
+	  	}
 
 		data.push(sel_data.key)
 
-		storage.set('keys', data, function(error) {
-	    	if (error) throw error;
+		conf.keys = data
 
+		cm.save_config(conf, function() {
 	    	console.log("set keys ok ")
 
 	    	$("#sugin").val("")

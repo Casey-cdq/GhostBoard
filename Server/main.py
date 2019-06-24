@@ -28,10 +28,22 @@ def id_market_from_key(key):
 def get_one_from_map(one):
     id,m = id_market_from_key(one)
     market = web.all_data[m]
+    ret = {}
+    ret['key'] = one
     if one in market:
-        return market[one]
+        it = market[one]
+        ret['name'] = it['name']
+        ret['code'] = it['code']
+        ret['price'] = it['price']
+        ret['pre_close'] = it['pre_close']
+
+        prc = float(ret['price'])
+        pcl = float(ret['pre_close'])
+        ret['per'] = "%.2f%%" % ((prc-pcl)/pcl*100)
+        return ret
     else:
-        return {"key":one,"name":id}
+        ret['name'] = id
+        return ret
 
 def parse_sina_sug(text):
     sugs = []
