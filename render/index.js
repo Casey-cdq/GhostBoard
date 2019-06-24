@@ -156,12 +156,14 @@ function gb_set_row(key,row,row_data){
 	for (let k in row_data){
 		let t = row.children("td[id='"+k+"']")
 		t.text(row_data[k])
-		if (pn>0.0){
-			t.css('color','red')
-		}else if(pn<0.0){
-			t.css('color','green')
-		}else{
-			t.css('color','gray')
+		if(k=="name"|k=="per"){
+			if (pn>0.0){
+				t.css('color','red')
+			}else if(pn<0.0){
+				t.css('color','green')
+			}else{
+				t.css('color','gray')
+			}
 		}
 	}
 
@@ -351,6 +353,7 @@ function request_keys_and_set_timer(emp){
 
 		if (typeof(the_current_req)!="undefined"){
 			the_current_req.abort()
+			console.log("-----------abort last request----------")
 		}
 
 		the_current_req = cm.post(cm.base_url,keys,
@@ -376,9 +379,7 @@ function request_keys_and_set_timer(emp){
 		        	gb_set_row(v.key,row_td,v_col)
 		        }
 
-		        if (added){
-		        	ret_window_height()
-		        }
+		        ret_window_height()
 
 		        the_current_req = undefined
 		    },
@@ -416,7 +417,7 @@ function reset_font(func){
 }
 
 function ready_func(){
-	reset_font()
+	// reset_font()
 	reset_cols()
 
 	$("#addnew").click(add_new)
@@ -427,7 +428,7 @@ function ready_func(){
 	console.log("doc ready.")
 
 	//start request and timer...
-	request_keys_and_set_timer(false)
+	// request_keys_and_set_timer(false)
 	window.setInterval(request_keys_and_set_timer,10000,false)
 }
 
