@@ -27,8 +27,8 @@ function draw_cols(){
 	cm.get_current_config(function(data){
 		let cols = data.col
 		$("#cols").children().each(function(){
-			let ck = $(this).attr("col_key")
-			let index = cols.indexOf(ck);
+			let ck = $(this).attr("col_key")+"|"+$(this).text()
+			let index = cols.indexOf(ck)
 			console.log(ck)
 			if (index > -1) {
 				$(this).css("color","green")
@@ -40,7 +40,7 @@ function draw_cols(){
 }
 
 function col_click(col){
-	let ck = $(col).attr("col_key")
+	let ck = $(col).attr("col_key")+"|"+$(col).text()
 	cm.get_current_config(function(data){
 		let cols = data.col
 		let index = cols.indexOf(ck);
@@ -53,7 +53,7 @@ function col_click(col){
 		console.log(data.col)
 		cm.save_config(data, function() {
 			draw_cols()
-			remote.getGlobal("indexwindow").webContents.send('resetfont')
+			remote.getGlobal("indexwindow").webContents.send('resetcol')
 		})
 	})
 }

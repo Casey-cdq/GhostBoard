@@ -47,21 +47,18 @@ function gb_chart(ev){
 }
 
 function gb_delete_row(ev){
-	console.log("delete click")
-	console.log(ev)
 	key = ev.data
-	storage.get('keys', function(error, data) {
-			if (error) throw error
+	cm.get_current_config(function(conf) {
+			let data = conf.keys
 			let new_data = []
 		  	for (i in data){
 		  		if (data[i]!=key){
 		  			new_data.push(data[i])
 		  		}
 		  	}
+		  	conf.keys = new_data
 
-			storage.set('keys', new_data, function(error) {
-		    	if (error) throw error;
-
+			cm.save_config(conf, function() {
 		    	request_keys_and_set_timer(false)
 
 				let gbrow = $("#gbrow")
@@ -75,22 +72,21 @@ function gb_delete_row(ev){
 
 function gb_top_row(ev){
 	key = ev.data
-	storage.get('keys', function(error, data) {
-			if (error) throw error
-			let new_data = []
-		  	new_data.push(key)
-		  	for (i in data){
-		  		if (data[i]!=key){
-		  			new_data.push(data[i])
-		  		}
-		  	}
+	cm.get_current_config(function(conf) {
+		let data = conf.keys
+		let new_data = []
+	  	new_data.push(key)
+	  	for (i in data){
+	  		if (data[i]!=key){
+	  			new_data.push(data[i])
+	  		}
+	  	}
+	  	conf.keys = new_data
+		cm.save_config(conf, function() {
 
-			storage.set('keys', new_data, function(error) {
-		    	if (error) throw error;
-
-		    	request_keys_and_set_timer(true)
-		    	console.log("top key ok ")
-			});
+	    	request_keys_and_set_timer(true)
+	    	console.log("top key ok ")
+		});
 	});
 }
 
@@ -138,12 +134,12 @@ function gb_add_row(key,row){
 	the_tr = gbrow.children("tr[id='"+key+"']")
 
 	the_tr.mouseenter(function(){
-    	console.log("in " + key)
+    	// console.log("in " + key)
     	$(this).find('.collapse').collapse('show')
  	});
 
  	the_tr.mouseleave(function(){
-    	console.log("out " + key)
+    	// console.log("out " + key)
     	$(this).find('.collapse').collapse('hide')
  	});
 }
@@ -151,9 +147,22 @@ function gb_add_row(key,row){
 
 function gb_set_row(key,row,row_data){
 
+	let per = row_data.per
+	let pn = 0.0
+	if(typeof(per)!="undefined"){
+		pn = Number(per.split("%")[0])
+	}
+
 	for (let k in row_data){
 		let t = row.children("td[id='"+k+"']")
 		t.text(row_data[k])
+		if (pn>0.0){
+			t.css('color','red')
+		}else if(pn<0.0){
+			t.css('color','green')
+		}else{
+			t.css('color','gray')
+		}
 	}
 
 	// let cbt = row.find("button[id='chart_"+key+"']")
@@ -285,10 +294,44 @@ function vcol_from_col(v,col){
 	ret.per = v.per
 
 	for (c in col){
-		ret[c] = v[c]
+		let key = col[c].split("|")[0]
+		ret[key] = v[key]
 	}
 
 	return ret
+}
+
+function reset_cols(){
+	cm.get_current_config(function(data) {
+		let col_keys = ["name|股票名","per|涨跌幅"]
+		col_keys = col_keys.concat(data.col)
+		let alin = []
+		$("#colhead").children().each(function(){
+			let ck = $(this).attr("col_key")+"|"+$(this).text()
+			let index = col_keys.indexOf(ck);
+			if (index > -1) {
+				alin.push(ck)
+			}else{
+				$(this).remove()
+			}
+		})
+		
+		for(i in col_keys){
+			let c = col_keys[i]
+			let index = alin.indexOf(c)
+			if (index > -1) {
+			}else{
+				let key = c.split("|")[0]
+				let name = c.split("|")[1]
+				let t = '<th col_key="'+key+'" class="px-1 py-1" scope="col">'+name+'</th>'
+				$("#colhead").append($(t))
+			}
+		}
+
+		reset_font()
+		request_keys_and_set_timer(true)
+		
+	})
 }
 
 function request_keys_and_set_timer(emp){
@@ -303,8 +346,6 @@ function request_keys_and_set_timer(emp){
 				console.log("type="+typeof(data.keys[i]))
 			}
 		}
-
-		delay = 10000
 
 		let keys = watch_keys
 
@@ -342,7 +383,7 @@ function request_keys_and_set_timer(emp){
 		        the_current_req = undefined
 		    },
 		    function (message) {
-		        console.log("NOTOK:"+JSON.stringify(message))
+		        // console.log("NOTOK:"+JSON.stringify(message))
 
 		        the_current_req = undefined
 		    }
@@ -352,26 +393,31 @@ function request_keys_and_set_timer(emp){
 
 }
 
-function reset_font(){
+function reset_font(func){
 	cm.get_current_config(function(data){
 		$("#board").css("font-size",Number(data.fontsize))
 
 		let cw1 = require('electron').remote.getCurrentWindow()
-		cw1.setBounds({ width:100})
+		cw1.setBounds({ width:80})
 
 		$(window).resize(function(){
 			let cw = require('electron').remote.getCurrentWindow()
 			let dw = $("#board")[0].scrollWidth
 			let dh = $("#board")[0].scrollHeight
-			console.log(dw+","+dh)
-			console.log($("#board").width()+","+$("#board").height())
+			// console.log(dw+","+dh)
+			// console.log($("#board").width()+","+$("#board").height())
 			cw.setBounds({ width:dw,height: dh})
+
+			if (typeof(func)!="undefined"){
+				func()
+			}
 		})
 	})
 }
 
 function ready_func(){
 	reset_font()
+	reset_cols()
 
 	$("#addnew").click(add_new)
 	$("#help").click(help)
@@ -382,7 +428,7 @@ function ready_func(){
 
 	//start request and timer...
 	request_keys_and_set_timer(false)
-	window.setInterval(request_keys_and_set_timer,5000,false)
+	window.setInterval(request_keys_and_set_timer,10000,false)
 }
 
 const { ipcRenderer } = require('electron')
@@ -392,6 +438,10 @@ ipcRenderer.on('refreshboard', (event, arg) => {
 
 ipcRenderer.on('resetfont', (event, arg) => {
   reset_font()
+})
+
+ipcRenderer.on('resetcol', (event, arg) => {
+  reset_cols()
 })
 
 $(document).ready(ready_func)
