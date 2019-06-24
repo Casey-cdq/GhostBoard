@@ -31,7 +31,7 @@ def get_one_from_map(one):
     if one in market:
         return market[one]
     else:
-        return {"key":one}
+        return {"key":one,"name":id}
 
 def parse_sina_sug(text):
     sugs = []
@@ -145,7 +145,15 @@ def DataLoop(name):
         a.extend(web.a_fixed)
         if len(a)>0:
             print(str(now)+" getting @a " + str(a))
-            df = ts.get_realtime_quotes(a)
+            df = None
+            try:
+                df = ts.get_realtime_quotes(a)
+            except Exception as e:
+                print("get_realtime_quotes Exception:")
+                print(e)
+                continue
+            else:
+                pass
             jss = json.loads(df.to_json(orient='records'))
             for i in range(len(jss)):
                 js = jss[i]
@@ -161,7 +169,7 @@ def DataLoop(name):
                 the_time = "%d-%02d-%02d %s" % (lt.year, lt.month, lt.day,js["time"])
                 the_time = arrow.get(the_time).timestamp
                 chart[key].append({"price":js["price"],"time":the_time})
-        time.sleep(5)
+        time.sleep(10)
 
 if __name__ == "__main__":
     web.req_pool = {}

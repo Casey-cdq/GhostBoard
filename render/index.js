@@ -165,8 +165,8 @@ function ret_window_height(){
 
 	let dw = $("#board")[0].scrollWidth
 	let dh = $("#board")[0].scrollHeight
-	console.log(dw+","+dh)
-	console.log($("#board").width()+","+$("#board").height())
+	// console.log(dw+","+dh)
+	// console.log($("#board").width()+","+$("#board").height())
 	cw.setBounds({ width:dw,height: dh})
 
 	// cw.setBounds({ height: dh})
@@ -298,7 +298,7 @@ function request_keys_and_set_timer(emp){
 			}
 		}
 
-		delay = 5000
+		delay = 10000
 
 		let keys = watch_keys
 
