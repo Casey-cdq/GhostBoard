@@ -104,12 +104,13 @@ function gb_add_row(key,row){
 	let bts = $('<div></div>')
 	// bts.addClass("btn-group")
 	bts.addClass("collapse")
-	bts.css("margin-left",-colhead.width()+10)
+	bts.css("left",0)
 	bts.css("height",colhead.height())
 	bts.css("-webkit-transition","none")
+	bts.css("background")
 	bts.addClass("position-absolute")
 
-	let bttext = '<a href="#"></a>'
+	let bttext = '<a href="#" class="bg-light"></a>'
 
 	// let chart = $(bttext).text('分时')
 	// chart.click(key,gb_chart)
