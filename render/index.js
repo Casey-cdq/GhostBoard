@@ -110,7 +110,7 @@ function gb_add_row(key,row){
 	bts.css("background")
 	bts.addClass("position-absolute")
 
-	let bttext = '<a href="#" class="bg-light"></a>'
+	let bttext = '<a href="#" class="text-white"></a>'
 
 	// let chart = $(bttext).text('分时')
 	// chart.click(key,gb_chart)
@@ -119,11 +119,12 @@ function gb_add_row(key,row){
 	// bts.append(chart)
 
 	let top_bt = $(bttext).text('置顶')
+	top_bt.addClass('bg-info')
 	top_bt.click(key,gb_top_row)
 	bts.append(top_bt)
 
 	let del_bt = $(bttext).text('删除')
-	del_bt.addClass("ml-1")
+	del_bt.addClass("bg-danger")
 	del_bt.click(key,gb_delete_row)
 	bts.append(del_bt)
 
