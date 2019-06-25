@@ -241,7 +241,7 @@ function add_new_cleanup(){
 }
 
 function help(){
-	cm.open_url("http://help")
+	cm.open_file("./doc/help.html")
 }
 
 function config(){
@@ -292,7 +292,48 @@ function config(){
 }
 
 function info(){
-	cm.open_url("http://info")
+	$("#info").addClass("disabled")
+
+	const { BrowserWindow } = require('electron').remote
+	conf = {}
+	conf.fullscreenable = false
+	conf.fullscreen = false
+	conf.width = 400
+	conf.height = 135
+	conf.x = window.screen.width/2 - conf.width/2
+	conf.y = window.screen.height/2 - conf.height/2
+	conf.show = false
+	conf.alwaysOnTop = true
+	conf.title = "幽灵看盘"
+	conf.frame = false
+	conf.opacity = 1.0
+	conf.resizable = false
+	conf.useContentSize = true
+	conf.minimizable = false
+	conf.maximizable = false
+	conf.webPreferences = {nodeIntegration:true}
+	// conf.transparent = true
+
+	// 创建浏览器窗口。
+	win = new BrowserWindow(conf)
+
+	// 然后加载应用的 index.html。
+	win.loadFile('render/info.html')
+
+	// 打开开发者工具
+	// win.webContents.openDevTools({ mode: 'detach' })
+	win.once('ready-to-show', () => {
+		win.show()
+	})
+
+	// 当 window 被关闭，这个事件会被触发。
+	win.on('closed', () => {
+		// 取消引用 window 对象，如果你的应用支持多窗口的话，
+		// 通常会把多个 window 对象存放在一个数组里面，
+		// 与此同时，你应该删除相应的元素。
+		win = null
+		$("#info").removeClass("disabled")
+	})
 }
 
 function vcol_from_col(v,col){

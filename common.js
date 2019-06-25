@@ -6,6 +6,11 @@ function open_url(url){
 	shell.openExternal(url);
 }
 
+function open_file(url){
+    console.log("open "+url)
+    shell.openItem(url);
+}
+
 function get_current_config(func){
     storage.get("config",function(error,data){
         if (error) throw error;
@@ -75,6 +80,7 @@ function request_get(url,params,suc,fail){
 }
 
 exports.open_url = open_url;
+exports.open_file = open_file;
 exports.post = request_post;
 exports.get = request_get;
 exports.get_current_config = get_current_config;

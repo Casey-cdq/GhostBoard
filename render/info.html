@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  </head>
+  <body>
+
+    <div class="container mx-0 px-0" id="board">
+        <ul class="list-group list-group-flush">
+          <li id="version" class="list-group-item"></li>
+          <li class="list-group-item">联系我 QQ:236415625</li>
+        </ul>
+        <button id="close" type="button" class="btn btn-primary btn-block rounded-0 w-30">关闭</button>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>
+// window.nodeRequire = require;
+// delete window.require;
+// delete window.exports;
+// delete window.module;
+    </script>
+    <script src="./../node_modules/jquery/jquery.min.js"></script>
+    <script src="./../node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="./../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./../node_modules/mousetrap/mousetrap.min.js"></script>
+    <script type="text/javascript">
+      const { remote } = require('electron')
+      function info_ready(){
+        $("#close").click(function(){
+          remote.getCurrentWindow().close()
+        })
+        $("#version").text("版本："+remote.app.getVersion())
+      }
+      $(document).ready(info_ready)
+    </script>
+  </body>
+</html>
