@@ -58,11 +58,21 @@ function col_click(col){
 	})
 }
 
+function config_restore(){
+	cm.save_config({}, function() {
+		remote.getGlobal("indexwindow").webContents.send('resetfont')
+		remote.getGlobal("indexwindow").webContents.send('refreshboard')
+		remote.getGlobal("indexwindow").webContents.send('resetcol')
+		remote.getCurrentWindow().close()
+	});	
+}
+
 function config_ready(){
 	console.log("config_ready")
 	draw_cols()
 	
 	$("#configsave").click(config_save)
+	$("#configrestore").click(config_restore)
 
 	cm.get_current_config(function(data){
 		$("#fontsize").attr("value",data.fontsize)

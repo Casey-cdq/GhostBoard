@@ -55,13 +55,13 @@ def parse_sina_sug(text):
     for line in lines:
         tokens = line.split(',')
         code = tokens[2].strip()
-        if tokens[0] in ["sh000001","sz399001"]:
+        if tokens[3] in ["sh000001","sz399001"]:
             sug = {}
             sug['code'] = code
             sug['name'] = tokens[4].strip()
-            sug['key'] = tokens[0][:2]+"@a"
+            sug['key'] = tokens[3][:2]+"@a"
             sugs.append(sug)
-        elif tokens[0] == "sz399006":
+        elif tokens[3] == "sz399006":
             sug = {}
             sug['code'] = code
             sug['name'] = tokens[4].strip()

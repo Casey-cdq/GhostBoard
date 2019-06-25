@@ -31,6 +31,8 @@ function sug_click(a){
 	  		}
 	  	}
 
+	  	console.log(sel_data.key)
+
 		data.push(sel_data.key)
 
 		conf.keys = data

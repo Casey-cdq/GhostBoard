@@ -219,7 +219,7 @@ function add_new(){
 	win.loadFile('render/add_new.html')
 
 	// 打开开发者工具
-	// win.webContents.openDevTools({ mode: 'detach' })
+	win.webContents.openDevTools({ mode: 'detach' })
 	win.once('ready-to-show', () => {
 		win.show()
 	})
