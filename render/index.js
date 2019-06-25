@@ -99,14 +99,17 @@ function gb_add_row(key,row){
 		row_all.append(td)
 	}
 
+	let colhead = $("#colhead")
+
 	let bts = $('<div></div>')
 	// bts.addClass("btn-group")
 	bts.addClass("collapse")
-	bts.css("margin-left",-200)
+	bts.css("margin-left",-colhead.width()+10)
+	bts.css("height",colhead.height())
 	bts.css("-webkit-transition","none")
 	bts.addClass("position-absolute")
 
-	let bttext = '<button type="button" class="btn btn-primary btn-sm px-0 py-0"></button>'
+	let bttext = '<button type="button" class="btn btn-success btn-sm px-0 py-0"></button>'
 
 	// let chart = $(bttext).text('分时')
 	// chart.click(key,gb_chart)
