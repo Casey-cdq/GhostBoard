@@ -11,6 +11,13 @@ function open_file(url){
     shell.openItem(url);
 }
 
+function set_config(key,value){
+    get_current_config(function(conf){
+        conf[key] = value
+        save_config(conf,function(){})
+    })
+}
+
 function get_current_config(func){
     storage.get("config",function(error,data){
         if (error) throw error;
@@ -24,6 +31,9 @@ function get_current_config(func){
         }
         if(typeof(data.keys)=="undefined"){
             data.keys = ["sh@a"]
+        }
+        if(typeof(data.opa)=="undefined"){
+            data.opa = 1.0
         }
         console.log("config:")
         console.log(data)
@@ -85,4 +95,5 @@ exports.post = request_post;
 exports.get = request_get;
 exports.get_current_config = get_current_config;
 exports.save_config = save_config;
+exports.set_config = set_config;
 exports.base_url = "http://localhost:8080";

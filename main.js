@@ -1,4 +1,5 @@
 const { app, BrowserWindow,globalShortcut } = require('electron')
+var cm = require("./common")
 
 // 保持对window对象的全局引用，如果不这么做的话，当JavaScript对象被
 // 垃圾回收的时候，window对象将会自动的关闭
@@ -51,6 +52,10 @@ function createWindow () {
   })
 
   addShotCut(win)
+
+  cm.get_current_config(function(conf){
+    win.setOpacity(conf.opa)
+  })
 }
 
 function addShotCut(win){
@@ -59,23 +64,23 @@ function addShotCut(win){
 	globalShortcut.register('CommandOrControl+[', () => {
     // Do stuff when Y and either Command/Control is pressed.
     	opacity = win.getOpacity()
-    	console.log("add"+opacity)
     	if (opacity - ADJ_CONST < 0.05){
     		win.setOpacity(0.05)
     	}else{
     		win.setOpacity(opacity - ADJ_CONST)
     	}
+      cm.set_config("opa",win.getOpacity())
   	})
 
   	globalShortcut.register('CommandOrControl+]', () => {
     // Do stuff when Y and either Command/Control is pressed.
     	opacity = win.getOpacity()
-    	console.log("sub")
     	if (opacity + ADJ_CONST > 1){
     		win.setOpacity(1)
     	}else{
     		win.setOpacity(opacity + ADJ_CONST)
     	}
+      cm.set_config("opa",win.getOpacity())
   	})
 }
 
