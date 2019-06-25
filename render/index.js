@@ -109,7 +109,7 @@ function gb_add_row(key,row){
 	bts.css("-webkit-transition","none")
 	bts.addClass("position-absolute")
 
-	let bttext = '<button type="button" class="btn btn-success btn-sm px-0 py-0"></button>'
+	let bttext = '<a href="#"></a>'
 
 	// let chart = $(bttext).text('分时')
 	// chart.click(key,gb_chart)
