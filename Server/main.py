@@ -133,7 +133,9 @@ class index:
     def POST(self):
         pool = web.req_pool
         data = web.data()
-        aslist = json.loads(data.decode())
+        psd = json.loads(data.decode())
+        print("post:"+str(psd))
+        aslist = psd['keys']
         ret = {}
         datas=[]
         now = time.time()
@@ -147,7 +149,8 @@ class index:
                 obj['ts'] = the_time
             datas.append(obj)
         ret['datas'] = datas
-        ret['warning'] = "免费版目前只支持一只股票"
+        # ret['warning'] = "免费版目前只支持一只股票"
+        ret['warning'] = 'new version <a onclick="cm.open_url(\'http://www.baidu.com\');" href="#">DD</a>'
         return json.dumps(ret)
 
 def DataLoop(name):

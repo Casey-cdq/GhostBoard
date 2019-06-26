@@ -13,29 +13,26 @@
   "author": "huji",
   "license": "ISC",
   "dependencies": {
-    "jquery": "1.9.1",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
     "electron-json-storage": "4.1.6",
+    "electron-log": "^3.0.6",
     "electron-updater": "^4.0.6",
+    "jquery": "1.9.1",
     "moment": "^2.24.0",
     "mousetrap": "^1.6.3",
-    "popper.js": "^1.14.7"
+    "popper.js": "^1.14.7",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "electron": "^5.0.5",
     "electron-builder": "^20.44.4"
   },
   "build": {
-    "productName":"幽灵股票",
+    "productName": "幽灵股票",
     "appId": "com.huji.ghostboard",
     "mac": {
       "category": "huji.ghostboard.finace"
-    },
-    "publish":[{
-      "provider": "github",
-      "owner": "huji0624",
-      "repo": "gsrelease"
-    }]
+    }
   }
 }

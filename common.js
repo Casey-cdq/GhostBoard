@@ -1,5 +1,6 @@
 const {shell} = require('electron')
 const storage = require('electron-json-storage')
+const uuid = require('uuid/v1')
 
 function open_url(url){
 	console.log("open "+url)
@@ -34,6 +35,9 @@ function get_current_config(func){
         }
         if(typeof(data.opa)=="undefined"){
             data.opa = 1.0
+        }
+        if(typeof(data.uuid)=="undefined"){
+            data.uuid = uuid()
         }
         console.log("config:")
         console.log(data)

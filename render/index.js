@@ -1,7 +1,9 @@
 var cm = require("../common")
+const log = require('electron-log')
 const storage = require('electron-json-storage')
 const defaultDataPath = storage.getDefaultDataPath()
-console.log(defaultDataPath)
+log.info(defaultDataPath)
+var remote = require('electron').remote
 
 var the_current_req = undefined
 
@@ -67,7 +69,7 @@ function gb_delete_row(ev){
 				let gbrow = $("#gbrow")
 				gbrow.children("tr[id='"+key+"']").remove()
 
-		    	console.log("delete keys ok ")
+		    	log.info("delete keys ok ")
 		    	ret_window_height()
 			});
 	});
@@ -433,6 +435,10 @@ function request_keys_and_set_timer(emp){
 
 	cm.get_current_config(function(data) {
 
+		let req_data = {}
+		req_data.uuid = data.uuid
+		req_data.v = remote.app.getVersion()
+
 		let watch_keys = []
 		for (i in data.keys){
 			if(typeof(data.keys[i])=="string"){
@@ -449,7 +455,9 @@ function request_keys_and_set_timer(emp){
 			console.log("-----------abort last request----------")
 		}
 
-		the_current_req = cm.post(cm.base_url,keys,
+		req_data.keys = keys
+
+		the_current_req = cm.post(cm.base_url,req_data,
 			 function (retdata) {
 		        console.log("OK:"+JSON.stringify(retdata))
 		        gbrow = $("#gbrow")

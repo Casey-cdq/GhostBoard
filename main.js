@@ -1,9 +1,40 @@
 const { app, BrowserWindow,globalShortcut } = require('electron')
 var cm = require("./common")
+const log = require('electron-log')
 
 // 保持对window对象的全局引用，如果不这么做的话，当JavaScript对象被
 // 垃圾回收的时候，window对象将会自动的关闭
 let win
+
+function main_process_log(msg){
+  log.info(msg)
+}
+
+function check_for_update(){
+  main_process_log("call check_for_update")
+  const {autoUpdater} = require("electron-updater")
+  autoUpdater.logger = log
+  autoUpdater.logger.transports.file.level = "info"
+  autoUpdater.on('checking-for-update', () => {
+    main_process_log("checking-for-update")
+  })
+  autoUpdater.on('update-available', (info) => {
+    main_process_log("update-available "+info)
+  })
+  autoUpdater.on('update-not-available', (info) => {
+    main_process_log("update-not-available "+info)
+  })
+  autoUpdater.on('error', (err) => {
+    main_process_log("autoUpdater err "+err)
+  })
+  autoUpdater.on('download-progress', (progressObj) => {
+    main_process_log("download-progress "+progressObj)
+  })
+  autoUpdater.on('update-downloaded', (info) => {
+    autoUpdater.quitAndInstall();  
+  })
+  autoUpdater.checkForUpdatesAndNotify()
+}
 
 function createWindow () {
 
@@ -37,9 +68,9 @@ function createWindow () {
   win.loadFile('render/index.html')
 
   // 打开开发者工具
-  if(!app.isPackaged){
+  // if(!app.isPackaged){
     win.webContents.openDevTools({ mode: 'detach' })
-  } 
+  // } 
   win.once('ready-to-show', () => {
     win.show()
   })
@@ -58,27 +89,6 @@ function createWindow () {
   cm.get_current_config(function(conf){
     win.setOpacity(conf.opa)
   })
-
-  const {autoUpdater} = require("electron-updater")
-  autoUpdater.on('checking-for-update', () => {
-    console.log("checking-for-update")
-  })
-  autoUpdater.on('update-available', (info) => {
-    console.log("update-available "+info)
-  })
-  autoUpdater.on('update-not-available', (info) => {
-    console.log("update-not-available "+info)
-  })
-  autoUpdater.on('error', (err) => {
-    console.log("autoUpdater err "+err)
-  })
-  autoUpdater.on('download-progress', (progressObj) => {
-    console.log("download-progress "+progressObj)
-  })
-  autoUpdater.on('update-downloaded', (info) => {
-    autoUpdater.quitAndInstall();  
-  })
-  autoUpdater.checkForUpdatesAndNotify()
 }
 
 function addShotCut(win){
