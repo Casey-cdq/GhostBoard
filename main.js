@@ -58,6 +58,27 @@ function createWindow () {
   cm.get_current_config(function(conf){
     win.setOpacity(conf.opa)
   })
+
+  const {autoUpdater} = require("electron-updater")
+  autoUpdater.on('checking-for-update', () => {
+    console.log("checking-for-update")
+  })
+  autoUpdater.on('update-available', (info) => {
+    console.log("update-available "+info)
+  })
+  autoUpdater.on('update-not-available', (info) => {
+    console.log("update-not-available "+info)
+  })
+  autoUpdater.on('error', (err) => {
+    console.log("autoUpdater err "+err)
+  })
+  autoUpdater.on('download-progress', (progressObj) => {
+    console.log("download-progress "+progressObj)
+  })
+  autoUpdater.on('update-downloaded', (info) => {
+    autoUpdater.quitAndInstall();  
+  })
+  autoUpdater.checkForUpdatesAndNotify()
 }
 
 function addShotCut(win){

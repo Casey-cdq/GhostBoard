@@ -303,7 +303,7 @@ function config(){
 	conf.show = false
 	conf.alwaysOnTop = true
 	conf.title = "幽灵看盘"
-	conf.frame = false
+	conf.frame = true
 	conf.opacity = 1.0
 	conf.resizable = false
 	conf.useContentSize = true
