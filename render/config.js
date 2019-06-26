@@ -26,7 +26,7 @@ function config_save(){
 function draw_cols(){
 	cm.get_current_config(function(data){
 		let cols = data.col
-		$("#cols").children().each(function(){
+		$("#cols").children("li").each(function(){
 			let ck = $(this).attr("col_key")+"|"+$(this).text()
 			let index = cols.indexOf(ck)
 			console.log(ck)

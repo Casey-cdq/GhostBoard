@@ -37,7 +37,9 @@ function createWindow () {
   win.loadFile('render/index.html')
 
   // 打开开发者工具
-  win.webContents.openDevTools({ mode: 'detach' })
+  if(!app.isPackaged){
+    win.webContents.openDevTools({ mode: 'detach' })
+  } 
   win.once('ready-to-show', () => {
     win.show()
   })

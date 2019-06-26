@@ -32,7 +32,10 @@ function gb_chart(ev){
 	  win.loadFile('render/gbchart.html',{query:{key:key}})
 
 	  // 打开开发者工具
-	  win.webContents.openDevTools()
+	  let app = require('electron').remote.app
+	  if(!app.isPackaged){
+    	win.webContents.openDevTools({ mode: 'detach' })
+  	  }
 	  win.once('ready-to-show', () => {
 	    win.show()
 	  })
@@ -220,7 +223,10 @@ function add_new(){
 	win.loadFile('render/add_new.html')
 
 	// 打开开发者工具
-	win.webContents.openDevTools({ mode: 'detach' })
+	let app = require('electron').remote.app
+	if(!app.isPackaged){
+		win.webContents.openDevTools({ mode: 'detach' })
+	}
 	win.once('ready-to-show', () => {
 		win.show()
 	})
@@ -290,7 +296,7 @@ function config(){
 	conf = {}
 	conf.fullscreenable = false
 	conf.fullscreen = false
-	conf.width = 410
+	conf.width = 500
 	conf.height = 100
 	conf.x = window.screen.width/2 - conf.width/2
 	conf.y = window.screen.height/2 - conf.height/2
@@ -313,7 +319,11 @@ function config(){
 	win.loadFile('render/config.html')
 
 	// 打开开发者工具
-	win.webContents.openDevTools({ mode: 'detach' })
+	let app = require('electron').remote.app
+	if(!app.isPackaged){
+		win.webContents.openDevTools({ mode: 'detach' })
+	}
+
 	win.once('ready-to-show', () => {
 	win.show()
 	})
@@ -354,7 +364,11 @@ function info(){
 	win.loadFile('render/info.html')
 
 	// 打开开发者工具
-	// win.webContents.openDevTools({ mode: 'detach' })
+	let app = require('electron').remote.app
+	if(!app.isPackaged){
+		win.webContents.openDevTools({ mode: 'detach' })
+	}
+
 	win.once('ready-to-show', () => {
 		win.show()
 	})
