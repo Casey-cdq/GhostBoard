@@ -1,5 +1,5 @@
 {
-  "name": "huji",
+  "name": "ghostboard",
   "version": "1.0.0",
   "description": "test app",
   "main": "main.js",
@@ -7,7 +7,8 @@
     "start": "electron .",
     "dev": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "pub": "build -p always"
   },
   "author": "huji",
   "license": "ISC",
@@ -26,9 +27,15 @@
     "electron-builder": "^20.44.4"
   },
   "build": {
+    "productName":"幽灵股票",
     "appId": "com.huji.ghostboard",
     "mac": {
       "category": "huji.ghostboard.finace"
-    }
+    },
+    "publish":[{
+      "provider": "github",
+      "owner": "huji0624",
+      "repo": "gsrelease"
+    }]
   }
 }

@@ -20,7 +20,7 @@ function createWindow () {
   conf.height = 200
   conf.show = false
   conf.alwaysOnTop = true
-  conf.title = "幽灵看盘"
+  conf.title = "幽灵股票"
   conf.frame = false
   conf.opacity = 1.0
   conf.resizable = false

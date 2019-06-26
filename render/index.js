@@ -15,7 +15,7 @@ function gb_chart(ev){
 	  conf.height = 600
 	  conf.show = false
 	  conf.alwaysOnTop = true
-	  conf.title = "幽灵看盘"
+	  conf.title = "幽灵股票"
 	  conf.frame = false
 	  conf.opacity = 1.0
 	  conf.resizable = true
@@ -206,7 +206,7 @@ function add_new(){
 	conf.height = 38
 	conf.show = false
 	conf.alwaysOnTop = true
-	conf.title = "幽灵看盘"
+	conf.title = "幽灵股票"
 	conf.frame = false
 	conf.opacity = 1.0
 	conf.resizable = false
@@ -255,7 +255,7 @@ function help(){
 	conf.fullscreen = true
 	conf.show = false
 	conf.alwaysOnTop = false
-	conf.title = "幽灵看盘"
+	conf.title = "幽灵股票"
 	conf.frame = true
 	conf.opacity = 1.0
 	conf.resizable = true
@@ -302,7 +302,7 @@ function config(){
 	conf.y = window.screen.height/2 - conf.height/2
 	conf.show = false
 	conf.alwaysOnTop = true
-	conf.title = "幽灵看盘"
+	conf.title = "幽灵股票"
 	conf.frame = true
 	conf.opacity = 1.0
 	conf.resizable = false
@@ -347,7 +347,7 @@ function info(){
 	conf.fullscreen = true
 	conf.show = false
 	conf.alwaysOnTop = false
-	conf.title = "幽灵看盘"
+	conf.title = "幽灵股票"
 	conf.frame = true
 	conf.opacity = 1.0
 	conf.resizable = true
@@ -450,12 +450,18 @@ function request_keys_and_set_timer(emp){
 		}
 
 		the_current_req = cm.post(cm.base_url,keys,
-			 function (message) {
-		        console.log("OK:"+JSON.stringify(message))
+			 function (retdata) {
+		        console.log("OK:"+JSON.stringify(retdata))
 		        gbrow = $("#gbrow")
 		        if (emp){
 		        	gbrow.empty()
 		        }
+		        if (typeof(retdata.warning)!="undefined"){
+		        	$("#warnalert").html(retdata.warning)
+		        	$("#warnalert").removeClass("d-none")
+		        }
+
+		        let message = retdata.datas
 
 		        let added = false
 

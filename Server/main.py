@@ -134,7 +134,8 @@ class index:
         pool = web.req_pool
         data = web.data()
         aslist = json.loads(data.decode())
-        ret = []
+        ret = {}
+        datas=[]
         now = time.time()
         lt = arrow.now().date()
         for one in aslist:
@@ -144,8 +145,9 @@ class index:
                 the_time = "%d-%02d-%02d %s" % (lt.year, lt.month, lt.day, obj["time"])
                 the_time = arrow.get(the_time).timestamp
                 obj['ts'] = the_time
-            ret.append(obj)
-        # print "ret:"+str(ret)
+            datas.append(obj)
+        ret['datas'] = datas
+        ret['warning'] = "免费版目前只支持一只股票"
         return json.dumps(ret)
 
 def DataLoop(name):
