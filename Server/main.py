@@ -17,6 +17,7 @@ urls = (
 
 all_data = {}
 all_data["a"] = {}
+all_data["hk"] = {}
 all_data["chart@a"] = {}
 
 def id_market_from_key(key):
@@ -34,11 +35,23 @@ def get_one_from_map(one):
         it = market[one]
         ret['name'] = it['name']
         ret['code'] = it['code']
-        ret['price'] = it['price']
-        ret['pre_close'] = it['pre_close']
-        ret['open'] = it['open']
-        ret['volume'] = it['volume']
-        ret['amount'] = it['amount']
+        ret['price'] = "%.2f" % (float(it['price']))
+        ret['pre_close'] = "%.2f" % (float(it['pre_close']))
+        ret['open'] = "%.2f" % (float(it['open']))
+
+        vol = float(it['volume'])/10000
+        if vol<10000:
+            vol = "%.1f万股" % (vol)
+        else:
+            vol = "%.1f亿股" % (vol/10000)
+        ret['volume'] = vol
+
+        amt = float(it['amount'])/10000
+        if amt<10000:
+            amt = "%.1f万" % (amt)
+        else:
+            amt = "%.1f亿" % (amt/10000)
+        ret['amount'] = amt
 
         prc = float(ret['price'])
         pcl = float(ret['pre_close'])
@@ -48,7 +61,7 @@ def get_one_from_map(one):
         ret['name'] = id
         return ret
 
-def parse_sina_sug(text):
+def parse_sina_sug(m,text):
     sugs = []
     text = text.split('="')[1]
     text = text.split('";')[0].strip()
@@ -57,24 +70,26 @@ def parse_sina_sug(text):
     lines = text.split(";")
     for line in lines:
         tokens = line.split(',')
-        code = tokens[2].strip()
-        if tokens[3] in ["sh000001","sz399001"]:
+        mkt = tokens[1]
+        code = tokens[2].strip()#600335
+        mcode = tokens[3]#sh600335
+        name = tokens[4].strip()
+        if m=="a" and mkt=="11":
             sug = {}
             sug['code'] = code
-            sug['name'] = tokens[4].strip()
-            sug['key'] = tokens[3][:2]+"@a"
+            sug['name'] = name
+            if mcode in ["sh000001","sz399001"]:
+                sug['key'] = mcode[:2]+"@a"
+            elif mcode == "sz399006":
+                sug['key'] = "cyb@a"
+            else:
+                sug['key'] = code+"@a"
             sugs.append(sug)
-        elif tokens[3] == "sz399006":
+        elif m=="hk" and mkt=="31":
             sug = {}
             sug['code'] = code
-            sug['name'] = tokens[4].strip()
-            sug['key'] = "cyb@a"
-            sugs.append(sug)
-        elif len(code)==6:
-            sug = {}
-            sug['code'] = code
-            sug['name'] = tokens[4].strip()
-            sug['key'] = code+"@a"
+            sug['name'] = name
+            sug['key'] = code+"@hk"
             sugs.append(sug)
         else:
             print("code not right..."+line)
@@ -115,13 +130,13 @@ class sug:
         if key.strip().startswith("@"):
             return {"message":"no input"}
         id,m = id_market_from_key(key)
-        if m == "a":
+        if m == "a" or m=="hk":
             print("get sug : " + id)
             sina_key = id
             now = int(1000*time.time())
             url = "https://suggest3.sinajs.cn/suggest/type=&key=%s&name=suggestdata_%d" % (sina_key,now)
             ret = requests.get(url)
-            sina_sug = parse_sina_sug(ret.text)
+            sina_sug = parse_sina_sug(m,ret.text)
             ret_sug = {}
             ret_sug['value'] = sina_sug
             return json.dumps(ret_sug)
@@ -150,45 +165,87 @@ class index:
             datas.append(obj)
         ret['datas'] = datas
         # ret['warning'] = "免费版目前只支持一只股票"
-        ret['warning'] = 'new version <a onclick="cm.open_url(\'http://www.baidu.com\');" href="#">DD</a>'
+        # ret['warning'] = 'new version <a onclick="cm.open_url(\'http://www.baidu.com\');" href="#">DD</a>'
         return json.dumps(ret)
+
+def loopA(now,a):
+    print(str(now)+" getting @a " + str(a))
+    df = None
+    try:
+        df = ts.get_realtime_quotes(a)
+    except Exception as e:
+        print("get_realtime_quotes Exception:")
+        print(e)
+        return
+    else:
+        pass
+    jss = json.loads(df.to_json(orient='records'))
+    for i in range(len(jss)):
+        js = jss[i]
+        js["key"] = a[i]+"@a"
+        key = js["key"]
+        all_data["a"][key] = js
+        id, m = id_market_from_key(key)
+        # if id in web.a_fixed:
+        chart = all_data["chart@a"]
+        if key not in chart:
+            chart[key] = []
+        lt = arrow.now().date()
+        the_time = "%d-%02d-%02d %s" % (lt.year, lt.month, lt.day,js["time"])
+        the_time = arrow.get(the_time).timestamp
+        chart[key].append({"price":js["price"],"time":the_time})    
+
+def parse_hk(text):
+    lines = text.split("\n")
+    for l in lines:
+        if len(l.strip())==0:
+            continue
+        left = l.split('hq_str_rt_hk')[1].split("=")
+        code = left[0]
+        left = left[1].split(",")
+        vol = left[12]
+        amt = left[11]
+        prc = left[6]
+        op = left[2]
+        pc = left[3]
+        name = left[1]
+        key = code+"@hk"
+        stock = {}
+        stock['code'] = code
+        stock['volume'] = vol
+        stock['amount'] = amt
+        stock['price'] = prc
+        stock['open'] = op
+        stock['pre_close'] = pc
+        stock['name'] = name
+        stock['key'] = key
+        all_data["hk"][key] = stock
+
+def loopHK(now,hk):
+    print(str(now)+" getting @hk " + str(hk))
+    url = "http://hq.sinajs.cn/list="
+    for i in hk:
+        url += "rt_hk"+i+","
+    ret = requests.get(url)
+    parse_hk(ret.text)
 
 def DataLoop(name):
     while True:
         now = time.time()
         pool = web.req_pool
         a = list()
+        hk = list()
         for one in pool:
             id,m = id_market_from_key(one)
             if m == "a" and now - pool[one] < 60:
                 a.append(id)
+            elif m == "hk" and now - pool[one] < 60:
+                hk.append(id)
         a.extend(web.a_fixed)
         if len(a)>0:
-            print(str(now)+" getting @a " + str(a))
-            df = None
-            try:
-                df = ts.get_realtime_quotes(a)
-            except Exception as e:
-                print("get_realtime_quotes Exception:")
-                print(e)
-                continue
-            else:
-                pass
-            jss = json.loads(df.to_json(orient='records'))
-            for i in range(len(jss)):
-                js = jss[i]
-                js["key"] = a[i]+"@a"
-                key = js["key"]
-                all_data["a"][key] = js
-                id, m = id_market_from_key(key)
-                # if id in web.a_fixed:
-                chart = all_data["chart@a"]
-                if key not in chart:
-                    chart[key] = []
-                lt = arrow.now().date()
-                the_time = "%d-%02d-%02d %s" % (lt.year, lt.month, lt.day,js["time"])
-                the_time = arrow.get(the_time).timestamp
-                chart[key].append({"price":js["price"],"time":the_time})
+            loopA(now,a)
+        if len(hk)>0:
+            loopHK(now,hk)
         time.sleep(10)
 
 if __name__ == "__main__":

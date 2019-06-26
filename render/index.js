@@ -101,6 +101,9 @@ function gb_add_row(key,row){
 	for ( k in row){
 		td = $('<td class="px-1 py-1">-</td>')
 		td.attr("id",k)
+		if(k=="per"){
+			td.addClass("text-center")
+		}
 		row_all.append(td)
 	}
 
@@ -467,6 +470,8 @@ function request_keys_and_set_timer(emp){
 		        if (typeof(retdata.warning)!="undefined"){
 		        	$("#warnalert").html(retdata.warning)
 		        	$("#warnalert").removeClass("d-none")
+		        }else{
+		        	$("#warnalert").addClass("d-none")
 		        }
 
 		        let message = retdata.datas
