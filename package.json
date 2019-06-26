@@ -4,7 +4,10 @@
   "description": "test app",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dev": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "author": "huji",
   "license": "ISC",
@@ -12,10 +15,19 @@
     "bootstrap": "^4.3.1",
     "bootstrap-suggest-plugin": "^0.1.27",
     "chart.js": "^2.8.0",
-    "electron-json-storage": "^4.1.6",
+    "electron-json-storage": "4.1.6",
     "jquery": "^1.9.1",
     "moment": "^2.24.0",
     "mousetrap": "^1.6.3",
     "popper.js": "^1.14.7"
+  },
+  "devDependencies": {
+    "electron-builder": "^20.44.4"
+  },
+  "build": {
+    "appId": "com.huji.ghostboard",
+    "mac": {
+      "category": "huji.ghostboard.finace"
+    }
   }
 }
