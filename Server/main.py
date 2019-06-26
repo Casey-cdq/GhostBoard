@@ -36,6 +36,9 @@ def get_one_from_map(one):
         ret['code'] = it['code']
         ret['price'] = it['price']
         ret['pre_close'] = it['pre_close']
+        ret['open'] = it['open']
+        ret['volume'] = it['volume']
+        ret['amount'] = it['amount']
 
         prc = float(ret['price'])
         pcl = float(ret['pre_close'])

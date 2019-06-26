@@ -15,7 +15,6 @@
           <li id="version" class="list-group-item"></li>
           <li class="list-group-item">联系我 QQ:236415625</li>
         </ul>
-        <button id="close" type="button" class="btn btn-primary btn-block rounded-0 w-30">关闭</button>
     </div>
 
     <!-- Optional JavaScript -->
@@ -33,9 +32,6 @@
     <script type="text/javascript">
       const { remote } = require('electron')
       function info_ready(){
-        $("#close").click(function(){
-          remote.getCurrentWindow().close()
-        })
         $("#version").text("版本："+remote.app.getVersion())
       }
       $(document).ready(info_ready)
