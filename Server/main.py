@@ -8,6 +8,8 @@ import time
 import json
 import requests
 import arrow
+import logging
+logging.basicConfig(format='%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s',level=logging.DEBUG)
 
 urls = (
     '/', 'index',
@@ -92,7 +94,7 @@ def parse_sina_sug(m,text):
             sug['key'] = code+"@hk"
             sugs.append(sug)
         else:
-            print("code not right..."+line)
+            logging.warning("code not right..."+line)
     return sugs
 
 class chart:
@@ -131,7 +133,7 @@ class sug:
             return {"message":"no input"}
         id,m = id_market_from_key(key)
         if m == "a" or m=="hk":
-            print("get sug : " + id)
+            logging.info("get sug : " + id)
             sina_key = id
             now = int(1000*time.time())
             url = "https://suggest3.sinajs.cn/suggest/type=&key=%s&name=suggestdata_%d" % (sina_key,now)
@@ -149,7 +151,7 @@ class index:
         pool = web.req_pool
         data = web.data()
         psd = json.loads(data.decode())
-        print("post:"+str(psd))
+        logging.info("post:"+str(psd))
         aslist = psd['keys']
         ret = {}
         datas=[]
@@ -169,7 +171,6 @@ class index:
         return json.dumps(ret)
 
 def loopA(now,a):
-    print(str(now)+" getting @a " + str(a))
     df = None
     try:
         df = ts.get_realtime_quotes(a)
@@ -222,7 +223,6 @@ def parse_hk(text):
         all_data["hk"][key] = stock
 
 def loopHK(now,hk):
-    print(str(now)+" getting @hk " + str(hk))
     url = "http://hq.sinajs.cn/list="
     for i in hk:
         url += "rt_hk"+i+","
