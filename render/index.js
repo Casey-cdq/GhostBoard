@@ -258,7 +258,7 @@ function help(){
 	const { BrowserWindow } = require('electron').remote
 	conf = {}
 	conf.fullscreenable = false
-	conf.fullscreen = true
+	conf.fullscreen = false
 	conf.show = false
 	conf.alwaysOnTop = false
 	conf.title = "幽灵股票"
@@ -350,7 +350,7 @@ function info(){
 	const { BrowserWindow } = require('electron').remote
 	conf = {}
 	conf.fullscreenable = false
-	conf.fullscreen = true
+	conf.fullscreen = false
 	conf.show = false
 	conf.alwaysOnTop = false
 	conf.title = "幽灵股票"
