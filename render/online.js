@@ -12,32 +12,68 @@ function string_strip(str){
 //   	}else{
 //   	} 
 // }
-function __ol_get_keys(uuid,keys,suc,fail){
+function get_keys_suc(suc,message){
+
+}
+
+function __ol_get_keys(params,suc,fail){
+	let keys = params.keys
 	url = "http://hq.sinajs.cn/list="
 	for(i in keys){
 		k = keys[i]
 		tks = k.split("@")
-		if(tks[1]=="hk"){
-			url += "rt_hk"+tks[0]+","
-		}else if(tks[1]=="a"){
-			if(tks[0].indexOf("sh")==0){
-				url += "sh000001,"
-			}else if(tks[0].indexOf("sz")==0){
-				url += "sz399001,"
-			}else if(tks[0].indexOf("cyb")==0){
-				url += "sz399006,"
-			}else if(tks[0].indexOf("6")==0){
-				url += "sh"+tks[0]+","
-			}else{
-				url += "sz"+tks[0]+","
-			}
+		code = tks[0]
+		mkt = tks[1]
+		if(mkt=="hk"){
+			url += "rt_hk"+code+","
+		}else if(mkt=="a"){
+			url += code+","
 		}
 	}
 	console.log(url)
 
-	let req_data = {}
-	req_data.uuid = uuid
-	req_data.v = remote.app.getVersion()
+	let req = {}
+
+	req.out = cm.get(url,{},
+			 function (message) {
+		        // console.log("OK:"+JSON.stringify(message))
+
+		        let req_data = {}
+				req_data.uuid = params.uuid
+				req_data.v = params.v
+				req_data.t = message
+
+				console.log("post data:"+req_data.t)
+
+				let inreq = cm.post(
+					cm.base_url,
+					req_data,
+					function (ret){
+						suc(ret)
+					},
+					function (message) {
+				        console.log("post NOTOK:"+JSON.stringify(message))
+				        fail(message,"err")
+				    }
+				)
+				req.inreq = inreq
+
+		    },
+		    function (message,einfo) {
+		        console.log("get NOTOK:"+JSON.stringify(message))
+		        fail(message,einfo)
+		    }
+	)
+
+	req.aa = function(){
+		this.out.abort()
+		if(typeof(this.inreq)!="undefined"){
+			this.inreq.abort()
+		}
+		console.log("abort all---------------------")
+	}
+
+	return req
 }
 
 function parse_sina_sug(text,m){
@@ -51,8 +87,7 @@ function parse_sina_sug(text,m){
 	for(i in lines){
 		let l = lines[i]
 		tk = l.split(",")
-		console.log(tk)
-
+		// console.log(tk)
 		mkt = tk[1]
 		code = string_strip(tk[2])
 		mcode = string_strip(tk[3])
@@ -71,14 +106,14 @@ function parse_sina_sug(text,m){
             sug['key'] = mcode+"@hk"
             sugs.push(sug)
         }else{
-        	log.warn("sug warning:"+l)
+        	// log.warn("sug warning:"+l)
         }
 	}
 
 	return sugs
 }
 
-function __ol_sub(key,params,suc,fail){
+function __ol_sug(key,params,suc,fail){
 	let tk = key.split("@")
 	let k = tk[0]
 	let m = tk[1]
@@ -90,7 +125,6 @@ function __ol_sub(key,params,suc,fail){
 			 function (message) {
 		        console.log("OK:"+JSON.stringify(message))
 		        let ret = parse_sina_sug(message,m)
-		        console.log(ret)
 		        suc({value:ret})
 		    },
 		    function (message,einfo) {
@@ -103,4 +137,4 @@ function __ol_sub(key,params,suc,fail){
 }
 
 exports.get_keys = __ol_get_keys;
-exports.sug = __ol_sub;
+exports.sug = __ol_sug;

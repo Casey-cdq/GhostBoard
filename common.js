@@ -31,7 +31,7 @@ function get_current_config(func){
             data.col = []
         }
         if(typeof(data.keys)=="undefined"){
-            data.keys = ["sh@a"]
+            data.keys = ["sh000001@a"]
         }
         if(typeof(data.opa)=="undefined"){
             data.opa = 1.0
@@ -101,4 +101,4 @@ exports.get_current_config = get_current_config;
 exports.save_config = save_config;
 exports.set_config = set_config;
 exports.base_url = "http://localhost:8080";
-exports.base_url = "http://static.luckyhu.top:8080";
+// exports.base_url = "http://static.luckyhu.top:8080";

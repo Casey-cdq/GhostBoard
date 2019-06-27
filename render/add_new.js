@@ -69,11 +69,10 @@ function setup_sug(){
 			mkt_key = "@hk"
 		}
 		let url = encodeURI(cm.base_url+"/sug?key="+$("#sugin").val()+mkt_key)
-		console.log("URL:"+url)
 
 		the_current_req = online.sug(url,{},
 			 function (message) {
-		        console.log("OK:"+JSON.stringify(message))
+		        // console.log("OK:"+JSON.stringify(message))
 		        // {"value":[{"code":"000006","name":"地产指数","key":"000006@a"},{"code":"000006","name":"深振业A","key":"000006@a"},{"code":"159916","name":"深F60ETF","key":"159916@a"},{"code":"399701","name":"深证F60","key":"399701@a"},{"code":"399697","name":"中关村60","key":"399697@a"}]}
 				let vis = $("#sug").find("a.d-block")
 				vis.removeClass("d-block")

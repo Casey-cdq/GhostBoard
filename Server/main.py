@@ -17,51 +17,40 @@ urls = (
     '/chart', 'chart'
 )
 
-all_data = {}
-all_data["a"] = {}
-all_data["hk"] = {}
-# all_data["chart@a"] = {}
-
 def id_market_from_key(key):
     pair = key.split("@")
     id = pair[0]
     m = pair[1]
     return id,m
 
-def get_one_from_map(one):
-    id,m = id_market_from_key(one)
-    market = web.all_data[m]
+def get_one_from(one,it):
     ret = {}
     ret['key'] = one
-    if one in market:
-        it = market[one]
-        ret['name'] = it['name']
-        ret['code'] = it['code']
-        ret['price'] = "%.2f" % (float(it['price']))
-        ret['pre_close'] = "%.2f" % (float(it['pre_close']))
-        ret['open'] = "%.2f" % (float(it['open']))
 
-        vol = float(it['volume'])/10000
-        if vol<10000:
-            vol = "%.1f万股" % (vol)
-        else:
-            vol = "%.1f亿股" % (vol/10000)
-        ret['volume'] = vol
+    ret['name'] = it['name']
+    ret['code'] = it['code']
+    ret['price'] = "%.2f" % (float(it['price']))
+    ret['pre_close'] = "%.2f" % (float(it['pre_close']))
+    ret['open'] = "%.2f" % (float(it['open']))
 
-        amt = float(it['amount'])/10000
-        if amt<10000:
-            amt = "%.1f万" % (amt)
-        else:
-            amt = "%.1f亿" % (amt/10000)
-        ret['amount'] = amt
-
-        prc = float(ret['price'])
-        pcl = float(ret['pre_close'])
-        ret['per'] = "%.2f%%" % ((prc-pcl)/pcl*100)
-        return ret
+    vol = float(it['volume'])/10000
+    if vol<10000:
+        vol = "%.1f万股" % (vol)
     else:
-        ret['name'] = id
-        return ret
+        vol = "%.1f亿股" % (vol/10000)
+    ret['volume'] = vol
+
+    amt = float(it['amount'])/10000
+    if amt<10000:
+        amt = "%.1f万" % (amt)
+    else:
+        amt = "%.1f亿" % (amt/10000)
+    ret['amount'] = amt
+
+    prc = float(ret['price'])
+    pcl = float(ret['pre_close'])
+    ret['per'] = "%.2f%%" % ((prc-pcl)/pcl*100)
+    return ret
 
 def parse_sina_sug(m,text):
     sugs = []
@@ -145,29 +134,81 @@ class sug:
         else:
             return json.dumps({"err":"not support.."+key})
 
+def parse_hk(l):
+    left = l.split('hq_str_rt_hk')[1].split("=")
+    code = left[0]
+    left = left[1].split(",")
+    vol = left[12]
+    amt = left[11]
+    prc = left[6]
+    op = left[2]
+    pc = left[3]
+    name = left[1]
+    key = code+"@hk"
+    stock = {}
+    stock['code'] = code
+    stock['volume'] = vol
+    stock['amount'] = amt
+    stock['price'] = prc
+    stock['open'] = op
+    stock['pre_close'] = pc
+    stock['name'] = name
+    stock['key'] = key
+    return get_one_from(key,stock)
+
+def parse_sina_a(l):
+    left = l.split('hq_str_')[1].split("=\"")
+    if left[0]=="?":
+        return None
+    code = left[0]
+    left = left[1].split(",")
+    logging.info("=====")
+    logging.info(left)
+    vol = left[8]
+    amt = left[9]
+    prc = left[3]
+    op = left[1]
+    pc = left[2]
+    name = left[0]
+    key = code+"@hk"
+    stock = {}
+    stock['code'] = code
+    stock['volume'] = vol
+    stock['amount'] = amt
+    stock['price'] = prc
+    stock['open'] = op
+    stock['pre_close'] = pc
+    stock['name'] = name
+    stock['key'] = key
+    return get_one_from(key,stock)
+
+def parse_sina_text(datas,text):
+    lines = text.split("\n")
+    # logging.info(lines)
+    for l in lines:
+        if len(l.strip())==0:
+            continue
+        if "hq_str_rt_hk" in l:
+            datas.append(parse_hk(l))
+        else:
+            ret = parse_sina_a(l)
+            if ret is not None:
+                datas.append(ret)
+
 #sh=上证指数 sz=深圳成指 hs300=沪深300指数 sz50=上证50 zxb=中小板 cyb=创业板
 class index:
     def POST(self):
-        pool = web.req_pool
         data = web.data()
-        psd = json.loads(data.decode())
-        logging.info("post:"+str(psd))
-        aslist = psd['keys']
+        psd = json.loads(data.decode("utf-8"))
+        # logging.info("post:"+str(psd))
+        text = psd['t']
         ret = {}
         datas=[]
-        now = time.time()
-        lt = arrow.now().date()
-        for one in aslist:
-            pool[one] = now
-            obj = get_one_from_map(one)
-            if 'time' in obj:
-                the_time = "%d-%02d-%02d %s" % (lt.year, lt.month, lt.day, obj["time"])
-                the_time = arrow.get(the_time).timestamp
-                obj['ts'] = the_time
-            datas.append(obj)
+        parse_sina_text(datas,text)
         ret['datas'] = datas
-        # ret['warning'] = "免费版目前只支持一只股票"
+        ret['warning'] = "免费版目前只支持一只股票"
         # ret['warning'] = 'new version <a onclick="cm.open_url(\'http://www.baidu.com\');" href="#">DD</a>'
+        print(ret)
         return json.dumps(ret)
 
 def loopA(now,a):
@@ -187,40 +228,6 @@ def loopA(now,a):
         key = js["key"]
         all_data["a"][key] = js
         id, m = id_market_from_key(key)
-        # if id in web.a_fixed:
-        # chart = all_data["chart@a"]
-        # if key not in chart:
-        #     chart[key] = []
-        # lt = arrow.now().date()
-        # the_time = "%d-%02d-%02d %s" % (lt.year, lt.month, lt.day,js["time"])
-        # the_time = arrow.get(the_time).timestamp
-        # chart[key].append({"price":js["price"],"time":the_time})    
-
-def parse_hk(text):
-    lines = text.split("\n")
-    for l in lines:
-        if len(l.strip())==0:
-            continue
-        left = l.split('hq_str_rt_hk')[1].split("=")
-        code = left[0]
-        left = left[1].split(",")
-        vol = left[12]
-        amt = left[11]
-        prc = left[6]
-        op = left[2]
-        pc = left[3]
-        name = left[1]
-        key = code+"@hk"
-        stock = {}
-        stock['code'] = code
-        stock['volume'] = vol
-        stock['amount'] = amt
-        stock['price'] = prc
-        stock['open'] = op
-        stock['pre_close'] = pc
-        stock['name'] = name
-        stock['key'] = key
-        all_data["hk"][key] = stock
 
 def loopHK(now,hk):
     url = "http://hq.sinajs.cn/list="
@@ -249,9 +256,5 @@ def DataLoop(name):
         time.sleep(10)
 
 if __name__ == "__main__":
-    web.req_pool = {}
-    web.all_data = all_data
-    web.a_fixed = ["sh","sz","cyb"]
-    thread.start_new_thread(DataLoop, ("Thread-1",))
     app = web.application(urls, globals())
     app.run()

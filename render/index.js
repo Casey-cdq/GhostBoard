@@ -4,6 +4,7 @@ const storage = require('electron-json-storage')
 const defaultDataPath = storage.getDefaultDataPath()
 log.info(defaultDataPath)
 var remote = require('electron').remote
+var online = require('./online')
 
 var the_current_req = undefined
 
@@ -454,13 +455,13 @@ function request_keys_and_set_timer(emp){
 		let keys = watch_keys
 
 		if (typeof(the_current_req)!="undefined"){
-			the_current_req.abort()
+			the_current_req.aa()
 			console.log("-----------abort last request----------")
 		}
 
 		req_data.keys = keys
 
-		the_current_req = cm.post(cm.base_url,req_data,
+		the_current_req = online.get_keys(req_data,
 			 function (retdata) {
 		        console.log("OK:"+JSON.stringify(retdata))
 		        gbrow = $("#gbrow")
