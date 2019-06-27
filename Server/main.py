@@ -135,8 +135,10 @@ class sug:
             return json.dumps({"err":"not support.."+key})
 
 def parse_hk(l):
+    logging.info(l)
     left = l.split('hq_str_rt_hk')[1].split("=")
     code = left[0]
+    logging.info(left)
     left = left[1].split(",")
     vol = left[12]
     amt = left[11]
@@ -170,7 +172,7 @@ def parse_sina_a(l):
     op = left[1]
     pc = left[2]
     name = left[0]
-    key = code+"@hk"
+    key = code+"@a"
     stock = {}
     stock['code'] = code
     stock['volume'] = vol
