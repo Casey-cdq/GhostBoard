@@ -85,7 +85,7 @@ function request_get(url,params,suc,fail){
         type: "GET",
         url: url,
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
-        dataType: "json",
+        dataType: "text",
         success: suc,
         error: fail
     });
@@ -101,3 +101,4 @@ exports.get_current_config = get_current_config;
 exports.save_config = save_config;
 exports.set_config = set_config;
 exports.base_url = "http://localhost:8080";
+exports.base_url = "http://static.luckyhu.top:8080";

@@ -20,7 +20,7 @@ urls = (
 all_data = {}
 all_data["a"] = {}
 all_data["hk"] = {}
-all_data["chart@a"] = {}
+# all_data["chart@a"] = {}
 
 def id_market_from_key(key):
     pair = key.split("@")
@@ -188,13 +188,13 @@ def loopA(now,a):
         all_data["a"][key] = js
         id, m = id_market_from_key(key)
         # if id in web.a_fixed:
-        chart = all_data["chart@a"]
-        if key not in chart:
-            chart[key] = []
-        lt = arrow.now().date()
-        the_time = "%d-%02d-%02d %s" % (lt.year, lt.month, lt.day,js["time"])
-        the_time = arrow.get(the_time).timestamp
-        chart[key].append({"price":js["price"],"time":the_time})    
+        # chart = all_data["chart@a"]
+        # if key not in chart:
+        #     chart[key] = []
+        # lt = arrow.now().date()
+        # the_time = "%d-%02d-%02d %s" % (lt.year, lt.month, lt.day,js["time"])
+        # the_time = arrow.get(the_time).timestamp
+        # chart[key].append({"price":js["price"],"time":the_time})    
 
 def parse_hk(text):
     lines = text.split("\n")
