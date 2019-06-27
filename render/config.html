@@ -10,7 +10,7 @@
   </head>
   <body>
 
-    <div class="container mx-0 px-0" id="board">
+    <div class="container mx-0 px-0 h-100" id="board">
       <div id="setconfig" class="row mx-0 my-0">
         <div class="col px-0">
               <div class="input-group mb-0">
@@ -20,6 +20,7 @@
                 <input id="fontsize" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
               </div>
 
+              <div class="h-100">
               <ul id="cols" class="text-center list-group list-group-horizontal my-1">
               <li col_key="code" onclick="col_click(this);" class="px-0 py-1 list-group-item list-group-item-action">代码</li>
               <li col_key="price" onclick="col_click(this);" class="px-0 py-1 list-group-item list-group-item-action">现价</li>
@@ -28,9 +29,12 @@
               <li col_key="volume" onclick="col_click(this);" class="px-0 py-1 list-group-item list-group-item-action">成交量</li>
               <li col_key="amount" onclick="col_click(this);" class="px-0 py-1 list-group-item list-group-item-action">成交额</li>
               </ul>
+              </div>
              
+             <div style="height:80px;">
              <button id="configsave" type="button" class="btn btn-primary btn-block rounded-0">保存</button>
              <button id="configrestore" type="button" class="btn btn-danger btn-block my-0 rounded-0">重置为初始值</button>
+             </div>
         </div>
         </div>
     </div>

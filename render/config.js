@@ -79,11 +79,11 @@ function config_ready(){
 	})
 
 	let dw = $("#board")[0].scrollWidth
-	let dh = $("#board")[0].scrollHeight+20
+	let dh = $("#board")[0].scrollHeight
 	let cw = remote.getCurrentWindow()
 	let x = Math.round(window.screen.width/2 - dw/2)
 	let y = Math.round(window.screen.height/2 - dh/2)
-	cw.setBounds({x:x,height:dh,width:dw})
+	cw.setBounds({x:x,y:y,height:dh,width:dw})
 }
 
 $(document).ready(config_ready)

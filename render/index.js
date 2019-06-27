@@ -308,10 +308,10 @@ function config(){
 	conf.show = false
 	conf.alwaysOnTop = true
 	conf.title = "幽灵股票"
-	conf.frame = true
+	conf.frame = false
 	conf.opacity = 1.0
 	conf.resizable = false
-	conf.useContentSize = true
+	// conf.useContentSize = true
 	conf.minimizable = false
 	conf.maximizable = false
 	conf.webPreferences = {nodeIntegration:true}
