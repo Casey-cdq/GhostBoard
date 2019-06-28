@@ -15,7 +15,8 @@ function string_strip(str){
 function get_keys_suc(suc,message){
 
 }
-
+//sug warning:btcbitstamp,71,btcbitstamp,btcbitstamp,比特币兑美元(Bitstamp报价),,比特币兑美元(Bitstamp报价),99
+//sug warning:USDCNY,71,usdcny,usdcny,在岸人民币,,在岸人民币,99
 function __ol_get_keys(params,suc,fail){
 	let keys = params.keys
 	url = "http://hq.sinajs.cn/list="
@@ -28,6 +29,13 @@ function __ol_get_keys(params,suc,fail){
 			url += "rt_hk"+code+","
 		}else if(mkt=="a"){
 			url += code+","
+		}else if(mkt=="fc"){
+			pre = code.substr(0,3)
+			if (pre==="btc"){
+				url += "btc_"+code+","
+			}else{
+				url += "fx_s"+code+","
+			}
 		}
 	}
 	console.log(url)
@@ -105,8 +113,14 @@ function parse_sina_sug(text,m){
             sug['name'] = name
             sug['key'] = mcode+"@hk"
             sugs.push(sug)
+        }else if(m=="fc" && mkt =="71"){
+            let sug = {}
+			sug['code'] = code
+            sug['name'] = name
+            sug['key'] = mcode+"@fc"
+            sugs.push(sug)
         }else{
-        	// log.warn("sug warning:"+l)
+        	console.log("sug warning:"+l)
         }
 	}
 
@@ -121,10 +135,13 @@ function __ol_sug(key,params,suc,fail){
 	let now = new Date().getTime()
 	url = "https://suggest3.sinajs.cn/suggest/type=&key="+k+"&name=suggestdata_"+now
 
+	console.log("====")
+	console.log(url)
 	let req = cm.get(url,{},
 			 function (message) {
 		        console.log("OK:"+JSON.stringify(message))
 		        let ret = parse_sina_sug(message,m)
+		        console.log(ret)
 		        suc({value:ret})
 		    },
 		    function (message,einfo) {

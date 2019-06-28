@@ -29,26 +29,40 @@ def get_one_from(one,it):
 
     ret['name'] = it['name']
     ret['code'] = it['code']
-    ret['price'] = "%.2f" % (float(it['price']))
-    ret['pre_close'] = "%.2f" % (float(it['pre_close']))
-    ret['open'] = "%.2f" % (float(it['open']))
 
-    vol = float(it['volume'])/10000
-    if vol<10000:
-        vol = "%.1f万股" % (vol)
+    if it['price']<1:
+        ret['price'] = "%.4f" % (it['price'])
     else:
-        vol = "%.1f亿股" % (vol/10000)
-    ret['volume'] = vol
+        ret['price'] = "%.2f" % (it['price'])
 
-    amt = float(it['amount'])/10000
-    if amt<10000:
-        amt = "%.1f万" % (amt)
+    if it['pre_close']<1:
+        ret['pre_close'] = "%.4f" % (it['pre_close'])
     else:
-        amt = "%.1f亿" % (amt/10000)
-    ret['amount'] = amt
+        ret['pre_close'] = "%.2f" % (it['pre_close'])
+
+    if it['open']<1:
+        ret['open'] = "%.4f" % (it['open'])
+    else:
+        ret['open'] = "%.2f" % (it['open'])
+
+    if 'volume' in it:
+        vol = float(it['volume'])/10000
+        if vol<10000:
+            vol = "%.1f万" % (vol)
+        else:
+            vol = "%.1f亿" % (vol/10000)
+        ret['volume'] = vol
+
+    if "amount" in it:
+        amt = float(it['amount'])/10000
+        if amt<10000:
+            amt = "%.1f万" % (amt)
+        else:
+            amt = "%.1f亿" % (amt/10000)
+        ret['amount'] = amt
 
     prc = float(ret['price'])
-    pcl = float(ret['pre_close'])
+    pcl = float(it['pre_close'])
     ret['per'] = "%.2f%%" % ((prc-pcl)/pcl*100)
     return ret
 
@@ -135,10 +149,8 @@ class sug:
             return json.dumps({"err":"not support.."+key})
 
 def parse_hk(l):
-    logging.info(l)
     left = l.split('hq_str_rt_hk')[1].split("=")
     code = left[0]
-    logging.info(left)
     left = left[1].split(",")
     vol = left[12]
     amt = left[11]
@@ -151,11 +163,12 @@ def parse_hk(l):
     stock['code'] = code
     stock['volume'] = vol
     stock['amount'] = amt
-    stock['price'] = prc
-    stock['open'] = op
-    stock['pre_close'] = pc
+    stock['price'] = float(prc)
+    stock['open'] = float(op)
+    stock['pre_close'] = float(pc)
     stock['name'] = name
     stock['key'] = key
+    stock['mkt'] = "hk"
     return get_one_from(key,stock)
 
 def parse_sina_a(l):
@@ -164,8 +177,6 @@ def parse_sina_a(l):
         return None
     code = left[0]
     left = left[1].split(",")
-    logging.info("=====")
-    logging.info(left)
     vol = left[8]
     amt = left[9]
     prc = left[3]
@@ -177,11 +188,61 @@ def parse_sina_a(l):
     stock['code'] = code
     stock['volume'] = vol
     stock['amount'] = amt
-    stock['price'] = prc
-    stock['open'] = op
-    stock['pre_close'] = pc
+    stock['price'] = float(prc)
+    stock['open'] = float(op)
+    stock['pre_close'] = float(pc)
     stock['name'] = name
     stock['key'] = key
+    stock['mkt'] = "a"
+    return get_one_from(key,stock)
+
+#var hq_str_fx_susdcny="23:29:00,6.8671,6.8668,6.8771,257,6.8749,6.8817,6.856,6.8668,在岸人民币,-0.18,-0.0121,0.003738,Cougar Capital Management. New York,6.9762,6.5979,*+-++--+,2019-06-28";
+def parse_fx(l):
+    left = l.split("hq_str_fx_s")[1].strip().split("=\"")
+    code = left[0]
+    left = left[1].split(",")
+    name = left[9]
+    op = left[5]
+    pc = left[3]
+    prc = left[2]
+    high = left[6]
+    low = left[7]
+    key = code+"@fc"
+    stock = {}
+    stock['code'] = code
+    stock['price'] = float(prc)
+    stock['open'] = float(op)
+    stock['pre_close'] = float(pc)
+    stock['name'] = name
+    stock['key'] = key
+    stock['mkt'] = "fx"
+    return get_one_from(key,stock)
+
+#var hq_str_btc_btcbtcusd="01:10:34,0.0000,0.0000,11906.7000,0,11906.7000,12174.3000,10970.5000,11897.3000,比特币美元(BTC/USD),1260000.0000,2019-06-29";
+def parse_cc(l):
+    left = l.split("hq_str_btc_")[1].strip().split("=\"")
+    code = left[0]
+    left = left[1].split(",")
+    # print(left)
+    name = left[9]
+    op = left[5]
+    pc = left[3]
+    prc = left[8]
+    high = left[6]
+    low = left[7]
+    vol = left[10]
+    # amt = left[9]
+    key = code+"@fc"
+    stock = {}
+    stock['volume'] = vol
+    # stock['amount'] = amt
+    stock['code'] = code
+    stock['price'] = float(prc)
+    stock['open'] = float(op)
+    stock['pre_close'] = float(pc)
+    stock['name'] = name
+    stock['key'] = key
+    stock['mkt'] = "cc"
     return get_one_from(key,stock)
 
 def parse_sina_text(datas,text):
@@ -190,12 +251,17 @@ def parse_sina_text(datas,text):
     for l in lines:
         if len(l.strip())==0:
             continue
+        d = None
         if "hq_str_rt_hk" in l:
-            datas.append(parse_hk(l))
+            d = parse_hk(l)
+        elif "hq_str_fx_s" in l:
+            d = parse_fx(l)
+        elif "hq_str_btc" in l:
+            d = parse_cc(l)
         else:
-            ret = parse_sina_a(l)
-            if ret is not None:
-                datas.append(ret)
+            d = parse_sina_a(l)
+        if d is not None:
+            datas.append(d)
 
 #sh=上证指数 sz=深圳成指 hs300=沪深300指数 sz50=上证50 zxb=中小板 cyb=创业板
 class index:
@@ -210,7 +276,7 @@ class index:
         ret['datas'] = datas
         # ret['warning'] = "免费版目前只支持一只股票"
         # ret['warning'] = 'new version <a onclick="cm.open_url(\'http://www.baidu.com\');" href="#">DD</a>'
-        print(ret)
+        # print(ret)
         return json.dumps(ret)
 
 def loopA(now,a):

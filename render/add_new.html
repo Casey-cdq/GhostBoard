@@ -7,14 +7,16 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./fa/css/font-awesome.min.css">
   </head>
   <body>
 
     <div class="container pl-0 pr-0 pt-0 pb-0 ml-0 mr-0 mt-0 mb-0 dropdown" id="board">
         <div class="input-group mb-0">
+          <button class="btn input-group-text rounded-0" id="mkt"></button>
           <input id="sugin" type="text" class="form-control mousetrap" placeholder="股票代码(esc关闭,tab切换市场)" aria-label="Recipient's username" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <span style="-webkit-app-region: drag" class="input-group-text" id="mkt">A股</span>
+          <div class="input-group-append"> 
+          <button class="btn input-group-text" id="close"><i class="fa fa-close"></i></button>    
           </div>
         </div>
         <ul class="list-group" id="sug">

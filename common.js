@@ -39,6 +39,9 @@ function get_current_config(func){
         if(typeof(data.uuid)=="undefined"){
             data.uuid = uuid()
         }
+        if(typeof(data.mkt)=="undefined"){
+            data.mkt = "A股"
+        }
         console.log("config:")
         console.log(data)
         func(data)
@@ -100,5 +103,5 @@ exports.get = request_get;
 exports.get_current_config = get_current_config;
 exports.save_config = save_config;
 exports.set_config = set_config;
-// exports.base_url = "http://localhost:8080";
-exports.base_url = "http://static.luckyhu.top:8080";
+exports.base_url = "http://localhost:8080";
+// exports.base_url = "http://static.luckyhu.top:8080";

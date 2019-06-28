@@ -14,7 +14,7 @@ function gb_chart(ev){
 	  conf = {}
 	  conf.fullscreenable = false
 	  conf.fullscreen = false
-	  conf.width = 1200
+	  conf.width = 1000
 	  conf.height = 600
 	  conf.show = false
 	  conf.alwaysOnTop = true
