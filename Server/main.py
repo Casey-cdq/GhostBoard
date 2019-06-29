@@ -1,9 +1,6 @@
 #coding=utf-8
 
-import numpy
 import web
-import tushare as ts
-import thread
 import time
 import json
 import requests
@@ -14,7 +11,8 @@ logging.basicConfig(format='%(asctime)s - %(pathname)s[line:%(lineno)d] - %(leve
 urls = (
     '/', 'index',
     '/sug', 'sug',
-    '/chart', 'chart'
+    '/chart', 'chart',
+    '/update', 'update'
 )
 
 def id_market_from_key(key):
@@ -100,31 +98,35 @@ def parse_sina_sug(m,text):
             logging.warning("code not right..."+line)
     return sugs
 
-class chart:
-    def GET(self):
-        user_data = web.input()
-        key = user_data.key
-        id, m = id_market_from_key(key)
-        if m == "a":
-            ret = {}
-            ret["key"] = key
-            ret["quote"] = web.all_data["a"][key]
-            # if id in web.a_fixed:
-            ret["type"] = "index"
-            ret["his"] = web.all_data["chart@a"][key]
-            # else:
-            #     df = ts.get_today_ticks(id)
-            #     df = df[["time","price"]]
-            #     lt = arrow.now().date()
-            #     df = ts.get_today_ticks("600355")
-            #     df = df[["time", "price"]]
-            #     the_time = "%d-%02d-%02d " % (lt.year, lt.month, lt.day)
-            #     df["time"] = (the_time + df["time"]).apply(lambda x: arrow.get(x).timestamp)
-            #     his = df.to_json(orient='records')
-            #     ret["his"] = his
-            return json.dumps(ret)
+class update:
+    def POST(self):
+        data = web.data()
+        user_data = json.loads(data.decode("utf-8"))
+        key = user_data['key']
+        ret = web.all_data.get(key,{})
+        ret = ret.get('his',[])
+        if len(ret)>0:
+            return json.dumps(ret[-1])
         else:
-            return json.dumps({'err':'not support market.'})
+            return json.dumps({"err":"no data"})
+
+def test_chart_data():
+    import random
+    his = []
+    the_time = arrow.now().timestamp
+    for i in range(1000):
+        his.append({"time":the_time-i*10,"price":random.random()-0.5})
+    return {"his":his}
+
+class chart:
+    def POST(self):
+        data = web.data()
+        user_data = json.loads(data.decode("utf-8"))
+        key = user_data['key']
+        # if key == "sh600336@a":
+        #     return json.dumps(test_chart_data())
+        ret = web.all_data.get(key,{})
+        return json.dumps(ret)
 
 class sug:
     def GET(self):
@@ -263,6 +265,20 @@ def parse_sina_text(datas,text):
         if d is not None:
             datas.append(d)
 
+def save_today_his(datas):
+    now = time.time()
+    for d in datas:
+        d['time'] = now
+        k = d['key']
+        rc = web.all_data.get(k,{})
+        if (now - rc.get('last',0))>10:
+            rc['last'] = now
+            his = rc.get('his',[])
+            his.append(d)
+            rc['his'] = his
+            rc['quote'] = d
+        web.all_data[k] = rc
+
 #sh=上证指数 sz=深圳成指 hs300=沪深300指数 sz50=上证50 zxb=中小板 cyb=创业板
 class index:
     def POST(self):
@@ -281,52 +297,10 @@ class index:
         '''
         ret['warning'] = newversion
         # print(ret)
+        save_today_his(datas)
         return json.dumps(ret)
 
-def loopA(now,a):
-    df = None
-    try:
-        df = ts.get_realtime_quotes(a)
-    except Exception as e:
-        print("get_realtime_quotes Exception:")
-        print(e)
-        return
-    else:
-        pass
-    jss = json.loads(df.to_json(orient='records'))
-    for i in range(len(jss)):
-        js = jss[i]
-        js["key"] = a[i]+"@a"
-        key = js["key"]
-        all_data["a"][key] = js
-        id, m = id_market_from_key(key)
-
-def loopHK(now,hk):
-    url = "http://hq.sinajs.cn/list="
-    for i in hk:
-        url += "rt_hk"+i+","
-    ret = requests.get(url)
-    parse_hk(ret.text)
-
-def DataLoop(name):
-    while True:
-        now = time.time()
-        pool = web.req_pool
-        a = list()
-        hk = list()
-        for one in pool:
-            id,m = id_market_from_key(one)
-            if m == "a" and now - pool[one] < 60:
-                a.append(id)
-            elif m == "hk" and now - pool[one] < 60:
-                hk.append(id)
-        a.extend(web.a_fixed)
-        if len(a)>0:
-            loopA(now,a)
-        if len(hk)>0:
-            loopHK(now,hk)
-        time.sleep(10)
-
 if __name__ == "__main__":
+    web.all_data = {}
     app = web.application(urls, globals())
     app.run()

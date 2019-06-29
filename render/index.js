@@ -14,8 +14,8 @@ function gb_chart(ev){
 	  conf = {}
 	  conf.fullscreenable = false
 	  conf.fullscreen = false
-	  conf.width = 1000
-	  conf.height = 600
+	  conf.width = 400
+	  conf.height = 200
 	  conf.show = false
 	  conf.alwaysOnTop = true
 	  conf.title = "幽灵股票"
@@ -136,6 +136,11 @@ function gb_add_row(key,row){
 	del_bt.addClass("bg-danger")
 	del_bt.click(key,gb_delete_row)
 	bts.append(del_bt)
+
+	let chart_bt = $(bttext).text('分时')
+	chart_bt.addClass('bg-primary')
+	chart_bt.click(key,gb_chart)
+	bts.append(chart_bt)
 
 	row_all.append(bts)
 

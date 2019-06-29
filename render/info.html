@@ -14,6 +14,7 @@
         <ul class="list-group list-group-flush">
           <li id="version" class="list-group-item"></li>
           <li class="list-group-item">联系我 QQ:236415625</li>
+          <li class="list-group-item">项目地址:<a href="#" id="addr">https://luckyhu.top/gs</a></li>
         </ul>
     </div>
 
@@ -31,8 +32,12 @@
     <script src="./../node_modules/mousetrap/mousetrap.min.js"></script>
     <script type="text/javascript">
       const { remote } = require('electron')
+      var cm = require("../common")
       function info_ready(){
         $("#version").text("版本："+remote.app.getVersion())
+        $("#addr").click(function(){
+          cm.open_url("https://luckyhu.top/gs")
+        })
       }
       $(document).ready(info_ready)
     </script>

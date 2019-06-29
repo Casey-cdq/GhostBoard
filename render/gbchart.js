@@ -11,10 +11,8 @@ var pchart = undefined
 
 function update_chart(quote){
     pchart.data.datasets.forEach((dataset) => {
-        console.log("____")
-        console.log(quote)
         let tmp = {}
-        tmp.x = new Date(quote.ts*1000)
+        tmp.x = new Date(quote.time*1000)
         tmp.y = quote.price
         dataset.data.push(tmp);
     });
@@ -22,29 +20,31 @@ function update_chart(quote){
 }
 
 function set_quote(quote){
-  let qt = $("#qt")
-  qt.empty()
+  // let qt = $("#qt")
+  // qt.empty()
+  let per = quote.per
+  let pn = 0.0
+  if(typeof(per)!="undefined"){
+    pn = Number(per.split("%")[0])
+  }
 
-  qt.append($("<tr></tr>").append($("<td>"+quote.a5_p+"</td>")).append($("<td>"+quote.a5_v+"</td>")))
-  qt.append($("<tr></tr>").append($("<td>"+quote.a4_p+"</td>")).append($("<td>"+quote.a4_v+"</td>")))
-  qt.append($("<tr></tr>").append($("<td>"+quote.a3_p+"</td>")).append($("<td>"+quote.a3_v+"</td>")))
-  qt.append($("<tr></tr>").append($("<td>"+quote.a2_p+"</td>")).append($("<td>"+quote.a2_v+"</td>")))
-  qt.append($("<tr></tr>").append($("<td>"+quote.a1_p+"</td>")).append($("<td>"+quote.a1_v+"</td>")))
+  $("#per").text(per)
+  let t = $("#per")
+  if (pn>0.0){
+    t.css('color','red')
+  }else if(pn<0.0){
+    t.css('color','green')
+  }else{
+    t.css('color','gray')
+  }
+}
 
-
-  qt.append($("<tr></tr>").append($("<td>"+quote.b1_p+"</td>")).append($("<td>"+quote.b1_v+"</td>")))
-  qt.append($("<tr></tr>").append($("<td>"+quote.b2_p+"</td>")).append($("<td>"+quote.b2_v+"</td>")))
-  qt.append($("<tr></tr>").append($("<td>"+quote.b3_p+"</td>")).append($("<td>"+quote.b3_v+"</td>")))
-  qt.append($("<tr></tr>").append($("<td>"+quote.b4_p+"</td>")).append($("<td>"+quote.b4_v+"</td>")))
-  qt.append($("<tr></tr>").append($("<td>"+quote.b5_p+"</td>")).append($("<td>"+quote.b5_v+"</td>")))
-
-  let tt = $("tt")
-  let per = (quote.price-quote.pre_close)/quote.pre_close*100
-  tt.text(per+"%")
+function random(lower, upper) {
+    return Math.floor(Math.random() * (upper - lower+1)) + lower;
 }
 
 function init_chart(msg){
-    // console.log(msg)
+    console.log(msg)
     quote = msg.quote
     set_quote(quote)
 
@@ -54,13 +54,22 @@ function init_chart(msg){
       data.push({x:new Date(his[i].time*1000),y:his[i].price})
     }
 
+    let cl = "rgb("+random(0,230)+","+random(0,230)+","+random(0,230)+")"
+
     var ctx = $("#pchart");
     pchart = new Chart(ctx, {
         type: 'line',
         data: {
           datasets:[
             {
-              data:data
+              label:quote.name,
+              data:data,
+              backgroundColor: cl,
+              borderColor: cl,
+              fill: false,
+              pointRadius: 1,
+              pointHoverRadius: 1,
+              borderWidth:1,
             }
           ]
         },
@@ -84,23 +93,23 @@ function init_chart(msg){
                     time: {
                          unit: 'minute'
                     }
-                }]
-            }
+                }],
+            },
         }
     });
 }
 
 function request_new(key){
-    keys = [key]
+    keys = {key:key}
 
     if (typeof(the_current_req)!="undefined"){
       the_current_req.abort()
     }
 
-    the_current_req = cm.post(cm.base_url,keys,
+    the_current_req = cm.post(cm.base_url+"/update",keys,
        function (message) {
               // console.log("OK:"+JSON.stringify(message))
-              quote = message[0]
+              quote = message
 
               update_chart(quote)
               set_quote(quote)
@@ -140,22 +149,27 @@ function chart_ready_func(){
     let chart_key = queryURLParameter(window.location.href).key.replace("%40","@")
     console.log(chart_key)
 
-    cm.get(cm.base_url+"/chart",{key:chart_key},
+    cm.post(cm.base_url+"/chart",{key:chart_key},
              function (message) {
                 console.log("OK:"+message)
 
                 init_chart(message)
 
                 //start request and timer...
-                window.setInterval(request_new,5000,chart_key)
+                window.setInterval(request_new,10000,chart_key)
             },
             function (message) {
                 console.log("NOTOK:"+JSON.stringify(message))
 
-                const { dialog } = require('electron').remote
-                dialog.showMessageBox({message:"请求失败，请重试",buttons:["OK"]})
+                // const { dialog } = require('electron').remote
+                // dialog.showMessageBox({message:"请求失败，请重试",buttons:["OK"]})
+                $("#warnalert").removeClass("d-none")
             }
     )
+
+    $("#close").click(function(){
+      remote.getCurrentWindow().close()
+    })
 }
 
 $(document).ready(chart_ready_func)

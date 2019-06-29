@@ -12,28 +12,7 @@ function main_process_log(msg){
 
 function check_for_update(){
   main_process_log("call check_for_update")
-  const {autoUpdater} = require("electron-updater")
-  autoUpdater.logger = log
-  autoUpdater.logger.transports.file.level = "info"
-  autoUpdater.on('checking-for-update', () => {
-    main_process_log("checking-for-update")
-  })
-  autoUpdater.on('update-available', (info) => {
-    main_process_log("update-available "+info)
-  })
-  autoUpdater.on('update-not-available', (info) => {
-    main_process_log("update-not-available "+info)
-  })
-  autoUpdater.on('error', (err) => {
-    main_process_log("autoUpdater err "+err)
-  })
-  autoUpdater.on('download-progress', (progressObj) => {
-    main_process_log("download-progress "+progressObj)
-  })
-  autoUpdater.on('update-downloaded', (info) => {
-    autoUpdater.quitAndInstall();  
-  })
-  autoUpdater.checkForUpdatesAndNotify()
+  
 }
 
 function createWindow () {
