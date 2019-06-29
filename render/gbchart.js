@@ -90,9 +90,10 @@ function init_chart(msg){
             scales: {
                 xAxes: [{
                     type: 'time',
-                    time: {
-                         unit: 'minute'
-                    }
+                    distribution: 'series',
+                    // time: {
+                    //      unit: 'minute'
+                    // }
                 }],
             },
         }
@@ -142,6 +143,12 @@ function queryURLParameter(url){
 var the_current_req = undefined
 
 function chart_ready_func(){
+
+    cm.get_current_config(function(conf){
+      remote.getCurrentWindow().setOpacity(conf.opa_chart)
+    })
+
+    cm.setup_opacity_control("opa_chart",remote.getCurrentWindow())
 
     console.log("gbchart doc ready.")
     console.log(window.location.href)

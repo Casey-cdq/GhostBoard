@@ -36,6 +36,9 @@ function get_current_config(func){
         if(typeof(data.opa)=="undefined"){
             data.opa = 1.0
         }
+        if(typeof(data.opa_chart)=="undefined"){
+            data.opa_chart = 1.0
+        }
         if(typeof(data.uuid)=="undefined"){
             data.uuid = uuid()
         }
@@ -96,6 +99,33 @@ function request_get(url,params,suc,fail){
     return the_ajax
 }
 
+function setup_opacity_control(key,win){
+    ADJ_CONST = 0.05
+
+    Mousetrap.bind('ctrl+[', () => {
+    // Do stuff when Y and either Command/Control is pressed.
+        opacity = win.getOpacity()
+        if (opacity - ADJ_CONST < 0.05){
+            win.setOpacity(0.05)
+        }else{
+            win.setOpacity(opacity - ADJ_CONST)
+        }
+      cm.set_config(key,win.getOpacity())
+    })
+
+    Mousetrap.bind('ctrl+]', () => {
+    // Do stuff when Y and either Command/Control is pressed.
+        opacity = win.getOpacity()
+        if (opacity + ADJ_CONST > 1){
+            win.setOpacity(1)
+        }else{
+            win.setOpacity(opacity + ADJ_CONST)
+        }
+      cm.set_config(key,win.getOpacity())
+    })
+}
+
+exports.setup_opacity_control = setup_opacity_control
 exports.open_url = open_url;
 exports.open_file = open_file;
 exports.post = request_post;

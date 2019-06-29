@@ -63,39 +63,10 @@ function createWindow () {
     win = null
   })
 
-  addShotCut(win)
-
   cm.get_current_config(function(conf){
     win.setOpacity(conf.opa)
   })
 }
-
-function addShotCut(win){
-	ADJ_CONST = 0.05
-
-	globalShortcut.register('CommandOrControl+[', () => {
-    // Do stuff when Y and either Command/Control is pressed.
-    	opacity = win.getOpacity()
-    	if (opacity - ADJ_CONST < 0.05){
-    		win.setOpacity(0.05)
-    	}else{
-    		win.setOpacity(opacity - ADJ_CONST)
-    	}
-      cm.set_config("opa",win.getOpacity())
-  	})
-
-  	globalShortcut.register('CommandOrControl+]', () => {
-    // Do stuff when Y and either Command/Control is pressed.
-    	opacity = win.getOpacity()
-    	if (opacity + ADJ_CONST > 1){
-    		win.setOpacity(1)
-    	}else{
-    		win.setOpacity(opacity + ADJ_CONST)
-    	}
-      cm.set_config("opa",win.getOpacity())
-  	})
-}
-
 
 
 // Electron 会在初始化后并准备

@@ -11,45 +11,45 @@ var the_current_req = undefined
 function gb_chart(ev){
 	key = ev.data
 	const { BrowserWindow } = require('electron').remote
-	  conf = {}
-	  conf.fullscreenable = false
-	  conf.fullscreen = false
-	  conf.width = 400
-	  conf.height = 200
-	  conf.show = false
-	  conf.alwaysOnTop = true
-	  conf.title = "幽灵股票"
-	  conf.frame = false
-	  conf.opacity = 1.0
-	  conf.resizable = true
-	  conf.useContentSize = true
-	  conf.minimizable = false
-	  conf.maximizable = false
-	  conf.webPreferences = {nodeIntegration:true}
-	  // conf.transparent = true
+	conf = {}
+	conf.fullscreenable = false
+	conf.fullscreen = false
+	conf.width = 400
+	conf.height = 200
+	conf.show = false
+	conf.alwaysOnTop = true
+	conf.title = "幽灵股票"
+	conf.frame = false
+	conf.opacity = 1.0
+	conf.resizable = true
+	conf.useContentSize = true
+	conf.minimizable = false
+	conf.maximizable = false
+	conf.webPreferences = {nodeIntegration:true}
+	// conf.transparent = true
 
-	  // 创建浏览器窗口。
-	  win = new BrowserWindow(conf)
+	// 创建浏览器窗口。
+	win = new BrowserWindow(conf)
 
-	  // 然后加载应用的 index.html。
-	  win.loadFile('render/gbchart.html',{query:{key:key}})
+	// 然后加载应用的 index.html。
+	win.loadFile('render/gbchart.html',{query:{key:key}})
 
-	  // 打开开发者工具
-	  let app = require('electron').remote.app
-	  if(!app.isPackaged){
-    	win.webContents.openDevTools({ mode: 'detach' })
-  	  }
-	  win.once('ready-to-show', () => {
-	    win.show()
-	  })
+	// 打开开发者工具
+	let app = require('electron').remote.app
+	if(!app.isPackaged){
+	win.webContents.openDevTools({ mode: 'detach' })
+	}
+	win.once('ready-to-show', () => {
+	win.show()
+	})
 
-	  // 当 window 被关闭，这个事件会被触发。
-	  win.on('closed', () => {
-	    // 取消引用 window 对象，如果你的应用支持多窗口的话，
-	    // 通常会把多个 window 对象存放在一个数组里面，
-	    // 与此同时，你应该删除相应的元素。
-	    win = null
-	  })
+	// 当 window 被关闭，这个事件会被触发。
+	win.on('closed', () => {
+	// 取消引用 window 对象，如果你的应用支持多窗口的话，
+	// 通常会把多个 window 对象存放在一个数组里面，
+	// 与此同时，你应该删除相应的元素。
+	win = null
+	})
 }
 
 function gb_delete_row(ev){
@@ -536,6 +536,7 @@ function reset_font(func){
 
 function ready_func(){
 	// reset_font()
+	cm.setup_opacity_control("opa",remote.getCurrentWindow())
 	reset_cols()
 
 	$("#addnew").click(add_new)
