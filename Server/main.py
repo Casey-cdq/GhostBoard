@@ -275,7 +275,11 @@ class index:
         parse_sina_text(datas,text)
         ret['datas'] = datas
         # ret['warning'] = "免费版目前只支持一只股票"
-        # ret['warning'] = 'new version <a onclick="cm.open_url(\'http://www.baidu.com\');" href="#">DD</a>.忽略消息请<a onclick="$(\'#warnalert\').remove();" href="#">关闭</a>'
+        newversion = '''
+        new version <a onclick="cm.open_url(\'http://www.baidu.com\');" href="#">DD</a>.
+        忽略消息请<a onclick="$(\'#warnalert\').remove();" href="#">关闭</a>
+        '''
+        ret['warning'] = newversion
         # print(ret)
         return json.dumps(ret)
 
