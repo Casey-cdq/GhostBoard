@@ -375,10 +375,10 @@ function info(){
 	win.loadFile('render/info.html')
 
 	// 打开开发者工具
-	let app = require('electron').remote.app
-	if(!app.isPackaged){
-		win.webContents.openDevTools({ mode: 'detach' })
-	}
+	// let app = require('electron').remote.app
+	// if(!app.isPackaged){
+	// 	win.webContents.openDevTools({ mode: 'detach' })
+	// }
 
 	win.once('ready-to-show', () => {
 		win.show()
