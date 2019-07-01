@@ -111,9 +111,12 @@ function request_new(key){
        function (message) {
               // console.log("OK:"+JSON.stringify(message))
               quote = message
-
-              update_chart(quote)
-              set_quote(quote)
+              if (quote.err === 0){
+                console.log("no data")
+              }else{
+                update_chart(quote)
+                set_quote(quote)
+              }
 
               the_current_req = undefined
           },
