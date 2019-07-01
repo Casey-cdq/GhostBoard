@@ -19,11 +19,12 @@
 
        <div class="row pl-0 pr-0 pt-0 pb-0 ml-0 mr-0" >
           <div class="col px-0">
+            <a href="#" onclick="reload();" class="position-absolute" style="right:50%;top:50%;">刷新</a>
             <table class="table mb-0 table-borderless table-striped">
-              <thead style="-webkit-app-region: drag">
+              <thead>
                 <tr id="colhead">
-                  <th col_key="name" class="px-1 py-1" scope="col">股票名</th>
-                  <th col_key="per" class="text-center px-1 py-1" scope="col">涨跌幅</th>
+                  <th id="name" class="text-dark px-1 py-1" scope="col" style="-webkit-app-region: drag;">股票名</th>
+                  <th id="per" class="text-center px-1 py-1" scope="col"><a class="text-secondary" href="#" onclick="sort_col(this);">涨跌幅</a><span class="d-none fa fa-sort-asc"></span><span class="d-none fa fa-sort-desc"></span></th>
                 </tr>
               </thead>
               <tbody id="gbrow">
@@ -48,6 +49,9 @@
           </div>
           <div class="col pl-0 pr-0">
             <button id="info" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0"><i class="fa fa-info"></i></button>
+          </div>
+          <div class="col pl-0 pr-0">
+            <div class="text-center"><span class="" style="-webkit-app-region: drag;font-size:12px;">拖动</span></div>
           </div>
        </div>
        

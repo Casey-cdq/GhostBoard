@@ -45,6 +45,9 @@ function get_current_config(func){
         if(typeof(data.mkt)=="undefined"){
             data.mkt = "A股"
         }
+        if(typeof(data.sort)=="undefined"){
+            data.sort = ""
+        }
         console.log("config:")
         console.log(data)
         func(data)

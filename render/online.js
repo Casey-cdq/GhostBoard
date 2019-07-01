@@ -50,6 +50,7 @@ function __ol_get_keys(params,suc,fail){
 				req_data.uuid = params.uuid
 				req_data.v = params.v
 				req_data.t = message
+				req_data.sort = params.sort
 
 				console.log("post data:"+req_data.t)
 

@@ -407,13 +407,48 @@ function vcol_from_col(v,col){
 	return ret
 }
 
+function reload(){
+	remote.getCurrentWindow().reload()
+}
+
+function sort_col(ele){
+	cm.get_current_config(function(conf){
+		let select = $(ele).parent().attr("id")
+		let sk = conf.sort
+		if(sk===""){
+			sk = select+"#asc"
+		}else{
+			let order = sk.split("#")[1]
+			let ok = sk.split("#")[0]
+			if(select===ok){
+				if (order==="asc"){
+					sk = select + "#desc"
+				}else if(order==="desc"){
+					sk = ""
+				}else{
+					sk = select+"#asc"
+				}
+			}else{
+				sk = select+"#asc"
+			}
+		}
+
+		conf.sort = sk
+
+		cm.save_config(conf, function() {
+			request_keys_and_set_timer(true)
+		});
+	})
+	console.log()
+}
+
 function reset_cols(){
 	cm.get_current_config(function(data) {
 		let col_keys = ["name|股票名","per|涨跌幅"]
 		col_keys = col_keys.concat(data.col)
 		let alin = []
 		$("#colhead").children().each(function(){
-			let ck = $(this).attr("col_key")+"|"+$(this).text()
+			let ck = $(this).attr("id")+"|"+$(this).text()
 			let index = col_keys.indexOf(ck);
 			if (index > -1) {
 				alin.push(ck)
@@ -429,7 +464,7 @@ function reset_cols(){
 			}else{
 				let key = c.split("|")[0]
 				let name = c.split("|")[1]
-				let t = '<th col_key="'+key+'" class="px-1 py-1" scope="col">'+name+'</th>'
+				let t = '<th id="'+key+'" class="px-1 py-1" scope="col"><a class="text-secondary" href="#" onclick="sort_col(this);">'+name+'</a><span class="d-none fa fa-sort-asc"></span><span class="d-none fa fa-sort-desc"></span></th>'
 				$("#colhead").append($(t))
 			}
 		}
@@ -440,6 +475,26 @@ function reset_cols(){
 	})
 }
 
+function set_order_sign(sort){
+	let all_fa = $("#colhead").find(".fa")
+	all_fa.addClass("d-none")
+	all_fa.removeClass("d-inline")
+	if(sort===""){
+	}else{
+		let tks = sort.split("#")
+		let k = tks[0]
+		let od = tks[1]
+		let hd = $("#colhead").children("#"+k)
+		if(od=="desc"){
+			hd.children(".fa-sort-asc").addClass("d-inline")
+			hd.children(".fa-sort-asc").removeClass("d-none")
+		}else{
+			hd.children(".fa-sort-desc").addClass("d-inline")
+			hd.children(".fa-sort-desc").removeClass("d-none")
+		}
+	}
+}
+
 function request_keys_and_set_timer(emp){
 
 	cm.get_current_config(function(data) {
@@ -447,6 +502,7 @@ function request_keys_and_set_timer(emp){
 		let req_data = {}
 		req_data.uuid = data.uuid
 		req_data.v = remote.app.getVersion()
+		req_data.sort = data.sort
 
 		let watch_keys = []
 		for (i in data.keys){
@@ -483,6 +539,8 @@ function request_keys_and_set_timer(emp){
 		        let message = retdata.datas
 
 		        let added = false
+
+		        set_order_sign(retdata.sort)
 
 		        for (i in message){
 		        	v = message[i]
