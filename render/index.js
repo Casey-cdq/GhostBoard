@@ -476,6 +476,9 @@ function reset_cols(){
 }
 
 function set_order_sign(sort){
+	if(sort==undefined){
+		return
+	}
 	let all_fa = $("#colhead").find(".fa")
 	all_fa.addClass("d-none")
 	all_fa.removeClass("d-inline")
