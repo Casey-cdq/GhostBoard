@@ -48,6 +48,9 @@ function get_current_config(func){
         if(typeof(data.sort)=="undefined"){
             data.sort = ""
         }
+        if(typeof(data.model)=="undefined"){
+            data.model = "nm"
+        }
         console.log("config:")
         console.log(data)
         func(data)

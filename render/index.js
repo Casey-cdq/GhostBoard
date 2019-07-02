@@ -6,6 +6,31 @@ log.info(defaultDataPath)
 var remote = require('electron').remote
 var online = require('./online')
 
+Mousetrap.bind('ctrl+c', () => {
+    config()
+})
+
+Mousetrap.bind('ctrl+t', () => {
+	add_new()
+})
+
+Mousetrap.bind('ctrl+z', () => {
+	change_model()
+})
+
+function change_model(){
+	cm.get_current_config(function(conf){
+		if(conf.model==="nm"){
+			conf.model="sm"
+		}else{
+			conf.model="nm"
+		}
+		cm.save_config(conf,function(){
+			reload_fromconfig()
+		})
+	})
+}
+
 var the_current_req = undefined
 
 function gb_chart(ev){
@@ -442,39 +467,6 @@ function sort_col(ele){
 	console.log()
 }
 
-function reset_cols(){
-	cm.get_current_config(function(data) {
-		let col_keys = ["name|股票名","per|涨跌幅"]
-		col_keys = col_keys.concat(data.col)
-		let alin = []
-		$("#colhead").children().each(function(){
-			let ck = $(this).attr("id")+"|"+$(this).text()
-			let index = col_keys.indexOf(ck);
-			if (index > -1) {
-				alin.push(ck)
-			}else{
-				$(this).remove()
-			}
-		})
-		
-		for(i in col_keys){
-			let c = col_keys[i]
-			let index = alin.indexOf(c)
-			if (index > -1) {
-			}else{
-				let key = c.split("|")[0]
-				let name = c.split("|")[1]
-				let t = '<th id="'+key+'" class="px-1 py-1" scope="col"><a class="text-secondary" href="#" onclick="sort_col(this);">'+name+'</a><span class="d-none fa fa-sort-asc"></span><span class="d-none fa fa-sort-desc"></span></th>'
-				$("#colhead").append($(t))
-			}
-		}
-
-		reset_font()
-		request_keys_and_set_timer(true)
-		
-	})
-}
-
 function set_order_sign(sort){
 	if(sort==undefined){
 		return
@@ -573,9 +565,57 @@ function request_keys_and_set_timer(emp){
 
 }
 
-function reset_font(func){
+function reset_font(data){
+	$("#board").css("font-size",Number(data.fontsize))
+}
+
+function reset_cols(data){
+
+	let col_keys = ["name|股票名","per|涨跌幅"]
+	col_keys = col_keys.concat(data.col)
+	let alin = []
+	$("#colhead").children().each(function(){
+		let ck = $(this).attr("id")+"|"+$(this).text()
+		let index = col_keys.indexOf(ck);
+		if (index > -1) {
+			alin.push(ck)
+		}else{
+			$(this).remove()
+		}
+	})
+	
+	for(i in col_keys){
+		let c = col_keys[i]
+		let index = alin.indexOf(c)
+		if (index > -1) {
+		}else{
+			let key = c.split("|")[0]
+			let name = c.split("|")[1]
+			let t = '<th id="'+key+'" class="px-1 py-1" scope="col"><a class="text-secondary" href="#" onclick="sort_col(this);">'+name+'</a><span class="d-none fa fa-sort-asc"></span><span class="d-none fa fa-sort-desc"></span></th>'
+			$("#colhead").append($(t))
+		}
+	}	
+}
+
+function reset_model(data){
+	if(data.model==="nm"){
+		$("#btns").removeClass("d-none")
+		$("#colhead").removeClass("d-none")
+
+		$("#gbrow").css("-webkit-app-region","none")
+	}else{
+		$("#btns").addClass("d-none")
+		$("#colhead").addClass("d-none")
+
+		$("#gbrow").css("-webkit-app-region","drag")
+	}
+}
+
+function reload_fromconfig(func){
 	cm.get_current_config(function(data){
-		$("#board").css("font-size",Number(data.fontsize))
+		reset_font(data)
+		reset_cols(data)
+		reset_model(data)
 
 		let cw1 = require('electron').remote.getCurrentWindow()
 		cw1.setBounds({ width:80})
@@ -591,6 +631,8 @@ function reset_font(func){
 			if (typeof(func)!="undefined"){
 				func()
 			}
+
+			request_keys_and_set_timer(true)
 		})
 	})
 }
@@ -598,7 +640,7 @@ function reset_font(func){
 function ready_func(){
 	// reset_font()
 	cm.setup_opacity_control("opa",remote.getCurrentWindow())
-	reset_cols()
+	reload_fromconfig()
 
 	$("#addnew").click(add_new)
 	$("#help").click(help)
@@ -617,12 +659,8 @@ ipcRenderer.on('refreshboard', (event, arg) => {
   request_keys_and_set_timer(false)
 })
 
-ipcRenderer.on('resetfont', (event, arg) => {
-  reset_font()
-})
-
-ipcRenderer.on('resetcol', (event, arg) => {
-  reset_cols()
+ipcRenderer.on('reload_fromconf', (event, arg) => {
+  reload_fromconfig()
 })
 
 $(document).ready(ready_func)

@@ -14,9 +14,11 @@ function config_save(){
 	cm.get_current_config(function(data){
 		data.fontsize = $("#fontsize").val()
 
+		let model = $("#model").children(".active").children('input').first().attr("id")
+		data.model = model
+
 		cm.save_config(data, function() {
-			remote.getGlobal("indexwindow").webContents.send('resetfont')
-			remote.getGlobal("indexwindow").webContents.send('refreshboard')
+			remote.getGlobal("indexwindow").webContents.send('reload_fromconf')
     		remote.getCurrentWindow().close()
 		});	
 	})
@@ -53,16 +55,14 @@ function col_click(col){
 		console.log(data.col)
 		cm.save_config(data, function() {
 			draw_cols()
-			remote.getGlobal("indexwindow").webContents.send('resetcol')
+			remote.getGlobal("indexwindow").webContents.send('reload_fromconf')
 		})
 	})
 }
 
 function config_restore(){
 	cm.save_config({}, function() {
-		remote.getGlobal("indexwindow").webContents.send('resetfont')
-		remote.getGlobal("indexwindow").webContents.send('refreshboard')
-		remote.getGlobal("indexwindow").webContents.send('resetcol')
+		remote.getGlobal("indexwindow").webContents.send('reload_fromconf')
 		remote.getCurrentWindow().close()
 	});	
 }
@@ -76,6 +76,13 @@ function config_ready(){
 
 	cm.get_current_config(function(data){
 		$("#fontsize").attr("value",data.fontsize)
+
+		if(data.model==="nm"){
+			console.log("model is nm.do nothing.")
+		}else{
+			$("#nm").parent().removeClass("active")
+			$("#sm").parent().addClass("active")
+		}
 	})
 
 	let dw = $("#board")[0].scrollWidth
