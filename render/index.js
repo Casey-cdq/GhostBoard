@@ -277,11 +277,6 @@ function add_new(){
 	})
 }
 
-function add_new_cleanup(){
-	$("#newboard").collapse('toggle')
-	request_keys_and_set_timer(false)
-}
-
 function help(){
 	$("#help").addClass("disabled")
 
@@ -560,8 +555,7 @@ function request_keys_and_set_timer(emp){
 		        the_current_req = undefined
 		    },
 		    function (message) {
-		        // console.log("NOTOK:"+JSON.stringify(message))
-
+		        console.log("NOTOK:"+JSON.stringify(message))
 		        the_current_req = undefined
 		    }
 		)
