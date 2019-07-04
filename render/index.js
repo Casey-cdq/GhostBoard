@@ -492,6 +492,8 @@ function set_order_sign(sort){
 
 function request_keys_and_set_timer(emp){
 
+	$("#drag").addClass("d-none")
+	$("#refresh").removeClass("d-none")
 	cm.get_current_config(function(data) {
 
 		let req_data = {}
@@ -551,6 +553,9 @@ function request_keys_and_set_timer(emp){
 		        }
 
 		        ret_window_height()
+
+		        $("#drag").removeClass("d-none")
+				$("#refresh").addClass("d-none")
 
 		        the_current_req = undefined
 		    },
