@@ -332,7 +332,7 @@ function config(){
 	conf.x = window.screen.width/2 - conf.width/2
 	conf.y = window.screen.height/2 - conf.height/2
 	conf.show = false
-	conf.alwaysOnTop = true
+	conf.alwaysOnTop = false
 	conf.title = "幽灵股票"
 	conf.frame = false
 	conf.opacity = 1.0
@@ -486,7 +486,7 @@ function set_order_sign(sort){
 }
 
 function request_keys_and_set_timer(emp){
-
+	console.log("call ===== request_keys_and_set_timer")
 	$("#drag").addClass("d-none")
 	$("#refresh").removeClass("d-none")
 	cm.get_current_config(function(data) {
@@ -630,9 +630,9 @@ function reload_fromconfig(func){
 			if (typeof(func)!="undefined"){
 				func()
 			}
-
-			request_keys_and_set_timer(true)
 		})
+
+		request_keys_and_set_timer(true)
 	})
 }
 
@@ -659,6 +659,7 @@ ipcRenderer.on('refreshboard', (event, arg) => {
 })
 
 ipcRenderer.on('reload_fromconf', (event, arg) => {
+
   reload_fromconfig()
 })
 

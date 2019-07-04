@@ -55,6 +55,8 @@ function col_click(col){
 		console.log(data.col)
 		cm.save_config(data, function() {
 			draw_cols()
+
+			console.log("col_click>>>>>>")
 			remote.getGlobal("indexwindow").webContents.send('reload_fromconf')
 		})
 	})
