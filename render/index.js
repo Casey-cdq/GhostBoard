@@ -655,8 +655,8 @@ function reset_model(data){
 
 		$("#gbrow").css("-webkit-app-region","drag")
 
-		cm.happend_time("sm1",function(t){
-			if(t<=10){
+		cm.happend_time("ht_sm",function(t){
+			if(t<=0){
 				alert_with_close("初次使用极简模式?Ctrl+z进行切换.")
 			}
 		})

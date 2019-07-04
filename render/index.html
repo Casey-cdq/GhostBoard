@@ -18,7 +18,7 @@
     <div class="container-fluid pl-0 pr-0" id="board">
        <div class="row pl-0 pr-0 pt-0 pb-0 ml-0 mr-0" >
           <div class="col px-0">
-            <a href="#" onclick="reload();" class="position-absolute" style="top:2px;right:2px;">刷新</a>
+            <!-- <a href="#" onclick="reload();" class="position-absolute" style="top:2px;right:2px;">刷新</a> -->
             <table class="table mb-0 table-borderless table-striped">
               <thead>
                 <tr id="colhead">
@@ -39,21 +39,15 @@
       </div>
 
         <div id="btns" class="row pl-0 pr-0 pt-0 pb-0 ml-0 mr-0">
-          <div class="col pl-0 pr-0">
-            <button id="addnew" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0">+</button>
-          </div>
-           <div class="col pl-0 pr-0">
-            <button id="config" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0"><i class="fa fa-cog"></i></button>
-          </div>
-          <div class="col pl-0 pr-0">
-            <button id="help" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0"><span class="fa fa-question-circle-o"></span></button>
-          </div>
-          <div class="col pl-0 pr-0">
-            <button id="info" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0"><i class="fa fa-info"></i></button>
-          </div>
-          <div class="col pl-0 pr-0">
-            <div class="text-center" style="-webkit-app-region: drag;"><span class="d-none fa fa-hand-grab-o" id="drag" style="font-size:12px;"></span><span style="font-size:11px;" id="refresh" class="fa fa-circle-o-notch fa-spin"></span></div>
-          </div>
+            <button style="width:20%;" id="addnew" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><i class="fa fa-plus"></i></button>
+         
+            <button style="width:20%;" id="config" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><i class="fa fa-cog"></i></button>
+          
+            <button style="width:20%;" id="help" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><span class="fa fa-question-circle-o"></span></button>
+          
+            <button style="width:20%;" id="info" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><i class="fa fa-info"></i></button>
+          
+            <button class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0" style="-webkit-app-region: drag;width:20%;"><span class="d-none fa fa-hand-grab-o" id="drag" style=""></span><span style="" id="refresh" class="fa fa-circle-o-notch fa-spin"></span></button>
        </div>
        
     </div>
