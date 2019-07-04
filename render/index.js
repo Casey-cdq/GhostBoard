@@ -121,6 +121,32 @@ function gb_top_row(ev){
 	});
 }
 
+function gb_alias_save(key){
+	let alias = $('#alias')
+	let an = alias.children().first().val()
+	console.log("give key:"+key+" alias:"+an)
+	cm.get_current_config(function(conf) {
+		conf.alias[key] = an
+		cm.save_config(conf, function() {
+			alias.remove()
+	    	request_keys_and_set_timer(false)
+		});
+	});
+}
+
+function gb_alias(ev){
+	key = ev.data
+	let alias_div = $('<div id="alias" class="position-absolute" style="left:1px;top:1px;"></div>')
+	let alias_ip = $('<input style="width:120px;" class="d-block" type="text"></input>')
+	let name = $("#gbrow").children("tr[id='"+key+"']").children("td#name").text()
+	alias_ip.attr("placeholder",name)
+	alias_div.append(alias_ip)
+	alias_div.append($('<a style="width:60px;" onclick="gb_alias_save(\''+key+'\')" href="#" class="d-inline-block text-center text-white bg-info">保存</a>'))
+	alias_div.append($('<a style="width:60px;" onclick="$(\'#alias\').remove();" href="#" class="d-inline-block text-center text-white bg-danger">关闭</a>'))
+	$("#gbrow").append(alias_div)
+	alias_ip.focus()
+}
+
 function gb_add_row(key,row){
 	console.log("add key :"+key)
 	let row_all = $('<tr></tr>')
@@ -166,6 +192,11 @@ function gb_add_row(key,row){
 	chart_bt.addClass('bg-primary')
 	chart_bt.click(key,gb_chart)
 	bts.append(chart_bt)
+
+	let alias_bt = $(bttext).text('别名')
+	alias_bt.addClass('bg-warning')
+	alias_bt.click(key,gb_alias)
+	bts.append(alias_bt)
 
 	row_all.append(bts)
 
@@ -414,10 +445,15 @@ function info(){
 	})
 }
 
-function vcol_from_col(v,col){
+function vcol_from_col(v,col,alias){
 	let ret = {}
 	ret.name = v.name
 	ret.per = v.per
+
+	if(alias[v.key]===undefined){
+	}else{
+		ret.name = alias[v.key]
+	}
 
 	for (c in col){
 		let key = col[c].split("|")[0]
@@ -536,7 +572,7 @@ function request_keys_and_set_timer(emp){
 
 		        for (i in message){
 		        	v = message[i]
-		        	v_col = vcol_from_col(v,data.col)
+		        	v_col = vcol_from_col(v,data.col,data.alias)
 		        	row_td = gbrow.children("tr[id='"+v.key+"']")
 		        	if (row_td.length==0){
 		        		gb_add_row(v.key,v_col)
