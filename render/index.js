@@ -134,6 +134,10 @@ function gb_alias_save(key){
 	});
 }
 
+function row_op_click(key){
+
+}
+
 function gb_alias(ev){
 	key = ev.data
 	let alias_div = $('<div id="alias" class="position-absolute" style="left:1px;top:1px;"></div>')
@@ -172,31 +176,30 @@ function gb_add_row(key,row){
 
 	let bttext = '<a href="#" class="text-white"></a>'
 
-	// let chart = $(bttext).text('分时')
-	// chart.click(key,gb_chart)
-	// chart.attr("id","chart_"+key)
-	// chart.prop('disabled',true)
-	// bts.append(chart)
+	// let top_bt = $(bttext).text('置顶')
+	// top_bt.addClass('bg-info')
+	// top_bt.click(key,gb_top_row)
+	// bts.append(top_bt)
 
-	let top_bt = $(bttext).text('置顶')
-	top_bt.addClass('bg-info')
-	top_bt.click(key,gb_top_row)
-	bts.append(top_bt)
-
-	let del_bt = $(bttext).text('删除')
-	del_bt.addClass("bg-danger")
-	del_bt.click(key,gb_delete_row)
-	bts.append(del_bt)
+	let alias_bt = $(bttext).text('别名')
+	alias_bt.addClass('bg-warning')
+	alias_bt.click(key,gb_alias)
+	bts.append(alias_bt)
 
 	let chart_bt = $(bttext).text('分时')
 	chart_bt.addClass('bg-primary')
 	chart_bt.click(key,gb_chart)
 	bts.append(chart_bt)
 
-	let alias_bt = $(bttext).text('别名')
-	alias_bt.addClass('bg-warning')
-	alias_bt.click(key,gb_alias)
-	bts.append(alias_bt)
+	let del_bt = $(bttext).text('删除')
+	del_bt.addClass("bg-danger")
+	del_bt.click(key,gb_delete_row)
+	bts.append(del_bt)
+
+	// let op_bt = $(bttext).html('<span class="fa fa-cog"></span>')
+	// op_bt.addClass('bg-info')
+	// op_bt.click(key,row_op_click)
+	// bts.append(op_bt)
 
 	row_all.append(bts)
 
