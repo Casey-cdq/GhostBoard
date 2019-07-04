@@ -635,6 +635,14 @@ function reset_cols(data){
 	}	
 }
 
+function alert_with_close(message){
+	let alert = $("#infoalert")
+	alert.empty()
+	alert.append($('<p class="py-0 d-inline">'+message+"</p>"))
+	alert.append($('<a class="d-inline" href="#" onclick="$(\'#infoalert\').addClass(\'d-none\');$(\'#infoalert\').empty();ret_window_height();">关闭</a>'))
+	alert.removeClass("d-none")
+}
+
 function reset_model(data){
 	if(data.model==="nm"){
 		$("#btns").removeClass("d-none")
@@ -646,6 +654,12 @@ function reset_model(data){
 		$("#colhead").addClass("d-none")
 
 		$("#gbrow").css("-webkit-app-region","drag")
+
+		cm.happend_time("sm1",function(t){
+			if(t<=10){
+				alert_with_close("初次使用极简模式?Ctrl+z进行切换.")
+			}
+		})
 	}
 }
 
