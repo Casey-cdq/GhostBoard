@@ -1,3 +1,6 @@
+var Sentry = require('@sentry/electron');
+Sentry.init({dsn: 'https://8338bd2b3e404d2f9eff2929ede6c9b0@sentry.io/1499274'});
+
 var cm = require("../common")
 const log = require('electron-log')
 const storage = require('electron-json-storage')
