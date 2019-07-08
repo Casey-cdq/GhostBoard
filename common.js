@@ -54,6 +54,9 @@ function get_current_config(func){
         if(typeof(data.alias)=="undefined"){
             data.alias = {}
         }
+        if(typeof(data.color)=="undefined"){
+            data.color = "cw"
+        }
         console.log("config:")
         console.log(data)
         func(data)

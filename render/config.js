@@ -17,9 +17,6 @@ function config_save(){
 	cm.get_current_config(function(data){
 		data.fontsize = $("#fontsize").val()
 
-		let model = $("#model").children(".active").children('input').first().attr("id")
-		data.model = model
-
 		cm.save_config(data, function() {
 			remote.getGlobal("indexwindow").webContents.send('reload_fromconf')
     		remote.getCurrentWindow().close()
@@ -82,12 +79,23 @@ function config_ready(){
 	cm.get_current_config(function(data){
 		$("#fontsize").attr("value",data.fontsize)
 
-		if(data.model==="nm"){
-			console.log("model is nm.do nothing.")
-		}else{
-			$("#nm").parent().removeClass("active")
-			$("#sm").parent().addClass("active")
-		}
+		let radio = $("input[type='radio'][id='"+data.model+"']")
+		radio.attr("checked",true)
+		$("input[type='radio'][name='model']").change(function(){
+			data.model = this.id
+			cm.save_config(data,function(){
+				remote.getGlobal("indexwindow").webContents.send('reload_fromconf')	
+			})
+		})
+
+		let radio2 = $("input[type='radio'][id='"+data.color+"']")
+		radio2.attr("checked",true)
+		$("input[type='radio'][name='color']").change(function(){
+			data.color = this.id
+			cm.save_config(data,function(){
+				remote.getGlobal("indexwindow").webContents.send('reload_fromconf')	
+			})
+		})
 	})
 
 	let dw = $("#board")[0].scrollWidth

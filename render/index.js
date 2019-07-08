@@ -154,7 +154,7 @@ function gb_alias(ev){
 	alias_ip.focus()
 }
 
-function gb_add_row(key,row){
+function gb_add_row(key,row,conf){
 	console.log("add key :"+key)
 	let row_all = $('<tr></tr>')
 	for ( k in row){
@@ -162,6 +162,12 @@ function gb_add_row(key,row){
 		td.attr("id",k)
 		if(k=="per"){
 			td.addClass("text-center")
+		}else{
+			if(conf.color=="dg"){
+				td.addClass("text-secondary")
+			}else{
+				td.addClass("text-dark")
+			}
 		}
 		row_all.append(td)
 	}
@@ -581,7 +587,7 @@ function request_keys_and_set_timer(emp){
 		        	v_col = vcol_from_col(v,data.col,data.alias)
 		        	row_td = gbrow.children("tr[id='"+v.key+"']")
 		        	if (row_td.length==0){
-		        		gb_add_row(v.key,v_col)
+		        		gb_add_row(v.key,v_col,data)
 		        		added = true
 		        	}
 
@@ -635,6 +641,24 @@ function reset_cols(data){
 			let t = '<th id="'+key+'" class="px-1 py-1" scope="col"><a class="text-secondary" href="#" onclick="sort_col(this);">'+name+'</a><span class="d-none fa fa-sort-asc"></span><span class="d-none fa fa-sort-desc"></span></th>'
 			$("#colhead").append($(t))
 		}
+	}
+
+	if(data.color=="lg"){
+		$("#colhead").children("th").each(function(){
+			$(this).removeClass("text-secondary")	
+			$(this).addClass("text-dark")
+
+			$(this).children("a").removeClass("text-secondary")
+			$(this).children("a").addClass("text-dark")
+		})
+	}else{
+		$("#colhead").children("th").each(function(){
+			$(this).removeClass("text-dark")	
+			$(this).addClass("text-secondary")
+
+			$(this).children("a").removeClass("text-dark")
+			$(this).children("a").addClass("text-secondary")
+		})
 	}	
 }
 
@@ -666,11 +690,26 @@ function reset_model(data){
 	}
 }
 
+function reset_color(data){
+	let board = $("#board")
+	board.removeClass("bg-white")
+	board.removeClass("bg-dark")
+	board.removeClass("bg-secondary")
+	if(data.color==="dg"){
+		board.addClass("bg-dark")
+	}else if(data.color==="lg"){
+		board.addClass("bg-secondary")
+	}else{
+		board.addClass("bg-white")
+	}
+}
+
 function reload_fromconfig(func){
 	cm.get_current_config(function(data){
 		reset_font(data)
 		reset_cols(data)
 		reset_model(data)
+		reset_color(data)
 
 		let cw1 = require('electron').remote.getCurrentWindow()
 		cw1.setBounds({ width:80})
