@@ -28,6 +28,7 @@ function __ol_get_keys(params,suc,fail){
 		if(mkt=="hk"){
 			url += "rt_hk"+code+","
 		}else if(mkt=="a"){
+			url += code+"_i,"
 			url += code+","
 		}else if(mkt=="fc"){
 			pre = code.substr(0,3)
