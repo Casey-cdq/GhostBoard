@@ -109,7 +109,7 @@ function request_new(key){
     if (typeof(the_current_req)!="undefined"){
       the_current_req.abort()
     }
-
+    $("#going").removeClass("d-none")
     the_current_req = cm.post(cm.base_url+"/update",keys,
        function (message) {
               // console.log("OK:"+JSON.stringify(message))
@@ -120,6 +120,8 @@ function request_new(key){
                 update_chart(quote)
                 set_quote(quote)
               }
+
+              $("#going").addClass("d-none")
 
               the_current_req = undefined
           },
@@ -146,6 +148,14 @@ function queryURLParameter(url){
   return obj;
 }
 
+function alert_with_close(message){
+    let alert = $("#infoalert")
+    alert.empty()
+    alert.append($('<p class="py-0 d-inline">'+message+"</p>"))
+    alert.append($('<a class="d-inline" href="#" onclick="$(\'#infoalert\').addClass(\'d-none\');$(\'#infoalert\').empty();">  关闭</a>'))
+    alert.removeClass("d-none")
+}
+
 var the_current_req = undefined
 
 function chart_ready_func(){
@@ -162,11 +172,14 @@ function chart_ready_func(){
     let chart_key = queryURLParameter(window.location.href).key.replace("%40","@")
     console.log(chart_key)
 
+    $("#going").removeClass("d-none")
     cm.post(cm.base_url+"/chart",{key:chart_key},
              function (message) {
                 console.log("OK:"+message)
 
                 init_chart(message)
+
+                $("#going").addClass("d-none")
 
                 //start request and timer...
                 window.setInterval(request_new,10000,chart_key)
@@ -182,6 +195,12 @@ function chart_ready_func(){
 
     $("#close").click(function(){
       remote.getCurrentWindow().close()
+    })
+
+    cm.happend_time("gbchart",function(t){
+      if(t<=1){
+        alert_with_close("分时图只会展示关注该股票期间的数据")
+      }
     })
 }
 

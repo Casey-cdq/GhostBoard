@@ -12,6 +12,14 @@ function open_file(url){
     shell.openItem(url);
 }
 
+function alert_with_close(message){
+    let alert = $("#infoalert")
+    alert.empty()
+    alert.append($('<p class="py-0 d-inline">'+message+"</p>"))
+    alert.append($('<a class="d-inline" href="#" onclick="$(\'#infoalert\').addClass(\'d-none\');$(\'#infoalert\').empty();ret_window_height();">  关闭</a>'))
+    alert.removeClass("d-none")
+}
+
 function set_config(key,value){
     get_current_config(function(conf){
         conf[key] = value
@@ -163,5 +171,6 @@ exports.get_current_config = get_current_config;
 exports.save_config = save_config;
 exports.set_config = set_config;
 exports.happend_time = happend_time;
+exports.alert_with_close = alert_with_close;
 exports.base_url = "http://localhost:8080";
 // exports.base_url = "http://static.luckyhu.top:8080";
