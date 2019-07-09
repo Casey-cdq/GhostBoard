@@ -524,11 +524,11 @@ function set_order_sign(sort){
 		let od = tks[1]
 		let hd = $("#colhead").children("#"+k)
 		if(od=="desc"){
-			hd.children(".fa-sort-asc").addClass("d-inline")
-			hd.children(".fa-sort-asc").removeClass("d-none")
-		}else{
 			hd.children(".fa-sort-desc").addClass("d-inline")
 			hd.children(".fa-sort-desc").removeClass("d-none")
+		}else{
+			hd.children(".fa-sort-asc").addClass("d-inline")
+			hd.children(".fa-sort-asc").removeClass("d-none")
 		}
 	}
 }

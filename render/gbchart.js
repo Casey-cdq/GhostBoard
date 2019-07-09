@@ -152,8 +152,12 @@ function alert_with_close(message){
     let alert = $("#infoalert")
     alert.empty()
     alert.append($('<p class="py-0 d-inline">'+message+"</p>"))
-    alert.append($('<a class="d-inline" href="#" onclick="$(\'#infoalert\').addClass(\'d-none\');$(\'#infoalert\').empty();">  关闭</a>'))
+    alert.append($('<a class="d-inline position-absolute" href="#" style="right:2px;">  关闭</a>'))
     alert.removeClass("d-none")
+    alert.click(function(){
+      $('#infoalert').addClass('d-none')
+      $('#infoalert').empty()
+    })
 }
 
 var the_current_req = undefined
