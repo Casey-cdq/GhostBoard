@@ -746,6 +746,12 @@ function ready_func(){
 	//start request and timer...
 	// request_keys_and_set_timer(false)
 	window.setInterval(request_keys_and_set_timer,10000,false)
+
+	cm.happend_time("v"+remote.app.getVersion(),function(t){
+		if(t===0){
+			help()
+		}
+	})
 }
 
 const { ipcRenderer } = require('electron')
