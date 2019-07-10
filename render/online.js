@@ -54,6 +54,7 @@ function __ol_get_keys(params,suc,fail){
 				req_data.v = params.v
 				req_data.t = message
 				req_data.sort = params.sort
+				req_data.plat = process.platform
 
 				// console.log("post data:"+req_data.t)
 
