@@ -564,7 +564,7 @@ function request_keys_and_set_timer(emp){
 
 		the_current_req = online.get_keys(req_data,
 			 function (retdata) {
-		        console.log("OK:"+JSON.stringify(retdata))
+		        // console.log("OK:"+JSON.stringify(retdata))
 		        gbrow = $("#gbrow")
 		        if (emp){
 		        	gbrow.empty()
@@ -752,6 +752,8 @@ function ready_func(){
 			help()
 		}
 	})
+
+	// main_download_and_open("http://static.luckyhu.top:8824/gs_win_v1.0.2.exe")
 }
 
 const { ipcRenderer } = require('electron')
@@ -760,8 +762,15 @@ ipcRenderer.on('refreshboard', (event, arg) => {
 })
 
 ipcRenderer.on('reload_fromconf', (event, arg) => {
-
   reload_fromconfig()
 })
+
+ipcRenderer.on('info_alert', (event, arg) => {
+  alert_with_close(arg)
+})
+
+function main_download_and_open(url){
+	ipcRenderer.send("download_and_open",url)
+}
 
 $(document).ready(ready_func)
