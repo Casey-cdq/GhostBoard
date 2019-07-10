@@ -37,6 +37,8 @@ function __ol_get_keys(params,suc,fail){
 			}else{
 				url += "fx_s"+code+","
 			}
+		}else if(mkt=="nf"){
+			url += "nf_"+code.toUpperCase()+","
 		}
 	}
 	console.log(url)
@@ -120,6 +122,12 @@ function parse_sina_sug(text,m){
 			sug['code'] = code
             sug['name'] = name
             sug['key'] = mcode+"@fc"
+            sugs.push(sug)
+        }else if(m=="nf" && mkt =="87"){
+            let sug = {}
+			sug['code'] = code
+            sug['name'] = name
+            sug['key'] = mcode+"@nf"
             sugs.push(sug)
         }else{
         	console.log("sug warning:"+l)

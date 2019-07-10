@@ -23,6 +23,8 @@ function next_mkt(){
 		$("#mkt").html("加密货币"+span)
 	}else if(cu == "加密货币"){
 		$("#mkt").html("外汇"+span)
+	}else if(cu == "外汇"){
+		$("#mkt").html("期货"+span)
 	}else{
 		$("#mkt").html("A股"+span)
 	}
@@ -87,6 +89,8 @@ function setup_sug(){
 			key = "btc"+key
 		}else if($("#mkt").text() == "外汇"){
 			mkt_key = "@fc"
+		}else if($("#mkt").text() == "期货"){
+			mkt_key = "@nf"
 		}
 
 		the_current_req = online.sug(key+mkt_key,{},
