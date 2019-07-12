@@ -169,6 +169,9 @@ function gb_add_row(key,row,conf){
 				td.addClass("text-dark")
 			}
 		}
+		if(k==="name"){
+			td.css("-webkit-app-region","none")
+		}
 		row_all.append(td)
 	}
 
@@ -177,18 +180,19 @@ function gb_add_row(key,row,conf){
 	let bts = $('<div></div>')
 	// bts.addClass("btn-group")
 	bts.addClass("collapse")
-	bts.css("left",0)
+	bts.css("left","1px")
 	bts.css("height",colhead.height())
 	bts.css("-webkit-transition","none")
+	bts.css("-webkit-app-region","none")
 	bts.css("background")
 	bts.addClass("position-absolute")
 
 	let bttext = '<a href="#" class="text-white"></a>'
 
-	// let top_bt = $(bttext).text('置顶')
-	// top_bt.addClass('bg-info')
-	// top_bt.click(key,gb_top_row)
-	// bts.append(top_bt)
+	let top_bt = $(bttext).text('置顶')
+	top_bt.addClass('bg-info')
+	top_bt.click(key,gb_top_row)
+	bts.append(top_bt)
 
 	let alias_bt = $(bttext).text('别名')
 	alias_bt.addClass('bg-warning')
@@ -534,8 +538,7 @@ function set_order_sign(sort){
 }
 
 function request_keys_and_set_timer(emp){
-	console.log("call ===== request_keys_and_set_timer")
-	$("#drag").addClass("d-none")
+	// console.log("call ===== request_keys_and_set_timer")
 	$("#refresh").removeClass("d-none")
 	cm.get_current_config(function(data) {
 
@@ -597,7 +600,6 @@ function request_keys_and_set_timer(emp){
 
 		        ret_window_height()
 
-		        $("#drag").removeClass("d-none")
 				$("#refresh").addClass("d-none")
 
 		        the_current_req = undefined
@@ -638,7 +640,7 @@ function reset_cols(data){
 		}else{
 			let key = c.split("|")[0]
 			let name = c.split("|")[1]
-			let t = '<th id="'+key+'" class="px-1 py-1" scope="col"><a class="text-secondary" href="#" onclick="sort_col(this);">'+name+'</a><span class="d-none fa fa-sort-asc"></span><span class="d-none fa fa-sort-desc"></span></th>'
+			let t = '<th id="'+key+'" class="px-1 py-1" scope="col"><a style="-webkit-app-region: none;" class="text-secondary" href="#" onclick="sort_col(this);">'+name+'</a><span class="d-none fa fa-sort-asc"></span><span class="d-none fa fa-sort-desc"></span></th>'
 			$("#colhead").append($(t))
 		}
 	}
@@ -675,12 +677,11 @@ function reset_model(data){
 		$("#btns").removeClass("d-none")
 		$("#colhead").removeClass("d-none")
 
-		$("#gbrow").css("-webkit-app-region","none")
+		// $("#gbrow").css("-webkit-app-region","none")
 	}else{
 		$("#btns").addClass("d-none")
 		$("#colhead").addClass("d-none")
-
-		$("#gbrow").css("-webkit-app-region","drag")
+		// $("#gbrow").css("-webkit-app-region","drag")
 
 		cm.happend_time("ht_sm",function(t){
 			if(t<=0){

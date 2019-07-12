@@ -33,7 +33,7 @@ function get_current_config(func){
 
         if(JSON.stringify(data)=="{}"){
             //default config
-            data.fontsize = "16"   
+            data.fontsize = "14"   
         }
         if(typeof(data.col)=="undefined"){
             data.col = []
@@ -173,4 +173,4 @@ exports.set_config = set_config;
 exports.happend_time = happend_time;
 exports.alert_with_close = alert_with_close;
 exports.base_url = "http://localhost:8080";
-// exports.base_url = "http://static.luckyhu.top:8080";
+exports.base_url = "http://static.luckyhu.top:8080";

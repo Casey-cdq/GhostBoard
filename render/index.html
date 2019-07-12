@@ -15,15 +15,16 @@
   </head>
   <body>
 
-    <div class="container-fluid pl-0 pr-0" id="board">
+    <div class="container-fluid pl-0 pr-0" id="board" style="-webkit-app-region: drag;">
        <div class="row pl-0 pr-0 pt-0 pb-0 ml-0 mr-0" >
           <div class="col px-0">
-            <!-- <a href="#" onclick="reload();" class="position-absolute" style="top:2px;right:2px;">刷新</a> -->
+            <!-- <a href="#" onclick="reload();" class="position-absolute" style="-webkit-app-region: none;top:2px;right:2px;">刷新</a> -->
+            <span style="font-size:8px;left:2px;top:2px;" id="refresh" class="position-absolute fa fa-circle-o-notch fa-spin"></span>
             <table class="table mb-0 table-borderless table-striped">
               <thead>
                 <tr id="colhead">
-                  <th id="name" class="text-secondary px-1 py-1" scope="col" style="-webkit-app-region: drag;">股票名</th>
-                  <th id="per" class="text-center px-1 py-1" scope="col"><a class="text-secondary" href="#" onclick="sort_col(this);">涨跌幅</a><span class="d-none fa fa-sort-asc"></span><span class="d-none fa fa-sort-desc"></span></th>
+                  <th id="name" class="text-center text-secondary px-1 py-1" scope="col" style="-webkit-app-region: drag;">股票名</th>
+                  <th id="per" class="text-center px-1 py-1" scope="col"><a style="-webkit-app-region: none;" class="text-secondary" href="#" onclick="sort_col(this);">涨跌幅</a><span class="d-none fa fa-sort-asc"></span><span class="d-none fa fa-sort-desc"></span></th>
                 </tr>
               </thead>
               <tbody id="gbrow">
@@ -39,15 +40,14 @@
       </div>
 
         <div id="btns" class="row pl-0 pr-0 pt-0 pb-0 ml-0 mr-0">
-            <button style="width:20%;" id="addnew" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><i class="fa fa-plus"></i></button>
+            <button style="width:25%;" id="addnew" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><i class="fa fa-plus" style="-webkit-app-region: none;"></i></button>
          
-            <button style="width:20%;" id="config" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><i class="fa fa-cog"></i></button>
+            <button style="width:25%;" id="config" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><i class="fa fa-cog" style="-webkit-app-region: none;"></i></button>
           
-            <button style="width:20%;" id="help" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><span class="fa fa-question-circle-o"></span></button>
+            <button style="width:25%;" id="help" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><span class="fa fa-question-circle-o" style="-webkit-app-region: none;"></span></button>
           
-            <button style="width:20%;" id="info" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><i class="fa fa-info"></i></button>
+            <button style="width:25%;" id="info" type="button" class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0"><i class="fa fa-info" style="-webkit-app-region: none;"></i></button>
           
-            <button class="btn btn-sm btn-link btn-block pl-0 pr-0 pt-0 pb-0 my-0" style="-webkit-app-region: drag;width:20%;"><span class="d-none fa fa-hand-grab-o" id="drag" style=""></span><span style="" id="refresh" class="fa fa-circle-o-notch fa-spin"></span></button>
        </div>
        
     </div>
