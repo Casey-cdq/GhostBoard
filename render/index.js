@@ -144,12 +144,12 @@ function row_op_click(key){
 function gb_alias(ev){
 	key = ev.data
 	let alias_div = $('<div id="alias" class="position-absolute" style="left:1px;top:1px;"></div>')
-	let alias_ip = $('<input style="width:120px;" class="d-block" type="text"></input>')
+	let alias_ip = $('<input style="width:120px;-webkit-app-region: none;" class="d-block" type="text"></input>')
 	let name = $("#gbrow").children("tr[id='"+key+"']").children("td#name").text()
 	alias_ip.attr("placeholder",name)
 	alias_div.append(alias_ip)
-	alias_div.append($('<a style="width:60px;" onclick="gb_alias_save(\''+key+'\')" href="#" class="d-inline-block text-center text-white bg-info">保存</a>'))
-	alias_div.append($('<a style="width:60px;" onclick="$(\'#alias\').remove();" href="#" class="d-inline-block text-center text-white bg-danger">关闭</a>'))
+	alias_div.append($('<a style="width:60px;-webkit-app-region: none;" onclick="gb_alias_save(\''+key+'\')" href="#" class="d-inline-block text-center text-white bg-info">保存</a>'))
+	alias_div.append($('<a style="width:60px;-webkit-app-region: none;" onclick="$(\'#alias\').remove();" href="#" class="d-inline-block text-center text-white bg-danger">关闭</a>'))
 	$("#gbrow").append(alias_div)
 	alias_ip.focus()
 }
