@@ -124,6 +124,8 @@ function request_new(key){
               $("#going").addClass("d-none")
 
               the_current_req = undefined
+
+              ret_window_height();
           },
           function (message) {
               console.log("NOTOK:"+JSON.stringify(message))
@@ -166,7 +168,6 @@ function ret_window_height(){
   let dw = $("#board")[0].scrollWidth
   let dh = $("#board")[0].scrollHeight
   console.log(dw+","+dh)
-  // console.log($("#board").width()+","+$("#board").height())
   cw.setBounds({ width:dw,height: dh})
 
   // cw.setBounds({ height: dh})
@@ -207,8 +208,10 @@ function chart_ready_func(){
 
                 //start request and timer...
                 window.setInterval(request_new,10000,chart_key)
-
-                ret_window_height();
+                window.setTimeout(function(){
+                  ret_window_height();
+                  console.log("reset height.")
+                },100)
             },
             function (message) {
                 console.log("NOTOK:"+JSON.stringify(message))

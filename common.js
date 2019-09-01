@@ -1,6 +1,7 @@
 const {shell} = require('electron')
 const storage = require('electron-json-storage')
 const uuid = require('uuid/v1')
+const CryptoJS = require('crypto-js'); 
 
 function open_url(url){
 	console.log("open "+url)
@@ -83,13 +84,22 @@ function request_post(url,params,suc,fail){
     console.log("post to:"+url)
     console.log("params:",params)
 
+    let data = {}
+    var ciphertext = window.btoa(encodeURI(JSON.stringify(params)));
+    data.en = ciphertext;
+
 	the_ajax = $.ajax({
         type: "POST",
         url: url,
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(params),
+        data: JSON.stringify(data),
         dataType: "json",
-        success: suc,
+        success: function(ret){
+            var bytes  = window.atob(ret.en);
+            let tmp = decodeURIComponent(bytes);
+            var decryptedData = JSON.parse(tmp);
+            suc(decryptedData);
+        },
         error: fail
     });
 
@@ -173,4 +183,4 @@ exports.set_config = set_config;
 exports.happend_time = happend_time;
 exports.alert_with_close = alert_with_close;
 exports.base_url = "http://localhost:8080";
-exports.base_url = "http://static.luckyhu.top:8080";
+// exports.base_url = "http://static.luckyhu.top:8080";

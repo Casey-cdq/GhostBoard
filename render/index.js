@@ -43,7 +43,7 @@ function gb_chart(ev){
 	conf.fullscreenable = false
 	conf.fullscreen = false
 	conf.width = 400
-	conf.height = 430
+	conf.height = 424
 	conf.show = false
 	conf.alwaysOnTop = true
 	conf.title = "幽灵股票"
