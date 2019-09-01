@@ -160,6 +160,18 @@ function alert_with_close(message){
     })
 }
 
+function ret_window_height(){
+  let cw = require('electron').remote.getCurrentWindow()
+
+  let dw = $("#board")[0].scrollWidth
+  let dh = $("#board")[0].scrollHeight
+  console.log(dw+","+dh)
+  // console.log($("#board").width()+","+$("#board").height())
+  cw.setBounds({ width:dw,height: dh})
+
+  // cw.setBounds({ height: dh})
+}
+
 var the_current_req = undefined
 
 function chart_ready_func(){
@@ -176,6 +188,14 @@ function chart_ready_func(){
     let chart_key = queryURLParameter(window.location.href).key.replace("%40","@")
     console.log(chart_key)
 
+    let comps = chart_key.split("@");
+    console.log(comps)
+    if(comps[1]==="a"){
+      let path = "http://image.sinajs.cn/newchart/daily/"+comps[0]+".gif";
+      $("#pchart_img").attr("src",path);
+      $("#pchart_img").removeClass("d-none")
+    }
+
     $("#going").removeClass("d-none")
     cm.post(cm.base_url+"/chart",{key:chart_key},
              function (message) {
@@ -187,6 +207,8 @@ function chart_ready_func(){
 
                 //start request and timer...
                 window.setInterval(request_new,10000,chart_key)
+
+                ret_window_height();
             },
             function (message) {
                 console.log("NOTOK:"+JSON.stringify(message))
@@ -206,6 +228,8 @@ function chart_ready_func(){
         alert_with_close("分时图只会展示关注该股票期间的数据")
       }
     })
+
+    //http://image.sinajs.cn/newchart/daily/sz399001.gif
 }
 
 $(document).ready(chart_ready_func)
