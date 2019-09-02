@@ -83,22 +83,17 @@ function request_post(url,params,suc,fail){
     console.log("post to:"+url)
     console.log("params:",params)
 
-    let data = {}
-    var ciphertext = window.btoa(encodeURI(JSON.stringify(params)));
-    data.en = ciphertext;
+    // let data = {}
+    // var ciphertext = window.btoa(encodeURI(JSON.stringify(params)));
+    // data.en = ciphertext;
 
 	the_ajax = $.ajax({
         type: "POST",
         url: url,
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data),
+        data: JSON.stringify(params),
         dataType: "json",
-        success: function(ret){
-            var bytes  = window.atob(ret.en);
-            let tmp = decodeURIComponent(bytes);
-            var decryptedData = JSON.parse(tmp);
-            suc(decryptedData);
-        },
+        success: suc,
         error: fail
     });
 
