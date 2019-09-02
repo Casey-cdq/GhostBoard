@@ -124,8 +124,6 @@ function request_new(key){
               $("#going").addClass("d-none")
 
               the_current_req = undefined
-
-              ret_window_height();
           },
           function (message) {
               console.log("NOTOK:"+JSON.stringify(message))
@@ -173,6 +171,23 @@ function ret_window_height(){
   // cw.setBounds({ height: dh})
 }
 
+function kbtclick(key){
+  let tp = $("#kbt").text()
+  if(tp==="日线"){
+    $("#kbt").text("分时")
+    $("#pchart_img").removeClass("d-none")
+    $("#pchart").addClass("d-none")
+    $("#per").addClass("d-none")
+    ret_window_height();
+  }else{
+    $("#kbt").text("日线")
+    $("#pchart").removeClass("d-none")
+    $("#per").removeClass("d-none")
+    $("#pchart_img").addClass("d-none")
+    // ret_window_height();
+  }
+}
+
 var the_current_req = undefined
 
 function chart_ready_func(){
@@ -194,7 +209,9 @@ function chart_ready_func(){
     if(comps[1]==="a"){
       let path = "http://image.sinajs.cn/newchart/daily/"+comps[0]+".gif";
       $("#pchart_img").attr("src",path);
-      $("#pchart_img").removeClass("d-none")
+      // $("#pchart_img").removeClass("d-none")
+      $("#kbt").removeClass("d-none")
+      $("#kbt").click(chart_key,kbtclick);
     }
 
     $("#going").removeClass("d-none")
@@ -208,10 +225,10 @@ function chart_ready_func(){
 
                 //start request and timer...
                 window.setInterval(request_new,10000,chart_key)
-                window.setTimeout(function(){
-                  ret_window_height();
-                  console.log("reset height.")
-                },100)
+                // window.setTimeout(function(){
+                //   ret_window_height();
+                //   console.log("reset height.")
+                // },200)
             },
             function (message) {
                 console.log("NOTOK:"+JSON.stringify(message))

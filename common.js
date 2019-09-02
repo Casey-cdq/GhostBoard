@@ -1,7 +1,6 @@
 const {shell} = require('electron')
 const storage = require('electron-json-storage')
 const uuid = require('uuid/v1')
-const CryptoJS = require('crypto-js'); 
 
 function open_url(url){
 	console.log("open "+url)
