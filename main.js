@@ -78,6 +78,7 @@ function download_and_open(url){
 }
 
 function createWindow () {
+  console.log(process.platform)
   //tray
   const assetsPath = app.isPackaged ? path.join(process.resourcesPath, "assets") : "assets";
   let ptoi = assetsPath+"/icon.png";
@@ -92,7 +93,8 @@ function createWindow () {
   tray.setToolTip('幽灵股票')
   tray.setContextMenu(contextMenu)
 
-  // hide menu for Mac 
+  // hide menu for Mac
+  Menu.setApplicationMenu(null)
   console.log(process.platform)
   if (process.platform === 'darwin' && app.isPackaged) {
     app.dock.hide();
@@ -135,6 +137,7 @@ function createWindow () {
     win.show()
   })
   global.indexwindow = win
+  win.setSkipTaskbar(true);
 
   // 当 window 被关闭，这个事件会被触发。
   win.on('closed', () => {
