@@ -539,8 +539,13 @@ function set_order_sign(sort){
 
 function request_keys_and_set_timer(emp){
 	if (typeof(the_current_req)!="undefined"){
-		console.log("-----------requesting dont react----------")
-		return;
+		if(emp){
+			the_current_req.aa()
+			the_current_req = undefined
+		}else{
+			console.log("-----------requesting dont react----------")
+			return;
+		}
 	}
 
 	// console.log("call ===== request_keys_and_set_timer")
