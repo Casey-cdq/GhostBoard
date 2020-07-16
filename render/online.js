@@ -1,6 +1,7 @@
 var cm = require("../common")
 var remote = require('electron').remote
 const log = require('electron-log')
+const axios = require('axios')
 
 function string_strip(str){
 	return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
@@ -56,7 +57,7 @@ function __ol_get_keys(params,suc,fail){
 				req_data.sort = params.sort
 				req_data.plat = process.platform
 
-				// console.log("post data:"+req_data.t)
+				// console.log("post data:"+req_data)
 
 				let inreq = cm.post(
 					cm.base_url,
@@ -65,7 +66,6 @@ function __ol_get_keys(params,suc,fail){
 						suc(ret)
 					},
 					function (message) {
-				        console.log("post NOTOK:"+JSON.stringify(message))
 				        fail(message,"err")
 				    }
 				)
@@ -79,11 +79,11 @@ function __ol_get_keys(params,suc,fail){
 	)
 
 	req.aa = function(){
-		this.out.abort()
+		this.out.cancel("canceled")
 		if(typeof(this.inreq)!="undefined"){
-			this.inreq.abort()
+			this.inreq.cancel("canceled")
 		}
-		console.log("abort all---------------------")
+		console.log("cancel all---------------------")
 	}
 
 	return req

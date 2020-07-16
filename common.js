@@ -1,6 +1,8 @@
 const {shell} = require('electron')
 const storage = require('electron-json-storage')
 const uuid = require('uuid/v1')
+const axios = require('axios')
+const CancelToken = axios.CancelToken;
 
 function open_url(url){
 	console.log("open "+url)
@@ -87,40 +89,46 @@ function request_post(url,params,suc,fail){
     // var ciphertext = window.btoa(encodeURI(JSON.stringify(params)));
     // data.en = ciphertext;
 
-	the_ajax = $.ajax({
-        type: "POST",
-        url: url,
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(params),
-        dataType: "json",
-        success: suc,
-        error: fail
+	// the_ajax = $.ajax({
+    //     type: "POST",
+    //     url: url,
+    //     contentType: "application/json; charset=utf-8",
+    //     data: JSON.stringify(params),
+    //     dataType: "json",
+    //     timeout:5000,
+    //     success: suc,
+    //     error: fail
+    // });
+    var source = CancelToken.source();
+    axios.post(url,params,{
+        cancelToken: source.token
+    }).then(function(res){
+        suc(res.data)
+    })
+    .catch(function(message){
+        console.log("post NOTOK:"+JSON.stringify(message))
+        fail(message,"err")
     });
 
-	// the_ajax.abort()
-
-	return the_ajax
+	return source
 }
 
 function request_get(url,params,suc,fail){
-    url += "?"
-    for (k in params){
-        url += k
-        url += "="
-        url += params[k]
-        url += "&"
-    }
 
-    the_ajax = $.ajax({
-        type: "GET",
-        url: url,
-        contentType: "application/x-www-form-urlencoded; charset=utf-8",
-        dataType: "text",
-        success: suc,
-        error: fail
+    var source = CancelToken.source();
+    axios.get(url,params,{
+        cancelToken: source.token,
+        headers:{"contentType":'application/x-www-form-urlencoded; charset=utf-8'},
+        responseType:'text',
+    }).then(function(res){
+        suc(res.data)
+    })
+    .catch(function(message){
+        console.log("post NOTOK:"+JSON.stringify(message))
+        fail(message,"err")
     });
 
-    return the_ajax
+	return source
 }
 
 function setup_opacity_control(key,win){
@@ -176,5 +184,5 @@ exports.save_config = save_config;
 exports.set_config = set_config;
 exports.happend_time = happend_time;
 exports.alert_with_close = alert_with_close;
-exports.base_url = "http://localhost:8080";
-// exports.base_url = "http://static.luckyhu.top:8080";
+// exports.base_url = "http://localhost:8080";
+exports.base_url = "http://static.luckyhu.top:8080";

@@ -560,14 +560,14 @@ function request_keys_and_set_timer(emp){
 
 		if (typeof(the_current_req)!="undefined"){
 			the_current_req.aa()
-			console.log("-----------abort last request----------")
+			console.log("-----------cancel last request----------")
 		}
 
 		req_data.keys = keys
 
 		the_current_req = online.get_keys(req_data,
 			 function (retdata) {
-		        // console.log("OK:"+JSON.stringify(retdata))
+		        console.log("OK:"+JSON.stringify(retdata))
 		        gbrow = $("#gbrow")
 		        if (emp){
 		        	gbrow.empty()

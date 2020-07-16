@@ -79,7 +79,7 @@ function setup_sug(){
 		key = $("#sugin").val()
 
 	    if (typeof(the_current_req)!="undefined"){
-			the_current_req.abort()
+			the_current_req.cancel("canceled")
 		}
 		let mkt_key = "@a"
 		if ($("#mkt").text() == "港股"){

@@ -107,7 +107,7 @@ function request_new(key){
     keys = {key:key}
 
     if (typeof(the_current_req)!="undefined"){
-      the_current_req.abort()
+      the_current_req.cancel("canceled")
     }
     $("#going").removeClass("d-none")
     the_current_req = cm.post(cm.base_url+"/update",keys,
