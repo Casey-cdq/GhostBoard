@@ -1,8 +1,8 @@
 const {shell} = require('electron')
 const storage = require('electron-json-storage')
-const uuid = require('uuid/v1')
 const axios = require('axios')
 const CancelToken = axios.CancelToken;
+const {machineId, machineIdSync} = require('node-machine-id')
 
 function open_url(url){
 	console.log("open "+url)
@@ -50,7 +50,7 @@ function get_current_config(func){
             data.opa_chart = 1.0
         }
         if(typeof(data.uuid)=="undefined"){
-            data.uuid = uuid()
+            data.uuid = machineIdSync(true)
         }
         if(typeof(data.mkt)=="undefined"){
             data.mkt = "A股"

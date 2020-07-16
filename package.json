@@ -23,8 +23,8 @@
     "jquery": "1.9.1",
     "moment": "^2.24.0",
     "mousetrap": "^1.6.3",
-    "popper.js": "^1.14.7",
-    "uuid": "^3.3.2"
+    "node-machine-id": "^1.1.12",
+    "popper.js": "^1.14.7"
   },
   "devDependencies": {
     "electron": "^5.0.5",
@@ -35,6 +35,9 @@
     "appId": "com.huji.ghostboard",
     "mac": {
       "category": "huji.ghostboard.finace"
-    }
+    },
+    "extraResources": [
+      "./assets/**"
+    ]
   }
 }

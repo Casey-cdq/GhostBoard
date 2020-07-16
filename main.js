@@ -12,6 +12,7 @@ const { dialog } = require('electron')
 // 保持对window对象的全局引用，如果不这么做的话，当JavaScript对象被
 // 垃圾回收的时候，window对象将会自动的关闭
 let win
+let tray
 
 function main_process_log(msg){
   log.info(msg)
@@ -77,6 +78,25 @@ function download_and_open(url){
 }
 
 function createWindow () {
+  //tray
+  const assetsPath = app.isPackaged ? path.join(process.resourcesPath, "assets") : "assets";
+  let ptoi = assetsPath+"/icon.png";
+  console.log("path icon:"+ptoi);
+  const { Menu,Tray } = require('electron');
+  tray = new Tray(ptoi)
+  const contextMenu = Menu.buildFromTemplate([
+    { label: '退出', click:function(){
+      app.quit();
+    } },
+  ])
+  tray.setToolTip('幽灵股票')
+  tray.setContextMenu(contextMenu)
+
+  // hide menu for Mac 
+  console.log(process.platform)
+  if (process.platform === 'darwin') {
+    app.dock.hide();
+  }
 
   const {width, height} = require('electron').screen.getPrimaryDisplay().workAreaSize
 
