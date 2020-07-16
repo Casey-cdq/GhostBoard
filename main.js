@@ -8,6 +8,7 @@ const storage = require('electron-json-storage')
 const defaultDataPath = storage.getDefaultDataPath()
 const fs = require('fs')
 const { dialog } = require('electron')
+const path = require('path');
 
 // 保持对window对象的全局引用，如果不这么做的话，当JavaScript对象被
 // 垃圾回收的时候，window对象将会自动的关闭
@@ -132,7 +133,8 @@ function createWindow () {
   // 打开开发者工具
   if(!app.isPackaged){
     win.webContents.openDevTools({ mode: 'detach' })
-  } 
+  }
+ 
   win.once('ready-to-show', () => {
     win.show()
   })
