@@ -538,6 +538,11 @@ function set_order_sign(sort){
 }
 
 function request_keys_and_set_timer(emp){
+	if (typeof(the_current_req)!="undefined"){
+		console.log("-----------requesting dont react----------")
+		return;
+	}
+
 	// console.log("call ===== request_keys_and_set_timer")
 	$("#refresh").removeClass("d-none")
 	cm.get_current_config(function(data) {
@@ -734,6 +739,8 @@ function reload_fromconfig(func){
 
 function ready_func(){
 	// reset_font()
+	// gb_add_row("sh000001@a",{name:"上证指数","per":"0.00%"},{});
+
 	cm.setup_opacity_control("opa",remote.getCurrentWindow())
 	reload_fromconfig()
 
@@ -746,7 +753,7 @@ function ready_func(){
 
 	//start request and timer...
 	// request_keys_and_set_timer(false)
-	window.setInterval(request_keys_and_set_timer,10000,false)
+	window.setInterval(request_keys_and_set_timer,15000,false)
 
 	cm.happend_time("v"+remote.app.getVersion(),function(t){
 		if(t===0){

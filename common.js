@@ -101,7 +101,8 @@ function request_post(url,params,suc,fail){
     // });
     var source = CancelToken.source();
     axios.post(url,params,{
-        cancelToken: source.token
+        cancelToken: source.token,
+        timeout: 60000,
     }).then(function(res){
         suc(res.data)
     })

@@ -94,7 +94,7 @@ function createWindow () {
 
   // hide menu for Mac 
   console.log(process.platform)
-  if (process.platform === 'darwin') {
+  if (process.platform === 'darwin' && app.isPackaged) {
     app.dock.hide();
   }
 
