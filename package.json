@@ -1,6 +1,6 @@
 {
   "name": "ghostboard",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "可能是最适合上班族的股票工具",
   "main": "main.js",
   "scripts": {
