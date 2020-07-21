@@ -78,9 +78,7 @@ function download_and_open(url){
   index_window.webContents.downloadURL(url)
 }
 
-function createWindow () {
-  console.log(process.platform)
-  //tray
+function createTray(){
   const assetsPath = app.isPackaged ? path.join(process.resourcesPath, "assets") : "assets";
   let ptoi = assetsPath+"/icon.png";
   console.log("path icon:"+ptoi);
@@ -90,6 +88,14 @@ function createWindow () {
     { label: '退出', click:function(){
       app.quit();
     } },
+    {
+      label:"重置软件",click:function(){
+        cm.save_config({},function(){
+          console.log("reset ok.")
+          win.webContents.send('reload_fromconf')
+        })
+      }
+    },
   ])
   tray.setToolTip('幽灵股票')
   tray.setContextMenu(contextMenu)
@@ -97,6 +103,13 @@ function createWindow () {
   // hide menu for Mac
   Menu.setApplicationMenu(null)
   console.log(process.platform)
+}
+
+function createWindow () {
+  console.log(process.platform)
+  //tray
+  createTray()
+
   if (process.platform === 'darwin' && app.isPackaged) {
     app.dock.hide();
   }

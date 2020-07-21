@@ -18,6 +18,8 @@ var span = '<i class="fa fa-angle-double-right pl-1"></i>'
 function next_mkt(){
 	let cu = $("#mkt").text()
 	if (cu == "A股"){
+		$("#mkt").html("基金"+span)
+	}else if(cu == "基金"){
 		$("#mkt").html("港股"+span)
 	}else if(cu == "港股"){
 		$("#mkt").html("加密货币"+span)
@@ -91,6 +93,8 @@ function setup_sug(){
 			mkt_key = "@fc"
 		}else if($("#mkt").text() == "期货"){
 			mkt_key = "@nf"
+		}else if($("#mkt").text() == "基金"){
+			mkt_key = "@of"
 		}
 
 		the_current_req = online.sug(key+mkt_key,{},
