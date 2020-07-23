@@ -22,6 +22,7 @@ Mousetrap.bind('ctrl+z', () => {
 })
 
 function change_model(){
+	console.log("change_model")
 	cm.get_current_config(function(conf){
 		if(conf.model==="nm"){
 			conf.model="sm"
@@ -780,6 +781,10 @@ ipcRenderer.on('reload_fromconf', (event, arg) => {
 
 ipcRenderer.on('info_alert', (event, arg) => {
   alert_with_close(arg)
+})
+
+ipcRenderer.on('change_model', (event, arg) => {
+	change_model()
 })
 
 function main_download_and_open(url){

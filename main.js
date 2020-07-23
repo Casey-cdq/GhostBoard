@@ -96,6 +96,11 @@ function createTray(){
         })
       }
     },
+    {
+      label:"模式切换(极简|普通)",click:function(){
+        win.webContents.send('change_model')
+      }
+    },
   ])
   tray.setToolTip('幽灵股票')
   tray.setContextMenu(contextMenu)
