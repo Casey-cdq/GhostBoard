@@ -328,6 +328,8 @@ function add_new(){
 function help(){
 	$("#help").addClass("disabled")
 
+	const {width, height} = require('electron').screen.getPrimaryDisplay().workAreaSize
+
 	const { BrowserWindow } = require('electron').remote
 	conf = {}
 	conf.fullscreenable = false
@@ -336,6 +338,7 @@ function help(){
 	conf.alwaysOnTop = false
 	conf.title = "幽灵股票"
 	conf.frame = true
+	conf.height = height-20
 	conf.opacity = 1.0
 	conf.resizable = true
 	conf.useContentSize = true

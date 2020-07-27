@@ -90,15 +90,35 @@ function createTray(){
     } },
     {
       label:"重置软件",click:function(){
-        cm.save_config({},function(){
-          console.log("reset ok.")
-          win.webContents.send('reload_fromconf')
+
+        const options = {
+          type: 'info',
+          title: '重置软件？',
+          message: "重置软件？重置后所有配置和股票都会晴空",
+          buttons: ['是', '否']
+        }
+        dialog.showMessageBox(options, function (index) {
+          if(index===0){
+            cm.save_config({},function(){
+              console.log("reset ok.")
+              win.webContents.send('reload_fromconf')
+            })
+          }
         })
       }
     },
     {
       label:"模式切换(极简|普通)",click:function(){
         win.webContents.send('change_model')
+      }
+    },
+    {
+      label:"面板(显示|隐藏)",click:function(){
+        if(win.isVisible()){
+          win.hide()
+        }else{
+          win.show()
+        }
       }
     },
   ])
@@ -166,6 +186,11 @@ function createWindow () {
     // 与此同时，你应该删除相应的元素。
     win = null
   })
+
+  win.on('move',()=>{
+		console.log('moved:')
+		console.log(win.getBounds())
+	})
 
   cm.get_current_config(function(conf){
     win.setOpacity(conf.opa)
