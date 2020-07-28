@@ -83,6 +83,8 @@ function gb_chart(ev){
 
 function gb_delete_row(ev){
 	key = ev.data
+	console.log("delete:")
+	console.log(key)
 	cm.get_current_config(function(conf) {
 			let data = conf.keys
 			let new_data = []
@@ -762,7 +764,7 @@ function ready_func(){
 
 	//start request and timer...
 	// request_keys_and_set_timer(false)
-	window.setInterval(request_keys_and_set_timer,15000,false)
+	window.setInterval(request_keys_and_set_timer,cm.freq,false)
 
 	cm.happend_time("v"+remote.app.getVersion(),function(t){
 		if(t===0){
