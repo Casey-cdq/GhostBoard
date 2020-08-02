@@ -110,12 +110,12 @@ function setup_sug(){
 		        	let it = v[i]
 		        	let cd = $("#sug").children("a")
 		        	let tmp = $(cd[i])
-		        	if (typeof(the_current_req)!="undefined"){
+		        	// if (typeof(the_current_req)!="undefined"){
 		        		tmp.text(it.code + " "+it.name)
 		        		tmp.attr("sugkey",it.key)
 		        		tmp.removeClass("d-none")
 		        		tmp.addClass("d-block")
-		        	}
+		        	// }
 		        }
 
 		        ret_window_height()
@@ -123,8 +123,6 @@ function setup_sug(){
 		        the_current_req = undefined
 		    },
 		    function (message,einfo) {
-		        console.log("NOTOK:"+JSON.stringify(message))
-
 		        the_current_req = undefined
 		    }
 		)

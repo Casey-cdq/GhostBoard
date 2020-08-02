@@ -117,7 +117,8 @@ function request_post(url,params,suc,fail){
 function request_get(url,params,suc,fail){
 
     var source = CancelToken.source();
-    axios.get(url,params,{
+    axios.get(url,{
+        params:params,
         cancelToken: source.token,
         headers:{"contentType":'application/x-www-form-urlencoded; charset=utf-8'},
         responseType:'text',
@@ -125,7 +126,7 @@ function request_get(url,params,suc,fail){
         suc(res.data)
     })
     .catch(function(message){
-        console.log("post NOTOK:"+JSON.stringify(message))
+        console.log("get NOTOK:"+JSON.stringify(message))
         fail(message,"err")
     });
 

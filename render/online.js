@@ -165,7 +165,6 @@ function __ol_sug(key,params,suc,fail){
 		        suc({value:ret})
 		    },
 		    function (message,einfo) {
-		        console.log("NOTOK:"+JSON.stringify(message))
 		        fail(message,einfo)
 		    }
 	)
