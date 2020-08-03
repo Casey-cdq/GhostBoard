@@ -121,6 +121,11 @@ function createTray(){
         }
       }
     },
+    {
+      label:"幽灵社区",click:function(){
+        cm.open_url(cm.base_url+"/h5/index.html")
+      }
+    },
   ])
   tray.setToolTip('幽灵股票')
   tray.setContextMenu(contextMenu)
