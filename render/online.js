@@ -139,6 +139,12 @@ function parse_sina_sug(text,m){
             sug['name'] = name
             sug['key'] = code+"@of"
             sugs.push(sug)
+		}else if(m=="etf" && mkt =="22"){
+            let sug = {}
+			sug['code'] = code
+            sug['name'] = name
+            sug['key'] = "sh"+code+"@a"
+            sugs.push(sug)
 		}else{
         	console.log("sug warning:"+l)
         }

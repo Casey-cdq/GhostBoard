@@ -20,6 +20,8 @@ function next_mkt(){
 	if (cu == "A股"){
 		$("#mkt").html("基金"+span)
 	}else if(cu == "基金"){
+		$("#mkt").html("ETF"+span)
+	}else if(cu == "ETF"){
 		$("#mkt").html("港股"+span)
 	}else if(cu == "港股"){
 		$("#mkt").html("加密货币"+span)
@@ -95,6 +97,8 @@ function setup_sug(){
 			mkt_key = "@nf"
 		}else if($("#mkt").text() == "基金"){
 			mkt_key = "@of"
+		}else if($("#mkt").text() == "ETF"){
+			mkt_key = "@etf"
 		}
 
 		the_current_req = online.sug(key+mkt_key,{},
