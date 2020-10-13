@@ -113,7 +113,7 @@ function createTray(){
       }
     },
     {
-      label:"面板(显示|隐藏)",click:function(){
+      label:"老板來了(快捷鍵 Alt+~)",click:function(){
         if(win.isVisible()){
           win.hide()
         }else{
@@ -134,6 +134,7 @@ function createTray(){
   Menu.setApplicationMenu(null)
   console.log(process.platform)
 }
+
 
 function createWindow () {
   console.log(process.platform)
@@ -177,6 +178,13 @@ function createWindow () {
   if(!app.isPackaged){
     win.webContents.openDevTools({ mode: 'detach' })
   }
+
+  // console.log('CommandOrControl+X:')
+  // console.log(globalShortcut.isRegistered('CommandOrControl+X'))
+
+  // globalShortcut.register('CommandOrControl+X', () => {
+  //   console.log('CommandOrControl+X is pressed')
+  // })
  
   win.once('ready-to-show', () => {
     win.show()
@@ -206,12 +214,37 @@ function createWindow () {
 // Electron 会在初始化后并准备
 // 创建浏览器窗口时，调用这个函数。
 // 部分 API 在 ready 事件触发后才能使用。
-app.on('ready', createWindow)
+// app.on('ready', createWindow)
+
+app.whenReady().then(() => {
+  // Register a 'CommandOrControl+X' shortcut listener.
+  acc = 'Alt+`'
+  const ret = globalShortcut.register(acc, () => {
+    if(win.isVisible()){
+      win.hide()
+    }else{
+      win.show()
+    }
+  })
+
+  if (!ret) {
+    console.log(acc+' registration failed')
+  }else{
+    console.log(acc+' registration OK')
+  }
+
+  // 检查快捷键是否注册成功
+  console.log(acc+" : "+globalShortcut.isRegistered(acc))
+
+  createWindow()
+})
 
 // 当全部窗口关闭时退出。
 app.on('window-all-closed', () => {
   // 在 macOS 上，除非用户用 Cmd + Q 确定地退出，
   // 否则绝大部分应用及其菜单栏会保持激活。
+  globalShortcut.unregisterAll()
+
   if (process.platform !== 'darwin') {
     app.quit()
   }
