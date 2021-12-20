@@ -188,5 +188,5 @@ exports.happend_time = happend_time;
 exports.alert_with_close = alert_with_close;
 // exports.base_url = "http://localhost:8080";
 // exports.freq = 3000;
-exports.base_url = "http://static.luckyhu.top:8080";
+exports.base_url = "http://api.guyu.biz:8080";
 exports.freq = 15000;

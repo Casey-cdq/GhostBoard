@@ -43,6 +43,7 @@ function __ol_get_keys(params,suc,fail){
 		}else if(mkt=="of"){
 			url += "fu_"+code+","
 			url += "of"+code+","
+			url += "f_"+code+","
 		}
 	}
 	console.log(url)
@@ -91,6 +92,9 @@ function __ol_get_keys(params,suc,fail){
 
 	return req
 }
+
+//var suggestdata_1640013068229=\"of16172C,21,16172c,of16172c,招商中证煤炭等权指数分级,,招商中证煤炭等权指数分级,99,1,\";
+//var suggestdata_1640013203499=\"of180031,21,180031,of180031,银华中小盘混合,,银华中小盘混合,99,1,\";
 
 function parse_sina_sug(text,m){
 	let sugs = []
